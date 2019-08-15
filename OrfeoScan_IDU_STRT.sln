@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrfeoScan_IDU_STRT", "OrfeoScan_IDU_STRT\OrfeoScan_IDU_STRT.csproj", "{C115520F-8BA1-4AF8-B8BA-6933953098CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funciones", "funciones\funciones.csproj", "{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "model", "model\model.csproj", "{D50BEA59-7129-42A1-828D-436992A91B96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C115520F-8BA1-4AF8-B8BA-6933953098CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C115520F-8BA1-4AF8-B8BA-6933953098CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C115520F-8BA1-4AF8-B8BA-6933953098CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C115520F-8BA1-4AF8-B8BA-6933953098CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50BEA59-7129-42A1-828D-436992A91B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50BEA59-7129-42A1-828D-436992A91B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50BEA59-7129-42A1-828D-436992A91B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50BEA59-7129-42A1-828D-436992A91B96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\bin\Debug\model.dll
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\bin\Debug\model.pdb
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\obj\Debug\model.csprojResolveAssemblyReference.cache
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\obj\Debug\model.dll
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\obj\Debug\model.pdb
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\bin\Debug\funciones.dll
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\model\bin\Debug\funciones.pdb
