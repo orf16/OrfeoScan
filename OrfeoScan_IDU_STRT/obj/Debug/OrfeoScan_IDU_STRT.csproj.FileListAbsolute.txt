@@ -12,3 +12,20 @@ C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STR
 C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\OrfeoScan_IDU_STRT\bin\Debug\model.dll
 C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\OrfeoScan_IDU_STRT\bin\Debug\model.pdb
 C:\Users\orf16\OneDrive\Documentos\Visual Studio 2015\Projects\OrfeoScan_IDU_STRT\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.ScanOrfeo.resources
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\OrfeoScan_IDU_STRT.exe.config
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.exe
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.pdb
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\OrfeoScan_IDU_STRT.exe
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\OrfeoScan_IDU_STRT.pdb
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\model.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\model.pdb
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.csprojResolveAssemblyReference.cache
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.Form1.resources
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.Login.resources
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.Properties.Resources.resources
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.csproj.GenerateResource.Cache
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Aspose.Pdf.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\SautinSoft.Document.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\SautinSoft.Document.xml
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.ScanOrfeo.resources

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cBoxtRadicado = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -63,11 +63,25 @@
             this.guardarImagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarSelecciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomAcercarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomAlejarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomALaSelecciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.verPáginaCompletaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verRutaImagenSeleccionadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.incluirDocumentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pQRTelefónicasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pQRPersonalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.anexarImagenAUnRadicadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.impresiónDeSobresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.impresiónEtiquetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buscarExpedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelDepen = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -81,21 +95,21 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(11, 50);
+            this.label2.Location = new System.Drawing.Point(9, 61);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(198, 18);
             this.label2.TabIndex = 7;
             this.label2.Text = "Tipo de Radicado/Expendiente";
             // 
-            // comboBox2
+            // cBoxtRadicado
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(12, 76);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(241, 22);
-            this.comboBox2.TabIndex = 6;
+            this.cBoxtRadicado.FormattingEnabled = true;
+            this.cBoxtRadicado.Location = new System.Drawing.Point(13, 83);
+            this.cBoxtRadicado.Margin = new System.Windows.Forms.Padding(4);
+            this.cBoxtRadicado.Name = "cBoxtRadicado";
+            this.cBoxtRadicado.Size = new System.Drawing.Size(206, 22);
+            this.cBoxtRadicado.TabIndex = 6;
             // 
             // label1
             // 
@@ -111,7 +125,7 @@
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(273, 134);
+            this.checkBox4.Location = new System.Drawing.Point(259, 115);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(271, 18);
             this.checkBox4.TabIndex = 11;
@@ -121,7 +135,9 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(273, 106);
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(259, 87);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(306, 18);
             this.checkBox3.TabIndex = 10;
@@ -131,7 +147,9 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(273, 76);
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(259, 57);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(276, 18);
             this.checkBox2.TabIndex = 9;
@@ -141,7 +159,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(273, 50);
+            this.checkBox1.Location = new System.Drawing.Point(259, 31);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(115, 18);
             this.checkBox1.TabIndex = 8;
@@ -150,7 +168,7 @@
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(593, 47);
+            this.numericUpDown3.Location = new System.Drawing.Point(594, 31);
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(83, 22);
             this.numericUpDown3.TabIndex = 26;
@@ -159,7 +177,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(537, 51);
+            this.label4.Location = new System.Drawing.Point(538, 35);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 15);
@@ -170,7 +188,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(683, 51);
+            this.label3.Location = new System.Drawing.Point(684, 35);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 15);
@@ -179,14 +197,14 @@
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(862, 46);
+            this.numericUpDown2.Location = new System.Drawing.Point(737, 56);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown2.TabIndex = 23;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(736, 46);
+            this.numericUpDown1.Location = new System.Drawing.Point(737, 30);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown1.TabIndex = 22;
@@ -194,9 +212,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.codbarras);
-            this.groupBox1.Location = new System.Drawing.Point(1001, 42);
+            this.groupBox1.Location = new System.Drawing.Point(863, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(130, 110);
+            this.groupBox1.Size = new System.Drawing.Size(409, 104);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Información";
@@ -205,16 +223,16 @@
             // 
             this.codbarras.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.codbarras.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.codbarras.Location = new System.Drawing.Point(3, 66);
+            this.codbarras.Location = new System.Drawing.Point(3, 60);
             this.codbarras.Name = "codbarras";
-            this.codbarras.Size = new System.Drawing.Size(124, 41);
+            this.codbarras.Size = new System.Drawing.Size(403, 41);
             this.codbarras.TabIndex = 18;
             this.codbarras.TabStop = false;
             // 
             // button5
             // 
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(821, 91);
+            this.button5.Location = new System.Drawing.Point(792, 89);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(49, 43);
             this.button5.TabIndex = 32;
@@ -224,7 +242,7 @@
             // button4
             // 
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(769, 91);
+            this.button4.Location = new System.Drawing.Point(740, 89);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(46, 43);
             this.button4.TabIndex = 31;
@@ -234,7 +252,7 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(714, 91);
+            this.button3.Location = new System.Drawing.Point(685, 89);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(49, 43);
             this.button3.TabIndex = 30;
@@ -244,7 +262,7 @@
             // button2
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(660, 93);
+            this.button2.Location = new System.Drawing.Point(631, 91);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(48, 42);
             this.button2.TabIndex = 29;
@@ -254,7 +272,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(609, 93);
+            this.button1.Location = new System.Drawing.Point(580, 91);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(45, 42);
             this.button1.TabIndex = 28;
@@ -264,7 +282,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 233);
+            this.dataGridView1.Location = new System.Drawing.Point(13, 290);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1260, 137);
             this.dataGridView1.TabIndex = 33;
@@ -306,96 +324,210 @@
             // buscarRadicadoToolStripMenuItem
             // 
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
+            this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar en Todos los Radicado o Expedientes";
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
             // buscarSoloEnTipoToolStripMenuItem
             // 
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(302, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(344, 6);
             // 
             // impresoraDePuntoImpresiónPorPuertoToolStripMenuItem
             // 
             this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Name = "impresoraDePuntoImpresiónPorPuertoToolStripMenuItem";
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + L";
+            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Text = "Impresora de Punto (Impresión por Puerto)";
             // 
             // imprimirImagenToolStripMenuItem
             // 
             this.imprimirImagenToolStripMenuItem.Name = "imprimirImagenToolStripMenuItem";
-            this.imprimirImagenToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.imprimirImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + P";
+            this.imprimirImagenToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.imprimirImagenToolStripMenuItem.Text = "Imprimir Imagen";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(302, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(344, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             // 
             // borrarSelecciónToolStripMenuItem
             // 
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             // 
             // verToolStripMenuItem
             // 
+            this.verToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zoomAcercarToolStripMenuItem,
+            this.zoomAlejarToolStripMenuItem,
+            this.zoomALaSelecciónToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.verPáginaCompletaToolStripMenuItem,
+            this.verRutaImagenSeleccionadaToolStripMenuItem,
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem});
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
+            this.verToolStripMenuItem.ShortcutKeyDisplayString = "F3";
             this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.verToolStripMenuItem.Text = "Ver";
             // 
+            // zoomAcercarToolStripMenuItem
+            // 
+            this.zoomAcercarToolStripMenuItem.Name = "zoomAcercarToolStripMenuItem";
+            this.zoomAcercarToolStripMenuItem.ShortcutKeyDisplayString = "F3";
+            this.zoomAcercarToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.zoomAcercarToolStripMenuItem.Text = "Zoom Acercar";
+            // 
+            // zoomAlejarToolStripMenuItem
+            // 
+            this.zoomAlejarToolStripMenuItem.Name = "zoomAlejarToolStripMenuItem";
+            this.zoomAlejarToolStripMenuItem.ShortcutKeyDisplayString = "F4";
+            this.zoomAlejarToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.zoomAlejarToolStripMenuItem.Text = "Zoom Alejar";
+            // 
+            // zoomALaSelecciónToolStripMenuItem
+            // 
+            this.zoomALaSelecciónToolStripMenuItem.Name = "zoomALaSelecciónToolStripMenuItem";
+            this.zoomALaSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "F5";
+            this.zoomALaSelecciónToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.zoomALaSelecciónToolStripMenuItem.Text = "Zoom a la selección";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(294, 6);
+            // 
+            // verPáginaCompletaToolStripMenuItem
+            // 
+            this.verPáginaCompletaToolStripMenuItem.Name = "verPáginaCompletaToolStripMenuItem";
+            this.verPáginaCompletaToolStripMenuItem.ShortcutKeyDisplayString = "F6";
+            this.verPáginaCompletaToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.verPáginaCompletaToolStripMenuItem.Text = "Ver Página Completa";
+            // 
+            // verRutaImagenSeleccionadaToolStripMenuItem
+            // 
+            this.verRutaImagenSeleccionadaToolStripMenuItem.Name = "verRutaImagenSeleccionadaToolStripMenuItem";
+            this.verRutaImagenSeleccionadaToolStripMenuItem.ShortcutKeyDisplayString = "F7";
+            this.verRutaImagenSeleccionadaToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.verRutaImagenSeleccionadaToolStripMenuItem.Text = "Ver Ruta Imagen Seleccionada";
+            // 
+            // verRutaÚltimaImagenCargadaToolStripMenuItem
+            // 
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem.Name = "verRutaÚltimaImagenCargadaToolStripMenuItem";
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + F7";
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.verRutaÚltimaImagenCargadaToolStripMenuItem.Text = "Ver Ruta Última Imagen Cargada";
+            // 
             // incluirDocumentosToolStripMenuItem
             // 
+            this.incluirDocumentosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pQRTelefónicasToolStripMenuItem,
+            this.pQRPersonalToolStripMenuItem});
             this.incluirDocumentosToolStripMenuItem.Name = "incluirDocumentosToolStripMenuItem";
             this.incluirDocumentosToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
             this.incluirDocumentosToolStripMenuItem.Text = "Incluir Documentos";
             // 
+            // pQRTelefónicasToolStripMenuItem
+            // 
+            this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
+            // 
+            // pQRPersonalToolStripMenuItem
+            // 
+            this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
+            // 
             // herramientasToolStripMenuItem
             // 
+            this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.anexarImagenAUnRadicadoToolStripMenuItem,
+            this.impresiónDeSobresToolStripMenuItem});
             this.herramientasToolStripMenuItem.Name = "herramientasToolStripMenuItem";
             this.herramientasToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
             this.herramientasToolStripMenuItem.Text = "Herramientas";
             // 
+            // anexarImagenAUnRadicadoToolStripMenuItem
+            // 
+            this.anexarImagenAUnRadicadoToolStripMenuItem.Name = "anexarImagenAUnRadicadoToolStripMenuItem";
+            this.anexarImagenAUnRadicadoToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.anexarImagenAUnRadicadoToolStripMenuItem.Text = "Anexar Imagen a un Radicado";
+            // 
+            // impresiónDeSobresToolStripMenuItem
+            // 
+            this.impresiónDeSobresToolStripMenuItem.CheckOnClick = true;
+            this.impresiónDeSobresToolStripMenuItem.Name = "impresiónDeSobresToolStripMenuItem";
+            this.impresiónDeSobresToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.impresiónDeSobresToolStripMenuItem.Text = "Impresión de Sobres";
+            // 
             // expedientesToolStripMenuItem
             // 
+            this.expedientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.impresiónEtiquetaToolStripMenuItem,
+            this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
             this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
+            // 
+            // impresiónEtiquetaToolStripMenuItem
+            // 
+            this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
+            this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
+            // 
+            // buscarExpedientesToolStripMenuItem
+            // 
+            this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
+            this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // ayudaToolStripMenuItem
             // 
@@ -403,16 +535,23 @@
             this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.ayudaToolStripMenuItem.Text = "Ayuda";
             // 
-            // label5
+            // labelDepen
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(107, 29);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 18);
-            this.label5.TabIndex = 35;
-            this.label5.Text = "435 - dependencia";
+            this.labelDepen.AutoSize = true;
+            this.labelDepen.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDepen.Location = new System.Drawing.Point(98, 29);
+            this.labelDepen.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelDepen.Name = "labelDepen";
+            this.labelDepen.Size = new System.Drawing.Size(29, 18);
+            this.labelDepen.TabIndex = 35;
+            this.labelDepen.Text = "435";
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(19, 141);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(705, 131);
+            this.panel1.TabIndex = 36;
             // 
             // ScanOrfeo
             // 
@@ -420,7 +559,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumAquamarine;
             this.ClientSize = new System.Drawing.Size(1284, 654);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.labelDepen);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -438,7 +578,7 @@
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cBoxtRadicado);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -447,6 +587,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Orfeo Scan";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.ScanOrfeo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -463,7 +604,7 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cBoxtRadicado;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox3;
@@ -501,6 +642,20 @@
         private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expedientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelDepen;
+        private System.Windows.Forms.ToolStripMenuItem zoomAcercarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomAlejarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomALaSelecciónToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem verPáginaCompletaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verRutaImagenSeleccionadaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verRutaÚltimaImagenCargadaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pQRTelefónicasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pQRPersonalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem anexarImagenAUnRadicadoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem impresiónDeSobresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem impresiónEtiquetaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem buscarExpedientesToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
     }
 }

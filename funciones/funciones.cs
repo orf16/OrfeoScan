@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using System.Security.Cryptography;
+using System.Windows.Forms;
+using Microsoft.VisualBasic;
+using System.Drawing;
 
 namespace funciones
 {
     public class funciones
     {
         public string conni = "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = gesdoc.idu.gov.co))); User Id = ow_orfeo; Password = TESTING;";
+        public string aaaa;
         public bool conexion_test(string cadena)
         {
             try
@@ -72,4 +76,5 @@ namespace funciones
             return strBuilder.ToString();
         }
     }
+    
 }
