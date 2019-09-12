@@ -940,6 +940,12 @@ namespace OrfeoScan_IDU_STRT
                 string asunto = "";
                 string dependencia = "";
                 string path = "";
+                string nombre_documento = "";
+                int OEM = 0;
+                int ESP = 0;
+                int CIU = 0;
+                string FUN = "";
+                string remitente = "";
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[0].Value!=null)
                     tipo = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
@@ -948,11 +954,6 @@ namespace OrfeoScan_IDU_STRT
 
                 if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(numero_documento))
                 {
-                    int OEM = 0;
-                    int ESP = 0;
-                    int CIU = 0;
-                    string FUN = "";
-
                     string IISQL = "Select a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,a.SGD_DOC_FUN from sgd_dir_drecciones a where a.radi_nume_radi=" + numero_documento;
                     IISQL = IISQL + " ORDER BY SGD_DIR_TIPO  ";
                     OracleConnection con = new OracleConnection(funciones.conni);
@@ -999,49 +1000,73 @@ namespace OrfeoScan_IDU_STRT
                         if (OEM > 0)
                         {
                             IISQL = "Select a.sgd_oem_oempresa REMITENTE from SGD_OEM_OEMPRESAS a where a.SGD_OEM_CODIGO=" + OEM.ToString();
-                            lbl_InfoRadicado3.Text += "(OEM) ";
+                            tipo_rem += "(OEM) ";
                         }
                         if (CIU > 0)
                         {
                             IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
-                            lbl_InfoRadicado3.Text += "(CIU) ";
+                            tipo_rem += "(CIU) ";
                         }
                         if (ESP > 0)
                         {
                             IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
-                            lbl_InfoRadicado3.Text += "(ESP) ";
+                            tipo_rem += "(ESP) ";
                         }
                         if (FUN != string.Empty)
                         {
                             IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
-                            lbl_InfoRadicado3.Text += "(FUN) ";
+                            tipo_rem += "(FUN) ";
                         }
-                        if (numero_documento.Substring(numero_documento.Length - 1)=="1")
-                        {
 
+                        con = new OracleConnection(funciones.conni);
+                        try
+                        {
+                            con.Open();
+                            OracleCommand command = new OracleCommand(IISQL, con);
+                            OracleDataReader reader = command.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                if (reader[0]!=null)
+                                    remitente = reader[0].ToString();
+                                funciones.desconectar(con);
+                            }
+                            else
+                                funciones.desconectar(con);
                         }
+                        catch (Exception ex)
+                        {
+                            funciones.desconectar(con);
+                        }
+
+                        lbl_InfoRadicado3.Text += tipo_rem;
+                        lbl_InfoRadicado3.Text += remitente;
 
                         if (numero_documento.Length==14)
                             codbarras.Image = generarCodigoBarras(numero_documento);
 
                         lbl_num_doc.Text = "RADICADO " + numero_documento.Substring(0,4) + "-"+ numero_documento.Substring(4, 3) +"-"+ numero_documento.Substring(7, 6) + "-"+ numero_documento.Substring(numero_documento.Length - 1);
+
                         if (path.Contains("pdf") || path.Contains("tif") || path.Contains("tiff"))
                             MessageBox.Show("El radicado seleccionado ya tiene un archivo asociado. Si continua, el pdf será remplazado.");
                     }
                     else if(tipo == "EXPEDIENTE")
                     {
+                        if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
+                            asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        if (dataGridView1.Rows[e.RowIndex].Cells[5].Value != null)
+                            nombre_documento = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+
                         lbl_InfoRadicado1.Text = tipo + " No." + numero_documento;
                         lbl_InfoRadicado2.Text ="Título:";
-                        lbl_InfoRadicado3.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        lbl_InfoRadicado3.Text = asunto;
                         lbl_InfoRadicado4.Text = "Nombre-CC-Nit:";
-                        lbl_InfoRadicado5.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+                        lbl_InfoRadicado5.Text = nombre_documento;
                         lbl_num_doc.Text = "EXPEDIENTE " + numero_documento;
 
                         if (numero_documento.Length > 14)
                             codbarras.Image = generarCodigoBarras(numero_documento);
                     }
                 }
-                //Advertir si tiene una imagen ya establecida, por modificación de imagen
             }
         }
 
