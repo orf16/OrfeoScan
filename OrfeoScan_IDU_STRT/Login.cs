@@ -68,8 +68,8 @@ namespace OrfeoScan_IDU_STRT
                         if (usuario.USUA_DIGITALIZADOR>0)
                         {
                             tipo_usuario = usuario.USUA_DIGITALIZADOR;
-                            ScanOrfeo ScanOrfeo = new ScanOrfeo(usuario);
-                            ScanOrfeo.Show();
+                            Contenedor Contenedor = new Contenedor(usuario);
+                            Contenedor.Show();
                             this.Hide();
                         }
                         else
