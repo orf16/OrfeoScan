@@ -472,7 +472,6 @@ namespace OrfeoScan_IDU_STRT
         private void button11_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
             dialog.InitialDirectory = @"C:\";
             dialog.Title = "Abrir Imagen";
