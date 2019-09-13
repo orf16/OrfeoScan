@@ -59,6 +59,10 @@ namespace OrfeoScan_IDU_STRT
         private string DEPRADICADO;
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         private string DirTraB;
+        private int paginaActual = 0;
+
+        public List<Image> TiffCarga = new List<Image>();
+
         public ScanOrfeo(USUARIO usuario)
         {
             usuarioScanOrfeo = usuario;
@@ -481,10 +485,67 @@ namespace OrfeoScan_IDU_STRT
                 string fileName = dialog.FileName;
                 var img = Bitmap.FromFile(fileName);
                 var pages = img.GetFrameCount(FrameDimension.Page);
+                List<Image> cargar = new List<Image>();
+                cargar= Split(fileName);
+                if (cargar.Count>0)
+                    cargarImagen(cargar);
             }
-            
         }
+        private List<Image> Split(string pstrInputFilePath)
+        {
+            List<Image> cargar = new List<Image>();
+            //Get the frame dimension list from the image of the file and
+            Image tiffImage = Image.FromFile(pstrInputFilePath);
+            //get the globally unique identifier (GUID)
+            Guid objGuid = tiffImage.FrameDimensionsList[0];
+            //create the frame dimension
+            FrameDimension dimension = new FrameDimension(objGuid);
+            //Gets the total number of frames in the .tiff file
+            int noOfPages = tiffImage.GetFrameCount(dimension);
 
+            ImageCodecInfo encodeInfo = null;
+            ImageCodecInfo[] imageEncoders = ImageCodecInfo.GetImageEncoders();
+            for (int j = 0; j < imageEncoders.Length; j++)
+            {
+                if (imageEncoders[j].MimeType == "image/tiff")
+                {
+                    encodeInfo = imageEncoders[j];
+                    break;
+                }
+            }
+
+            // Save the tiff file in the output directory.
+            //if (!Directory.Exists(pstrOutputPath))
+            //    Directory.CreateDirectory(pstrOutputPath);
+
+            foreach (Guid guid in tiffImage.FrameDimensionsList)
+            {
+                for (int index = 0; index < noOfPages; index++)
+                {
+                    FrameDimension currentFrame = new FrameDimension(guid);
+                    tiffImage.SelectActiveFrame(currentFrame, index);
+                    Bitmap nextFrame = new Bitmap(tiffImage);
+                    cargar.Add(nextFrame);
+                    //tiffImage.Save(string.Concat(pstrOutputPath, @"\", index, ".TIF"), encodeInfo, null);
+                }
+            }
+            return cargar;
+        }
+        private void cargarImagen(List<Image> imagenes)
+        {
+            TiffCarga.Clear();
+            foreach (var imagen in imagenes)
+            {
+                Bitmap nextFrame = new Bitmap(imagen);
+                TiffCarga.Add(nextFrame);
+            }
+            paginaActual = 1;
+            PageEdit.Image= TiffCarga[0];
+            pictureBox2.Image = TiffCarga[0];
+            pictureBox3.Image = TiffCarga[1];
+            pictureBox4.Image = TiffCarga[2];
+            pictureBox1.Image = TiffCarga[3];
+        }
         private void button10_Click(object sender, EventArgs e)
         {
 
@@ -1109,6 +1170,33 @@ namespace OrfeoScan_IDU_STRT
                                               e.Location.Y - _StartPoint.Y);
                 panel1.AutoScrollPosition = new Point(-panel1.AutoScrollPosition.X - changePoint.X,
                                                       -panel1.AutoScrollPosition.Y - changePoint.Y);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            paginaActual++;
+
+            if (paginaActual+1< TiffCarga.Count)
+            {
+                PageEdit.Image = TiffCarga[paginaActual];
+            }
+            else
+            {
+                paginaActual--;
+            }            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            paginaActual--;
+            if (paginaActual + 1 < TiffCarga.Count)
+            {
+                PageEdit.Image = TiffCarga[paginaActual];
+            }
+            else
+            {
+                paginaActual++;
             }
         }
         //Falta metodo para recargar la lista de items
