@@ -20,6 +20,10 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Diagnostics;
 using System.IO;
+using iTextSharp;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.Net;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -34,7 +38,7 @@ namespace OrfeoScan_IDU_STRT
         TwainSession _twain;
         bool _stopScan;
         bool _loadingCaps;
-        List<Image> imagenes = new List<Image>();
+        List<System.Drawing.Image> imagenes = new List<System.Drawing.Image>();
         List<PictureBox> boxes = new List<PictureBox>();
         int numero_box = 0;
 
@@ -60,8 +64,10 @@ namespace OrfeoScan_IDU_STRT
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         private string DirTraB;
         private int paginaActual = 0;
+        string digitalizador_user = "digitalizador40";
+        string digitalizador = "D1g1t4l#0129";
 
-        public List<Image> TiffCarga = new List<Image>();
+        public List<System.Drawing.Image> TiffCarga = new List<System.Drawing.Image>();
 
         public ScanOrfeo(USUARIO usuario)
         {
@@ -404,7 +410,7 @@ namespace OrfeoScan_IDU_STRT
         {
             //Print image
             Bitmap bm = new Bitmap(816, 1056);
-            PageEdit.DrawToBitmap(bm, new Rectangle(0, 0, PageEdit.Width, PageEdit.Height));
+            PageEdit.DrawToBitmap(bm, new System.Drawing.Rectangle(0, 0, PageEdit.Width, PageEdit.Height));
             e.Graphics.DrawImage(bm, 0, 0);
             bm.Dispose();
         }
@@ -485,17 +491,17 @@ namespace OrfeoScan_IDU_STRT
                 string fileName = dialog.FileName;
                 var img = Bitmap.FromFile(fileName);
                 var pages = img.GetFrameCount(FrameDimension.Page);
-                List<Image> cargar = new List<Image>();
+                List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
                 cargar= Split(fileName);
                 if (cargar.Count>0)
                     cargarImagen(cargar);
             }
         }
-        private List<Image> Split(string pstrInputFilePath)
+        private List<System.Drawing.Image> Split(string pstrInputFilePath)
         {
-            List<Image> cargar = new List<Image>();
+            List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
             //Get the frame dimension list from the image of the file and
-            Image tiffImage = Image.FromFile(pstrInputFilePath);
+            System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(pstrInputFilePath);
             //get the globally unique identifier (GUID)
             Guid objGuid = tiffImage.FrameDimensionsList[0];
             //create the frame dimension
@@ -531,7 +537,7 @@ namespace OrfeoScan_IDU_STRT
             }
             return cargar;
         }
-        private void cargarImagen(List<Image> imagenes)
+        private void cargarImagen(List<System.Drawing.Image> imagenes)
         {
             TiffCarga.Clear();
             foreach (var imagen in imagenes)
@@ -546,18 +552,69 @@ namespace OrfeoScan_IDU_STRT
             pictureBox4.Image = TiffCarga[2];
             pictureBox1.Image = TiffCarga[3];
         }
-        
-
-        
-
         private void button8_Click(object sender, EventArgs e)
         {
+            Document doc = new Document(PageSize.LETTER);
+            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
+            writer.PDFXConformance = PdfWriter.PDFA1B;
+            doc.Open();
+
+            PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
+            outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
+            outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
+            outi.Put(PdfName.S, PdfName.GTS_PDFA1);
+
+            // get this file here: http://old.nabble.com/attachment/10971467/0/srgb.profile
+            ICC_Profile icc = ICC_Profile.GetInstance("D:\\sRGB_v4.icc");
+            PdfICCBased ib = new PdfICCBased(icc);
+            ib.Remove(PdfName.ALTERNATE);
+            outi.Put(PdfName.DESTOUTPUTPROFILE, writer.AddToBody(ib).IndirectReference);
+
+            writer.ExtraCatalog.Put(PdfName.OUTPUTINTENTS, new PdfArray(outi));
+
+            BaseFont bf = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.WINANSI, true);
+            iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
+            doc.Add(new Paragraph("hello1", f));
+
+            writer.CreateXmpMetadata();
+
+            doc.Close();
+
 
         }
-
         private void button7_Click(object sender, EventArgs e)
         {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
+                    client.UploadFile("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf", WebRequestMethods.Ftp.UploadFile, @"D:\hello_A1_b_cs.pdf");
+                    MessageBox.Show("El archivo se subió correctamente");
+                }
+                var request = (FtpWebRequest)WebRequest.Create("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf");
+                request.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
+                request.Method = WebRequestMethods.Ftp.GetFileSize;
 
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    MessageBox.Show("El archivo se subió correctamente");
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no se subió correctamente, por favor vuelva a intentar");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -637,13 +694,13 @@ namespace OrfeoScan_IDU_STRT
                 }
 
                 // handle image data
-                Image img = null;
+                System.Drawing.Image img = null;
                 if (e.NativeData != IntPtr.Zero)
                 {
                     var stream = e.GetNativeImageStream();
                     if (stream != null)
                     {
-                        img = Image.FromStream(stream);
+                        img = System.Drawing.Image.FromStream(stream);
                     }
                 }
                 else if (!string.IsNullOrEmpty(e.FileDataPath))
@@ -663,7 +720,7 @@ namespace OrfeoScan_IDU_STRT
                         var stream = new System.IO.MemoryStream();
                         img.Save(stream, System.Drawing.Imaging.ImageFormat.Tiff);
                         stream.Position = 0;
-                        var image = Image.FromStream(stream);
+                        var image = System.Drawing.Image.FromStream(stream);
                         imagenes.Add(image);
 
                     }));
@@ -923,9 +980,9 @@ namespace OrfeoScan_IDU_STRT
         }
 
         private Point RectStartPoint;
-        private Rectangle Rect = new Rectangle();
-        private Brush selectionBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
-        private Brush selectionBrush1 = new SolidBrush(Color.FromArgb(1, 130, 48, 211));
+        private System.Drawing.Rectangle Rect = new System.Drawing.Rectangle();
+        private Brush selectionBrush = new SolidBrush(System.Drawing.Color.FromArgb(128, 72, 145, 220));
+        private Brush selectionBrush1 = new SolidBrush(System.Drawing.Color.FromArgb(1, 130, 48, 211));
         private Point _StartPoint;
         //imagen
         private void button9_Click(object sender, EventArgs e)
@@ -935,8 +992,8 @@ namespace OrfeoScan_IDU_STRT
                 using (Bitmap bitmap = new Bitmap(Width, Height))
                 using (Graphics graphics = Graphics.FromImage(TiffCarga[0]))
                 {
-                    Rectangle rect = new Rectangle(0, 0, Width, Height);
-                    graphics.FillRectangle(new SolidBrush(Color.White), Rect);
+                    System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
+                    graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
                     Invalidate();
                     PageEdit.Refresh();
                 }
@@ -1098,7 +1155,7 @@ namespace OrfeoScan_IDU_STRT
                 {
                     if (Rect.Width<= PageEdit.Image.Width)
                     {
-                        Pen blackPen = new Pen(Color.Black, 1);
+                        Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
                         e.Graphics.DrawRectangle(blackPen, Rect);
                         e.Graphics.FillRectangle(selectionBrush, Rect);
                     }
@@ -1145,13 +1202,13 @@ namespace OrfeoScan_IDU_STRT
         {
 
         }
-        private Image generarCodigoBarras(string numero_documento)
+        private System.Drawing.Image generarCodigoBarras(string numero_documento)
         {
             Barcode39 b = new Barcode39();
-            Image img;
+            System.Drawing.Image img;
             b.ShowString = true;
             b.IncludeCheckSumDigit = true;
-            b.TextFont = new Font("Courier New", 10);
+            b.TextFont = new System.Drawing.Font("Courier New", 10);
             img = b.GenerateBarcodeImage(codbarras.Width, codbarras.Height, numero_documento);
             return img;
         }
@@ -1393,7 +1450,7 @@ namespace OrfeoScan_IDU_STRT
             // 
             lblPrompt.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
             lblPrompt.BackColor = SystemColors.Control;
-            lblPrompt.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((Byte)(0)));
+            lblPrompt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((Byte)(0)));
             lblPrompt.Location = new Point(12, 9);
             lblPrompt.Name = "lblPrompt";
             lblPrompt.Size = new Size(302, 82);

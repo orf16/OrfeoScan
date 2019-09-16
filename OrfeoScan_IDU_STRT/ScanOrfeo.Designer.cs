@@ -95,6 +95,8 @@
             this.PageEdit = new System.Windows.Forms.PictureBox();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -109,8 +111,6 @@
             this.button15 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -124,11 +124,11 @@
             this.groupSize = new System.Windows.Forms.GroupBox();
             this.comboDepth = new System.Windows.Forms.ComboBox();
             this.groupDuplex = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.comboDPI = new System.Windows.Forms.ComboBox();
             this.comboSize = new System.Windows.Forms.ComboBox();
+            this.comboDPI = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.ckDuplex = new System.Windows.Forms.CheckBox();
             this.groupDPI = new System.Windows.Forms.GroupBox();
             this.pan_loading = new System.Windows.Forms.Panel();
@@ -143,6 +143,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button18 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -331,7 +333,7 @@
             // 
             this.btn_enviar_1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_enviar_1.Image = ((System.Drawing.Image)(resources.GetObject("btn_enviar_1.Image")));
-            this.btn_enviar_1.Location = new System.Drawing.Point(1008, 187);
+            this.btn_enviar_1.Location = new System.Drawing.Point(1038, 193);
             this.btn_enviar_1.Name = "btn_enviar_1";
             this.btn_enviar_1.Size = new System.Drawing.Size(23, 21);
             this.btn_enviar_1.TabIndex = 31;
@@ -344,9 +346,9 @@
             this.btnStartCapture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStartCapture.BackgroundImage")));
             this.btnStartCapture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStartCapture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartCapture.Location = new System.Drawing.Point(202, 21);
+            this.btnStartCapture.Location = new System.Drawing.Point(878, 162);
             this.btnStartCapture.Name = "btnStartCapture";
-            this.btnStartCapture.Size = new System.Drawing.Size(51, 45);
+            this.btnStartCapture.Size = new System.Drawing.Size(40, 34);
             this.btnStartCapture.TabIndex = 30;
             this.btnStartCapture.UseVisualStyleBackColor = true;
             this.btnStartCapture.Click += new System.EventHandler(this.btnStartCapture_Click);
@@ -356,7 +358,7 @@
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(74, 21);
+            this.button2.Location = new System.Drawing.Point(114, 21);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(45, 45);
             this.button2.TabIndex = 29;
@@ -373,7 +375,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(682, 141);
+            this.dataGridView1.Size = new System.Drawing.Size(682, 120);
             this.dataGridView1.TabIndex = 33;
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             // 
@@ -388,7 +390,7 @@
             this.ayudaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -604,13 +606,13 @@
             // pQRTelefónicasToolStripMenuItem
             // 
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             // 
             // pQRPersonalToolStripMenuItem
             // 
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             // 
             // herramientasToolStripMenuItem
@@ -677,7 +679,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             // 
             // impresiónEtiquetaToolStripMenuItem
@@ -685,7 +687,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -693,7 +695,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // ayudaToolStripMenuItem
@@ -727,7 +729,7 @@
             // 
             this.btn_enviar_2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_enviar_2.Image = ((System.Drawing.Image)(resources.GetObject("btn_enviar_2.Image")));
-            this.btn_enviar_2.Location = new System.Drawing.Point(1037, 187);
+            this.btn_enviar_2.Location = new System.Drawing.Point(1067, 193);
             this.btn_enviar_2.Name = "btn_enviar_2";
             this.btn_enviar_2.Size = new System.Drawing.Size(22, 21);
             this.btn_enviar_2.TabIndex = 37;
@@ -740,7 +742,7 @@
             this.btn_enviar_3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btn_enviar_3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_enviar_3.Image = ((System.Drawing.Image)(resources.GetObject("btn_enviar_3.Image")));
-            this.btn_enviar_3.Location = new System.Drawing.Point(137, 21);
+            this.btn_enviar_3.Location = new System.Drawing.Point(208, 21);
             this.btn_enviar_3.Name = "btn_enviar_3";
             this.btn_enviar_3.Size = new System.Drawing.Size(45, 45);
             this.btn_enviar_3.TabIndex = 38;
@@ -750,7 +752,7 @@
             // 
             this.PageEdit.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PageEdit.Image = ((System.Drawing.Image)(resources.GetObject("PageEdit.Image")));
-            this.PageEdit.Location = new System.Drawing.Point(3, 36);
+            this.PageEdit.Location = new System.Drawing.Point(4, 5);
             this.PageEdit.Name = "PageEdit";
             this.PageEdit.Size = new System.Drawing.Size(3000, 3000);
             this.PageEdit.TabIndex = 42;
@@ -768,12 +770,36 @@
             // 
             this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.PageEdit);
-            this.panel2.Location = new System.Drawing.Point(160, 215);
+            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.button6);
+            this.panel2.Location = new System.Drawing.Point(121, 243);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1581, 660);
+            this.panel2.Size = new System.Drawing.Size(1253, 631);
             this.panel2.TabIndex = 43;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
+            // 
+            // button4
+            // 
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(8, -471);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(29, 21);
+            this.button4.TabIndex = 45;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button6
+            // 
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Location = new System.Drawing.Point(43, -471);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(29, 21);
+            this.button6.TabIndex = 46;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button3
             // 
@@ -784,7 +810,7 @@
             this.button3.FlatAppearance.BorderSize = 2;
             this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(824, 179);
+            this.button3.Location = new System.Drawing.Point(289, 202);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(41, 35);
             this.button3.TabIndex = 70;
@@ -800,7 +826,7 @@
             this.button1.FlatAppearance.BorderSize = 2;
             this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(657, 179);
+            this.button1.Location = new System.Drawing.Point(122, 202);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(41, 35);
             this.button1.TabIndex = 69;
@@ -811,7 +837,7 @@
             // 
             this.textBox3.BackColor = System.Drawing.Color.Khaki;
             this.textBox3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(704, 180);
+            this.textBox3.Location = new System.Drawing.Point(169, 203);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(114, 31);
             this.textBox3.TabIndex = 69;
@@ -819,7 +845,7 @@
             // button11
             // 
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(615, 183);
+            this.button11.Location = new System.Drawing.Point(1179, 217);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(29, 21);
             this.button11.TabIndex = 51;
@@ -830,29 +856,31 @@
             // button7
             // 
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(475, 183);
+            this.button7.Location = new System.Drawing.Point(1039, 217);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(29, 21);
             this.button7.TabIndex = 47;
+            this.button7.Text = "E";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
+            this.button8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button8.BackgroundImage")));
+            this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button8.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Location = new System.Drawing.Point(510, 183);
+            this.button8.Location = new System.Drawing.Point(452, 203);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(29, 21);
+            this.button8.Size = new System.Drawing.Size(43, 35);
             this.button8.TabIndex = 48;
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(545, 183);
+            this.button9.Location = new System.Drawing.Point(1109, 217);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(29, 21);
             this.button9.TabIndex = 49;
@@ -863,7 +891,7 @@
             // button10
             // 
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(580, 183);
+            this.button10.Location = new System.Drawing.Point(1144, 217);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(29, 21);
             this.button10.TabIndex = 50;
@@ -874,7 +902,7 @@
             // button17
             // 
             this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Location = new System.Drawing.Point(1065, 187);
+            this.button17.Location = new System.Drawing.Point(7, 160);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(29, 21);
             this.button17.TabIndex = 57;
@@ -885,7 +913,7 @@
             // button16
             // 
             this.button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button16.Location = new System.Drawing.Point(1100, 187);
+            this.button16.Location = new System.Drawing.Point(40, 160);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(29, 21);
             this.button16.TabIndex = 56;
@@ -896,7 +924,7 @@
             // button12
             // 
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(1170, 187);
+            this.button12.Location = new System.Drawing.Point(1200, 193);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(29, 21);
             this.button12.TabIndex = 52;
@@ -907,7 +935,7 @@
             // button15
             // 
             this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button15.Location = new System.Drawing.Point(1135, 187);
+            this.button15.Location = new System.Drawing.Point(1165, 193);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(29, 21);
             this.button15.TabIndex = 55;
@@ -918,7 +946,7 @@
             // button13
             // 
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Location = new System.Drawing.Point(1205, 187);
+            this.button13.Location = new System.Drawing.Point(1235, 193);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(29, 21);
             this.button13.TabIndex = 53;
@@ -929,7 +957,7 @@
             // button14
             // 
             this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Location = new System.Drawing.Point(1240, 187);
+            this.button14.Location = new System.Drawing.Point(1270, 193);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(29, 21);
             this.button14.TabIndex = 54;
@@ -937,46 +965,27 @@
             this.button14.Visible = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
-            // button4
-            // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(121, 224);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(29, 21);
-            this.button4.TabIndex = 45;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button6
-            // 
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Location = new System.Drawing.Point(121, 251);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(29, 21);
-            this.button6.TabIndex = 46;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Visible = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.button18);
+            this.panel3.Controls.Add(this.label12);
             this.panel3.Controls.Add(this.pictureBox5);
             this.panel3.Controls.Add(this.pictureBox4);
             this.panel3.Controls.Add(this.pictureBox3);
             this.panel3.Controls.Add(this.pictureBox2);
-            this.panel3.Location = new System.Drawing.Point(12, 183);
+            this.panel3.Controls.Add(this.button16);
+            this.panel3.Controls.Add(this.button17);
+            this.panel3.Location = new System.Drawing.Point(12, 162);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(103, 577);
+            this.panel3.Size = new System.Drawing.Size(103, 598);
             this.panel3.TabIndex = 44;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(7, 436);
+            this.pictureBox1.Location = new System.Drawing.Point(938, 166);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(89, 124);
+            this.pictureBox1.Size = new System.Drawing.Size(18, 20);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 49;
             this.pictureBox1.TabStop = false;
@@ -994,7 +1003,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(7, 292);
+            this.pictureBox4.Location = new System.Drawing.Point(7, 369);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(89, 124);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1004,7 +1013,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(7, 151);
+            this.pictureBox3.Location = new System.Drawing.Point(7, 210);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(89, 124);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1014,17 +1023,15 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(7, 9);
+            this.pictureBox2.Location = new System.Drawing.Point(16, 36);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(89, 124);
+            this.pictureBox2.Size = new System.Drawing.Size(78, 118);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 45;
             this.pictureBox2.TabStop = false;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnStartCapture);
-            this.groupBox2.Controls.Add(this.btnStopScan);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.btn_enviar_3);
             this.groupBox2.Controls.Add(this.button5);
@@ -1033,7 +1040,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(13, 29);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(259, 148);
+            this.groupBox2.Size = new System.Drawing.Size(259, 127);
             this.groupBox2.TabIndex = 58;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
@@ -1045,9 +1052,9 @@
             this.btnStopScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStopScan.Enabled = false;
             this.btnStopScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStopScan.Location = new System.Drawing.Point(202, 24);
+            this.btnStopScan.Location = new System.Drawing.Point(878, 162);
             this.btnStopScan.Name = "btnStopScan";
-            this.btnStopScan.Size = new System.Drawing.Size(51, 42);
+            this.btnStopScan.Size = new System.Drawing.Size(40, 34);
             this.btnStopScan.TabIndex = 39;
             this.btnStopScan.UseVisualStyleBackColor = false;
             this.btnStopScan.Visible = false;
@@ -1058,110 +1065,99 @@
             this.groupDepth.Controls.Add(this.groupSize);
             this.groupDepth.Location = new System.Drawing.Point(25, 17);
             this.groupDepth.Name = "groupDepth";
-            this.groupDepth.Size = new System.Drawing.Size(38, 23);
+            this.groupDepth.Size = new System.Drawing.Size(400, 108);
             this.groupDepth.TabIndex = 59;
             this.groupDepth.TabStop = false;
             this.groupDepth.Text = "Tipo Color";
             // 
             // groupSize
             // 
-            this.groupSize.Location = new System.Drawing.Point(95, 14);
+            this.groupSize.Location = new System.Drawing.Point(22, 19);
             this.groupSize.Name = "groupSize";
-            this.groupSize.Size = new System.Drawing.Size(27, 33);
+            this.groupSize.Size = new System.Drawing.Size(256, 70);
             this.groupSize.TabIndex = 61;
             this.groupSize.TabStop = false;
             this.groupSize.Text = "Tamaño Imagen";
             // 
             // comboDepth
             // 
-            this.comboDepth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboDepth.FormattingEnabled = true;
-            this.comboDepth.Location = new System.Drawing.Point(147, 17);
+            this.comboDepth.Location = new System.Drawing.Point(452, 169);
             this.comboDepth.Name = "comboDepth";
-            this.comboDepth.Size = new System.Drawing.Size(0, 22);
+            this.comboDepth.Size = new System.Drawing.Size(114, 22);
             this.comboDepth.TabIndex = 1;
             this.comboDepth.SelectedIndexChanged += new System.EventHandler(this.comboDepth_SelectedIndexChanged);
             // 
             // groupDuplex
             // 
-            this.groupDuplex.Controls.Add(this.label7);
             this.groupDuplex.Controls.Add(this.label6);
-            this.groupDuplex.Controls.Add(this.label5);
-            this.groupDuplex.Controls.Add(this.comboDPI);
             this.groupDuplex.Controls.Add(this.comboSize);
-            this.groupDuplex.Controls.Add(this.comboDepth);
-            this.groupDuplex.Controls.Add(this.ckDuplex);
             this.groupDuplex.ForeColor = System.Drawing.Color.White;
-            this.groupDuplex.Location = new System.Drawing.Point(1371, 105);
+            this.groupDuplex.Location = new System.Drawing.Point(790, 313);
             this.groupDuplex.Name = "groupDuplex";
-            this.groupDuplex.Size = new System.Drawing.Size(51, 19);
+            this.groupDuplex.Size = new System.Drawing.Size(166, 120);
             this.groupDuplex.TabIndex = 60;
             this.groupDuplex.TabStop = false;
             this.groupDuplex.Text = "Opciones de Escaneo";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(108, 22);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(36, 15);
-            this.label7.TabIndex = 66;
-            this.label7.Text = "Color";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(242, 21);
+            this.label6.Location = new System.Drawing.Point(7, 41);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 15);
             this.label6.TabIndex = 65;
             this.label6.Text = "Tamaño Papel";
             // 
+            // comboSize
+            // 
+            this.comboSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboSize.FormattingEnabled = true;
+            this.comboSize.Location = new System.Drawing.Point(14, 59);
+            this.comboSize.Name = "comboSize";
+            this.comboSize.Size = new System.Drawing.Size(114, 22);
+            this.comboSize.TabIndex = 1;
+            this.comboSize.SelectedIndexChanged += new System.EventHandler(this.comboSize_SelectedIndexChanged);
+            // 
+            // comboDPI
+            // 
+            this.comboDPI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboDPI.FormattingEnabled = true;
+            this.comboDPI.Location = new System.Drawing.Point(652, 169);
+            this.comboDPI.Name = "comboDPI";
+            this.comboDPI.Size = new System.Drawing.Size(114, 22);
+            this.comboDPI.TabIndex = 1;
+            this.comboDPI.SelectedIndexChanged += new System.EventHandler(this.comboDPI_SelectedIndexChanged);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(436, 21);
+            this.label5.Location = new System.Drawing.Point(580, 173);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(25, 15);
+            this.label5.Size = new System.Drawing.Size(65, 15);
             this.label5.TabIndex = 64;
-            this.label5.Text = "DPI";
+            this.label5.Text = "Resolución";
             // 
-            // comboDPI
+            // label7
             // 
-            this.comboDPI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboDPI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboDPI.FormattingEnabled = true;
-            this.comboDPI.Location = new System.Drawing.Point(468, 19);
-            this.comboDPI.Name = "comboDPI";
-            this.comboDPI.Size = new System.Drawing.Size(0, 22);
-            this.comboDPI.TabIndex = 1;
-            this.comboDPI.SelectedIndexChanged += new System.EventHandler(this.comboDPI_SelectedIndexChanged);
-            // 
-            // comboSize
-            // 
-            this.comboSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboSize.FormattingEnabled = true;
-            this.comboSize.Location = new System.Drawing.Point(329, 17);
-            this.comboSize.Name = "comboSize";
-            this.comboSize.Size = new System.Drawing.Size(0, 22);
-            this.comboSize.TabIndex = 1;
-            this.comboSize.SelectedIndexChanged += new System.EventHandler(this.comboSize_SelectedIndexChanged);
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(416, 171);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 15);
+            this.label7.TabIndex = 66;
+            this.label7.Text = "Color";
             // 
             // ckDuplex
             // 
             this.ckDuplex.AutoSize = true;
-            this.ckDuplex.Location = new System.Drawing.Point(8, 20);
+            this.ckDuplex.Location = new System.Drawing.Point(786, 171);
             this.ckDuplex.Name = "ckDuplex";
             this.ckDuplex.Size = new System.Drawing.Size(86, 18);
             this.ckDuplex.TabIndex = 63;
@@ -1172,9 +1168,9 @@
             // groupDPI
             // 
             this.groupDPI.Controls.Add(this.groupDepth);
-            this.groupDPI.Location = new System.Drawing.Point(1572, 62);
+            this.groupDPI.Location = new System.Drawing.Point(1318, 186);
             this.groupDPI.Name = "groupDPI";
-            this.groupDPI.Size = new System.Drawing.Size(39, 33);
+            this.groupDPI.Size = new System.Drawing.Size(35, 28);
             this.groupDPI.TabIndex = 62;
             this.groupDPI.TabStop = false;
             this.groupDPI.Text = "DPI";
@@ -1241,7 +1237,7 @@
             this.lbl_num_doc.AutoSize = true;
             this.lbl_num_doc.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_num_doc.ForeColor = System.Drawing.Color.White;
-            this.lbl_num_doc.Location = new System.Drawing.Point(163, 180);
+            this.lbl_num_doc.Location = new System.Drawing.Point(120, 162);
             this.lbl_num_doc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_num_doc.Name = "lbl_num_doc";
             this.lbl_num_doc.Size = new System.Drawing.Size(295, 29);
@@ -1291,27 +1287,54 @@
             this.textBox6.Size = new System.Drawing.Size(52, 22);
             this.textBox6.TabIndex = 75;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(44, 5);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(25, 29);
+            this.label12.TabIndex = 76;
+            this.label12.Text = "1";
+            // 
+            // button18
+            // 
+            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button18.Location = new System.Drawing.Point(74, 160);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(29, 21);
+            this.button18.TabIndex = 77;
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Visible = false;
+            // 
             // ScanOrfeo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1924, 853);
+            this.ClientSize = new System.Drawing.Size(1370, 772);
             this.ControlBox = false;
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnStopScan);
+            this.Controls.Add(this.btnStartCapture);
+            this.Controls.Add(this.comboDPI);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.ckDuplex);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label10);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.comboDepth);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btn_enviar_1);
-            this.Controls.Add(this.button17);
             this.Controls.Add(this.lbl_num_doc);
             this.Controls.Add(this.btn_enviar_2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button16);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button15);
@@ -1323,13 +1346,11 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.pan_loading);
             this.Controls.Add(this.groupDPI);
-            this.Controls.Add(this.groupDuplex);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.numericUpDown1);
@@ -1342,6 +1363,7 @@
             this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.groupDuplex);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
@@ -1368,6 +1390,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PageEdit)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -1502,5 +1525,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Label label12;
     }
 }

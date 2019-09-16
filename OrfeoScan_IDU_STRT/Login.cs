@@ -12,6 +12,7 @@ using Oracle.ManagedDataAccess.Client;
 using System.Security.Cryptography;
 using OrfeoScan_IDU_STRT.funciones;
 using model;
+using System.Configuration;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -21,6 +22,7 @@ namespace OrfeoScan_IDU_STRT
         public USUARIO usuario;
         public int tipo_usuario=0;
         Single z;
+        public string configvalue1 = ConfigurationManager.AppSettings["FTP_IDU_USER"];
         public Login()
         {
             InitializeComponent();
