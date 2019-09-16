@@ -546,15 +546,9 @@ namespace OrfeoScan_IDU_STRT
             pictureBox4.Image = TiffCarga[2];
             pictureBox1.Image = TiffCarga[3];
         }
-        private void button10_Click(object sender, EventArgs e)
-        {
+        
 
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void button8_Click(object sender, EventArgs e)
         {
@@ -606,10 +600,7 @@ namespace OrfeoScan_IDU_STRT
             pan_loading.Enabled = false;
             pan_loading.Refresh();
         }
-        private Point RectStartPoint;
-        private Rectangle Rect = new Rectangle();
-        private Brush selectionBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
-        private Point _StartPoint;
+        
 
 
 
@@ -770,7 +761,6 @@ namespace OrfeoScan_IDU_STRT
         {
             _twain.CurrentSource.Enable(SourceEnableMode.ShowUIOnly, true, this.Handle);
         }
-
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
             imagenes.Clear();
@@ -902,7 +892,6 @@ namespace OrfeoScan_IDU_STRT
                 _twain.CurrentSource.Capabilities.ICapSupportedSizes.SetValue(sel);
             }
         }
-
         private void comboDepth_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!_loadingCaps && _twain.State == 4)
@@ -933,32 +922,173 @@ namespace OrfeoScan_IDU_STRT
 
         }
 
+        private Point RectStartPoint;
+        private Rectangle Rect = new Rectangle();
+        private Brush selectionBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
+        private Brush selectionBrush1 = new SolidBrush(Color.FromArgb(1, 130, 48, 211));
+        private Point _StartPoint;
+        //imagen
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (PageEdit.Image != null && Rect.X > 0 && Rect.Y > 0)
+            {
+                using (Bitmap bitmap = new Bitmap(Width, Height))
+                using (Graphics graphics = Graphics.FromImage(TiffCarga[0]))
+                {
+                    Rectangle rect = new Rectangle(0, 0, Width, Height);
+                    graphics.FillRectangle(new SolidBrush(Color.White), Rect);
+                    Invalidate();
+                    PageEdit.Refresh();
+                }
+
+
+                //Graphics gr = Graphics.FromImage(TiffCarga[0]);
+                ////Pen blackPen = new Pen(Color.Black, 1);
+                ////graphics.DrawRectangle();
+                ////gr.DrawRectangle(blackPen, new Rectangle(0, 0, 200, 300));
+                //Bitmap bmp = new Bitmap(PageEdit.Image.Width, PageEdit.Image.Height, gr);
+                //PageEdit.Image = bmp;
+
+
+                //using (Graphics graphics = Graphics.FromImage(PageEdit.Image))
+                //{
+                //    using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red))
+                //    {
+                //        //Pen blackPen = new Pen(Color.Black, 1);
+                //        //graphics.FillRectangle(selectionBrush1, new Rectangle(0, 0, 200, 300));
+                        
+                //        graphics.DrawRectangle(blackPen, new Rectangle(0, 0, 200, 300));
+                //        Bitmap bmp = new Bitmap(PageEdit.Image.Width, PageEdit.Image.Height, graphics);
+                //        //graphics.CopyFromScreen(myControl.PointToScreen(new Point(0, 0)), new Point(0, 0), rect.Size);
+                //        PageEdit.Image = bmp;
+                //    }
+                //}
+                    
+                //e.Graphics.DrawRectangle(blackPen, Rect);
+                //e.Graphics.FillRectangle(selectionBrush, Rect);
+            }
+        }
         private void PageEdit_MouseMove(object sender, MouseEventArgs e)
         {
-            
             if (e.Button != MouseButtons.Left)
                 return;
             Point tempEndPoint = e.Location;
             textBox1.Text = tempEndPoint.X.ToString();
             textBox2.Text = tempEndPoint.Y.ToString();
-            Rect.Location = new Point(
-                Math.Min(RectStartPoint.X, tempEndPoint.X),
-                Math.Min(RectStartPoint.Y, tempEndPoint.Y));
-            Rect.Size = new Size(
-                Math.Abs(RectStartPoint.X - tempEndPoint.X),
-                Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+
+            _StartPoint = e.Location;
+            textBox5.Text = _StartPoint.X.ToString();
+            textBox4.Text = _StartPoint.Y.ToString();
+            textBox5.Text = panel2.AutoScrollPosition.X.ToString();
+            textBox4.Text = panel2.AutoScrollPosition.Y.ToString();
+
+
+            if (PageEdit.Image != null)
+            {
+                if (tempEndPoint.X <= PageEdit.Image.Width && tempEndPoint.Y <= PageEdit.Image.Height)
+                {
+                    Rect.Location = new Point(
+                        Math.Min(RectStartPoint.X, tempEndPoint.X),
+                        Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+                    Rect.Size = new Size(
+                        Math.Abs(RectStartPoint.X - tempEndPoint.X),
+                        Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+
+                    Point changePoint = new Point(e.Location.X - RectStartPoint.X,
+                                  e.Location.Y - RectStartPoint.Y);
+                    bool cambio = false;
+
+                    //if (_StartPoint.Y >= 1320 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 810);
+                    //    cambio = true;
+                    //}
+                    if (_StartPoint.Y >= 1400 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 720);
+                        cambio = true;
+                    }
+                    //if (_StartPoint.Y >= 1320 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 810);
+                    //    cambio = true;
+                    //}
+                    if (_StartPoint.Y >= 1200 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 600);
+                        cambio = true;
+                    }
+                    //if (_StartPoint.Y >= 1080 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 690);
+                    //    cambio = true;
+                    //}
+                    if (_StartPoint.Y >= 960 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 480);
+                        cambio = true;
+                    }
+
+                    //if (_StartPoint.Y >= 840 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 330);
+                    //    cambio = true;
+                    //}
+                    if (_StartPoint.Y >= 720 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 240);
+                        cambio = true;
+                    }
+                    //if (_StartPoint.Y >= 600 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 210);
+                    //    cambio = true;
+                    //}
+                    if (_StartPoint.Y > 480 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 120);
+                        cambio = true;
+                    }
+                    if (_StartPoint.Y > 360 && !cambio)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 0);
+                        cambio = true;
+                    }
+                    //if (_StartPoint.Y >= 360 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 360);
+                    //    cambio = true;
+                    //}
+
+
+
+
+                    //if (_StartPoint.Y <= 1200 && _StartPoint.Y > 960 && !cambio)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 1440);
+                    //    cambio = true;
+                    //}
+
+                    //if (_StartPoint.Y > 600)
+                    //{
+                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, -600);
+                    //}
+
+
+
+
+                    //New Drawing.Point((DeltaX - Panel1.AutoScrollPosition.X), (DeltaY - Panel1.AutoScrollPosition.Y));
+                }
+            }
             PageEdit.Invalidate();
         }
-
         private void PageEdit_MouseDown(object sender, MouseEventArgs e)
         {
             // Determine the initial rectangle coordinates...
             RectStartPoint = e.Location;
+
             Invalidate();
-
-            
         }
-
         private void PageEdit_Paint(object sender, PaintEventArgs e)
         {
             // Draw the rectangle...
@@ -966,14 +1096,19 @@ namespace OrfeoScan_IDU_STRT
             {
                 if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                 {
-                    Pen blackPen = new Pen(Color.Black, 1);
-                    e.Graphics.DrawRectangle(blackPen, Rect);
-                    e.Graphics.FillRectangle(selectionBrush, Rect);
-                   
+                    if (Rect.Width<= PageEdit.Image.Width)
+                    {
+                        Pen blackPen = new Pen(Color.Black, 1);
+                        e.Graphics.DrawRectangle(blackPen, Rect);
+                        e.Graphics.FillRectangle(selectionBrush, Rect);
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
         }
-
         private void PageEdit_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -983,6 +1118,27 @@ namespace OrfeoScan_IDU_STRT
                     Debug.WriteLine("Right click");
                 }
             }
+        }
+        private void panel2_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    Point changePoint = new Point(e.Location.X - _StartPoint.X,
+            //                                  e.Location.Y - _StartPoint.Y);
+            //    panel1.AutoScrollPosition = new Point(-panel1.AutoScrollPosition.X - changePoint.X,
+            //                                          -panel1.AutoScrollPosition.Y - changePoint.Y);
+            //}
+        }
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            //if (e.Button == MouseButtons.Left)
+            //    _StartPoint = e.Location;
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var rectangulo = Rect;
+            var imagen = PageEdit.Image;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1141,7 +1297,6 @@ namespace OrfeoScan_IDU_STRT
                 }
             }
         }
-
         private void buscarTodosRadicadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -1155,24 +1310,6 @@ namespace OrfeoScan_IDU_STRT
             lbl_InfoRadicado5.Text = "";
             codbarras.Image = null;
         }
-
-        private void panel2_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                _StartPoint = e.Location;
-        }
-
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Point changePoint = new Point(e.Location.X - _StartPoint.X,
-                                              e.Location.Y - _StartPoint.Y);
-                panel1.AutoScrollPosition = new Point(-panel1.AutoScrollPosition.X - changePoint.X,
-                                                      -panel1.AutoScrollPosition.Y - changePoint.Y);
-            }
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             paginaActual++;
@@ -1186,7 +1323,6 @@ namespace OrfeoScan_IDU_STRT
                 paginaActual--;
             }            
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             paginaActual--;
