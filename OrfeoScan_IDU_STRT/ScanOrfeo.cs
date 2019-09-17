@@ -24,6 +24,7 @@ using iTextSharp;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Net;
+using System.Drawing.Drawing2D;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -441,12 +442,16 @@ namespace OrfeoScan_IDU_STRT
 
         private void button13_Click(object sender, EventArgs e)
         {
-
+            var imagen=RotateImage(TiffCarga[0], 90, true, true, System.Drawing.Color.White);
+            TiffCarga[0] = imagen;
+            PageEdit.Image = imagen;
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-
+            var imagen = RotateImage(TiffCarga[0], -90, true, true, System.Drawing.Color.White);
+            TiffCarga[0] = imagen;
+            PageEdit.Image = imagen;
         }
 
         private void btn_enviar_2_Click(object sender, EventArgs e)
@@ -552,36 +557,7 @@ namespace OrfeoScan_IDU_STRT
             pictureBox4.Image = TiffCarga[2];
             pictureBox1.Image = TiffCarga[3];
         }
-        private void button8_Click(object sender, EventArgs e)
-        {
-            Document doc = new Document(PageSize.LETTER);
-            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
-            writer.PDFXConformance = PdfWriter.PDFA1B;
-            doc.Open();
 
-            PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
-            outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
-            outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
-            outi.Put(PdfName.S, PdfName.GTS_PDFA1);
-
-            // get this file here: http://old.nabble.com/attachment/10971467/0/srgb.profile
-            ICC_Profile icc = ICC_Profile.GetInstance("D:\\sRGB_v4.icc");
-            PdfICCBased ib = new PdfICCBased(icc);
-            ib.Remove(PdfName.ALTERNATE);
-            outi.Put(PdfName.DESTOUTPUTPROFILE, writer.AddToBody(ib).IndirectReference);
-
-            writer.ExtraCatalog.Put(PdfName.OUTPUTINTENTS, new PdfArray(outi));
-
-            BaseFont bf = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.WINANSI, true);
-            iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
-            doc.Add(new Paragraph("hello1", f));
-
-            writer.CreateXmpMetadata();
-
-            doc.Close();
-
-
-        }
         private void button7_Click(object sender, EventArgs e)
         {
             try
@@ -997,32 +973,6 @@ namespace OrfeoScan_IDU_STRT
                     Invalidate();
                     PageEdit.Refresh();
                 }
-
-
-                //Graphics gr = Graphics.FromImage(TiffCarga[0]);
-                ////Pen blackPen = new Pen(Color.Black, 1);
-                ////graphics.DrawRectangle();
-                ////gr.DrawRectangle(blackPen, new Rectangle(0, 0, 200, 300));
-                //Bitmap bmp = new Bitmap(PageEdit.Image.Width, PageEdit.Image.Height, gr);
-                //PageEdit.Image = bmp;
-
-
-                //using (Graphics graphics = Graphics.FromImage(PageEdit.Image))
-                //{
-                //    using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Red))
-                //    {
-                //        //Pen blackPen = new Pen(Color.Black, 1);
-                //        //graphics.FillRectangle(selectionBrush1, new Rectangle(0, 0, 200, 300));
-                        
-                //        graphics.DrawRectangle(blackPen, new Rectangle(0, 0, 200, 300));
-                //        Bitmap bmp = new Bitmap(PageEdit.Image.Width, PageEdit.Image.Height, graphics);
-                //        //graphics.CopyFromScreen(myControl.PointToScreen(new Point(0, 0)), new Point(0, 0), rect.Size);
-                //        PageEdit.Image = bmp;
-                //    }
-                //}
-                    
-                //e.Graphics.DrawRectangle(blackPen, Rect);
-                //e.Graphics.FillRectangle(selectionBrush, Rect);
             }
         }
         private void PageEdit_MouseMove(object sender, MouseEventArgs e)
@@ -1392,6 +1342,147 @@ namespace OrfeoScan_IDU_STRT
                 paginaActual++;
             }
         }
+
+
+        public static Bitmap RotateImage(System.Drawing.Image inputImage, float angleDegrees, bool upsizeOk,
+                                         bool clipOk, System.Drawing.Color backgroundColor)
+        {
+            if (angleDegrees == 0f)
+                return (Bitmap)inputImage.Clone();
+
+            int oldWidth = inputImage.Width;
+            int oldHeight = inputImage.Height;
+            int newWidth = oldWidth;
+            int newHeight = oldHeight;
+            float scaleFactor = 1f;
+
+            if (upsizeOk || !clipOk)
+            {
+                double angleRadians = angleDegrees * Math.PI / 180d;
+
+                double cos = Math.Abs(Math.Cos(angleRadians));
+                double sin = Math.Abs(Math.Sin(angleRadians));
+                newWidth = (int)Math.Round(oldWidth * cos + oldHeight * sin);
+                newHeight = (int)Math.Round(oldWidth * sin + oldHeight * cos);
+            }
+
+            if (!upsizeOk && !clipOk)
+            {
+                scaleFactor = Math.Min((float)oldWidth / newWidth, (float)oldHeight / newHeight);
+                newWidth = oldWidth;
+                newHeight = oldHeight;
+            }
+
+            Bitmap newBitmap = new Bitmap(newWidth, newHeight, backgroundColor == System.Drawing.Color.Transparent ?
+                                             PixelFormat.Format32bppArgb : PixelFormat.Format24bppRgb);
+            newBitmap.SetResolution(inputImage.HorizontalResolution, inputImage.VerticalResolution);
+
+
+            using (Graphics graphicsObject = Graphics.FromImage(newBitmap))
+            {
+                graphicsObject.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphicsObject.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphicsObject.SmoothingMode = SmoothingMode.HighQuality;
+
+                if (backgroundColor != System.Drawing.Color.Transparent)
+                    graphicsObject.Clear(backgroundColor);
+
+                graphicsObject.TranslateTransform(newWidth / 2f, newHeight / 2f);
+
+                if (scaleFactor != 1f)
+                    graphicsObject.ScaleTransform(scaleFactor, scaleFactor);
+
+                graphicsObject.RotateTransform(angleDegrees);
+                graphicsObject.TranslateTransform(-oldWidth / 2f, -oldHeight / 2f);
+
+                graphicsObject.DrawImage(inputImage, 0, 0);
+            }
+
+            return newBitmap;
+        }
+
+        private void btnAbrirImagen_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+            if (Directory.Exists(@"D:\imgidu\"))
+            {
+                dialog.InitialDirectory = @"D:\imgidu\";
+            }
+            else
+            {
+                if (Directory.Exists(@"D:\"))
+                {
+                    dialog.InitialDirectory = @"D:\";
+                }
+                else
+                {
+                    if (Directory.Exists(@"C:\"))
+                    {
+                        dialog.InitialDirectory = @"C:\";
+                    }
+                }
+            }
+
+            dialog.Title = "Abrir Imagen";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = dialog.FileName;
+                var img = Bitmap.FromFile(fileName);
+                var pages = img.GetFrameCount(FrameDimension.Page);
+                List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
+                cargar = Split(fileName);
+                if (cargar.Count > 0)
+                    cargarImagen(cargar);
+            }
+        }
+
+        private void btnEnviarPDF1_Click(object sender, EventArgs e)
+        {
+            Document doc = new Document(PageSize.LETTER);
+            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
+            writer.PDFXConformance = PdfWriter.PDFA1B;
+            doc.Open();
+
+            PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
+            outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
+            outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
+            outi.Put(PdfName.S, PdfName.GTS_PDFA1);
+
+            // get this file here: http://old.nabble.com/attachment/10971467/0/srgb.profile
+            ICC_Profile icc = ICC_Profile.GetInstance("D:\\sRGB_v4.icc");
+            PdfICCBased ib = new PdfICCBased(icc);
+            ib.Remove(PdfName.ALTERNATE);
+            outi.Put(PdfName.DESTOUTPUTPROFILE, writer.AddToBody(ib).IndirectReference);
+
+            writer.ExtraCatalog.Put(PdfName.OUTPUTINTENTS, new PdfArray(outi));
+
+            BaseFont bf = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.WINANSI, true);
+            iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
+            doc.Add(new Paragraph("hello1", f));
+
+            writer.CreateXmpMetadata();
+
+            doc.Close();
+        }
+
+        private void btnBorrarSeleccion_Click(object sender, EventArgs e)
+        {
+            if (PageEdit.Image != null && Rect.X > 0 && Rect.Y > 0)
+            {
+                using (Bitmap bitmap = new Bitmap(Width, Height))
+                using (Graphics graphics = Graphics.FromImage(TiffCarga[0]))
+                {
+                    System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
+                    graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
+                    Invalidate();
+                    PageEdit.Refresh();
+                }
+            }
+        }
+
+
         //Falta metodo para recargar la lista de items
     }
 
