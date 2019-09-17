@@ -67,6 +67,8 @@ namespace OrfeoScan_IDU_STRT
         private int paginaActual = 0;
         string digitalizador_user = "digitalizador40";
         string digitalizador = "D1g1t4l#0129";
+        int[] pageRange = new int[2] { 0, 2 };
+        string pref_pag = "PAG ";
 
         public List<System.Drawing.Image> TiffCarga = new List<System.Drawing.Image>();
 
@@ -499,7 +501,7 @@ namespace OrfeoScan_IDU_STRT
                 List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
                 cargar= Split(fileName);
                 if (cargar.Count>0)
-                    cargarImagen(cargar);
+                    cargarImagen(cargar, pageRange, true);
             }
         }
         private List<System.Drawing.Image> Split(string pstrInputFilePath)
@@ -537,12 +539,13 @@ namespace OrfeoScan_IDU_STRT
                     tiffImage.SelectActiveFrame(currentFrame, index);
                     Bitmap nextFrame = new Bitmap(tiffImage);
                     cargar.Add(nextFrame);
+                    //nextFrame.Dispose();
                     //tiffImage.Save(string.Concat(pstrOutputPath, @"\", index, ".TIF"), encodeInfo, null);
                 }
             }
             return cargar;
         }
-        private void cargarImagen(List<System.Drawing.Image> imagenes)
+        private void cargarImagen(List<System.Drawing.Image> imagenes, int[] range, bool inicial)
         {
             TiffCarga.Clear();
             foreach (var imagen in imagenes)
@@ -551,11 +554,125 @@ namespace OrfeoScan_IDU_STRT
                 TiffCarga.Add(nextFrame);
             }
             paginaActual = 1;
-            PageEdit.Image= TiffCarga[0];
-            pictureBox2.Image = TiffCarga[0];
-            pictureBox3.Image = TiffCarga[1];
-            pictureBox4.Image = TiffCarga[2];
-            pictureBox1.Image = TiffCarga[3];
+
+            bool pageEmpty1 = true;
+            bool pageEmpty2 = true;
+            bool pageEmpty3 = true;
+
+            for (int i = range[0]; i < range[1]+1; i++)
+            {
+                bool asigno = false;
+                if (pageEmpty1 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen1.Image = TiffCarga[i];
+                        lblScreen1.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty1 = false;
+                        asigno = true;
+                    }
+                }
+                if (pageEmpty2 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen2.Image = TiffCarga[i];
+                        lblScreen2.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty2 = false;
+                        asigno = true;
+                    }
+                }
+                if (pageEmpty3 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen3.Image = TiffCarga[i];
+                        lblScreen3.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty3 = false;
+                        asigno = true;
+                    }
+                }
+            }
+            if (pageEmpty1)
+            {
+                PageScreen1.Image = null;
+                lblScreen1.Text = "";
+            }
+                
+            if (pageEmpty2)
+            {
+                PageScreen2.Image = null;
+                lblScreen2.Text = "";
+            }
+                
+            if (pageEmpty3)
+            {
+                PageScreen3.Image = null;
+                lblScreen3.Text = "";
+            }
+                
+
+            if (inicial && TiffCarga.Count >= 1)
+                PageEdit.Image = TiffCarga[0];
+        }
+        private void cargarImagen1(int[] range)
+        {
+
+            bool pageEmpty1 = true;
+            bool pageEmpty2 = true;
+            bool pageEmpty3 = true;
+
+            for (int i = range[0]; i < range[1] + 1; i++)
+            {
+                bool asigno = false;
+                if (pageEmpty1 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen1.Image = TiffCarga[i];
+                        lblScreen1.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty1 = false;
+                        asigno = true;
+                    }
+                }
+                if (pageEmpty2 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen2.Image = TiffCarga[i];
+                        lblScreen2.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty2 = false;
+                        asigno = true;
+                    }
+                }
+                if (pageEmpty3 && !asigno)
+                {
+                    if (TiffCarga.Count >= i + 1)
+                    {
+                        PageScreen3.Image = TiffCarga[i];
+                        lblScreen3.Text = pref_pag + (i + 1).ToString();
+                        pageEmpty3 = false;
+                        asigno = true;
+                    }
+                }
+            }
+            if (pageEmpty1)
+            {
+                PageScreen1.Image = null;
+                lblScreen1.Text = "";
+            }
+
+            if (pageEmpty2)
+            {
+                PageScreen2.Image = null;
+                lblScreen2.Text = "";
+            }
+
+            if (pageEmpty3)
+            {
+                PageScreen3.Image = null;
+                lblScreen3.Text = "";
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -698,7 +815,9 @@ namespace OrfeoScan_IDU_STRT
                         stream.Position = 0;
                         var image = System.Drawing.Image.FromStream(stream);
                         imagenes.Add(image);
-
+                        pageRange[0] = 0;
+                        pageRange[1] = 2;
+                        cargarImagen(imagenes, pageRange, true);
                     }));
                 }
             };
@@ -886,7 +1005,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void LoadAutoRotation(ICapWrapper<BoolType> cap)
         {
-            ckDuplex.Checked = cap.GetCurrent() == BoolType.True;
+            ckDuplex.Checked = cap.GetCurrent() == BoolType.False;
         }
         //capacidad de numero de DPI
         private void LoadDPI(ICapWrapper<TWFix32> cap)
@@ -1319,31 +1438,23 @@ namespace OrfeoScan_IDU_STRT
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            paginaActual++;
-
-            if (paginaActual+1< TiffCarga.Count)
+            if (pageRange[1] < TiffCarga.Count)
             {
-                PageEdit.Image = TiffCarga[paginaActual];
+                pageRange[0]++;
+                pageRange[1]++;
+                cargarImagen1(pageRange);
             }
-            else
-            {
-                paginaActual--;
-            }            
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            paginaActual--;
-            if (paginaActual + 1 < TiffCarga.Count)
+
+            if (pageRange[0]!=0)
             {
-                PageEdit.Image = TiffCarga[paginaActual];
-            }
-            else
-            {
-                paginaActual++;
+                pageRange[0]--;
+                pageRange[1]--;
+                cargarImagen1(pageRange);
             }
         }
-
-
         public static Bitmap RotateImage(System.Drawing.Image inputImage, float angleDegrees, bool upsizeOk,
                                          bool clipOk, System.Drawing.Color backgroundColor)
         {
@@ -1434,13 +1545,15 @@ namespace OrfeoScan_IDU_STRT
                 List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
                 cargar = Split(fileName);
                 if (cargar.Count > 0)
-                    cargarImagen(cargar);
+                    cargarImagen(cargar, pageRange, true);
             }
         }
 
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
         {
+            //Recorrer pagina por pagina e identificar el tamaño ideal
             Document doc = new Document(PageSize.LETTER);
+            doc.SetMargins(0, 0, 0, 0);
             PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
             writer.PDFXConformance = PdfWriter.PDFA1B;
             doc.Open();
@@ -1450,7 +1563,7 @@ namespace OrfeoScan_IDU_STRT
             outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
             outi.Put(PdfName.S, PdfName.GTS_PDFA1);
 
-            // get this file here: http://old.nabble.com/attachment/10971467/0/srgb.profile
+            //Perfiles icc
             ICC_Profile icc = ICC_Profile.GetInstance("D:\\sRGB_v4.icc");
             PdfICCBased ib = new PdfICCBased(icc);
             ib.Remove(PdfName.ALTERNATE);
@@ -1460,11 +1573,58 @@ namespace OrfeoScan_IDU_STRT
 
             BaseFont bf = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.WINANSI, true);
             iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
-            doc.Add(new Paragraph("hello1", f));
+
+            //Captar la ruta de imagenes del radicado, si existe: usar sus imagenes
+            System.Drawing.Bitmap bm = new System.Drawing.Bitmap(@"D:\escaner.tif");
+            int total = bm.GetFrameCount(System.Drawing.Imaging.FrameDimension.Page);
+
+            //Crear las paginas
+            for (int i = 0; i < total; ++i)
+            {
+                doc.NewPage();
+                float subtrahend = doc.PageSize.Height - 10;
+                bm.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, i);
+                iTextSharp.text.Image pool = iTextSharp.text.Image.GetInstance(bm, ImageFormat.Tiff);
+                pool.Alignment = 3;
+                pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
+                doc.Add(pool);
+            }
 
             writer.CreateXmpMetadata();
-
             doc.Close();
+
+            //Enviar archivo si existe
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
+                    client.UploadFile("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf", WebRequestMethods.Ftp.UploadFile, @"D:\hello_A1-b_cs.pdf");
+                    MessageBox.Show("El archivo se subió correctamente");
+                }
+                var request = (FtpWebRequest)WebRequest.Create("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf");
+                request.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
+                request.Method = WebRequestMethods.Ftp.GetFileSize;
+
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    MessageBox.Show("El archivo se subió correctamente");
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no se subió correctamente, por favor vuelva a intentar");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void btnBorrarSeleccion_Click(object sender, EventArgs e)
@@ -1482,7 +1642,90 @@ namespace OrfeoScan_IDU_STRT
             }
         }
 
+        private void PageScreen1_Click(object sender, EventArgs e)
+        {
+            PageEdit.Image = PageScreen1.Image;
+        }
 
+        private void PageScreen2_Click(object sender, EventArgs e)
+        {
+            PageEdit.Image = PageScreen2.Image;
+        }
+
+        private void PageScreen3_Click(object sender, EventArgs e)
+        {
+            PageEdit.Image = PageScreen3.Image;
+        }
+
+        private void ScanOrfeo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left)
+                btnPrevScreen_Click(null, null);
+            if (e.KeyCode == Keys.Right)
+                btnNextScreen_Click(null, null);
+
+
+        }
+
+        private void btnPrevScreen_Click(object sender, EventArgs e)
+        {
+            if (pageRange[0] != 0)
+            {
+                pageRange[0]--;
+                pageRange[1]--;
+                txtPage.Text = (pageRange[0]+1).ToString();
+                cargarImagen1(pageRange);
+            }
+        }
+
+        private void btnNextScreen_Click(object sender, EventArgs e)
+        {
+            if (pageRange[1] < TiffCarga.Count)
+            {
+                pageRange[0]++;
+                pageRange[1]++;
+                txtPage.Text = (pageRange[0] + 1).ToString();
+                cargarImagen1(pageRange);
+            }
+        }
+
+        private void txtPage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsSeparator(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtPage_KeyUp(object sender, KeyEventArgs e)
+        {
+            int page;
+            if (int.TryParse(txtPage.Text.Replace(" ",""), out page))
+            {
+                if (TiffCarga.Count>=page && TiffCarga.Count > 0)
+                {
+                    pageRange[0]= page-1;
+                    pageRange[1]+= 2;
+                    cargarImagen1(pageRange);
+                }
+            }
+        }
         //Falta metodo para recargar la lista de items
     }
 
