@@ -25,6 +25,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Net;
 using System.Drawing.Drawing2D;
+using funciones;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -52,6 +53,7 @@ namespace OrfeoScan_IDU_STRT
 
         //Variables de formularios
         funciones.funciones funciones = new funciones.funciones();
+        RawPrinterHelper RawPrinterHelper = new RawPrinterHelper();
         private string varConcat = "";
         private string varSubstr = "";
         private string varRadi_Fech_radi = "";
@@ -183,6 +185,8 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoExpediente(string numradicado)
         {
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             IISQL = " SELECT 'EXPEDIENTE' as TIPO,S.DEPE_CODI AS DEPENDENCIA, S.SGD_EXP_NUMERO AS NÚMERO_EXPEDIENTE,(SELECT COUNT(*) FROM SGD_AEX_ANEXOEXPEDIENTE A WHERE A.SGD_AEX_EXPEDIENTE = S.SGD_EXP_NUMERO) AS NÚM_ANEXOS ,S.SGD_SEXP_PAREXP1 AS ASUNTO,S.SGD_SEXP_PAREXP3 AS NOMBRE_Y_DOCUMENTO,S.SGD_SEXP_FECH AS FECHA ";
@@ -216,16 +220,19 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicado(string numradicado)
         {
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
                 IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
             else
-                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA,a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH from Radicado a , sgd_renv_regenvio renv where a.radi_nume_radi is not null AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL ";
-            IISQL = IISQL + " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
-            //IISQL = IISQL + " and a.radi_path is null ";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA,a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH  from Radicado a where a.radi_nume_radi is not null  ";
+
+            IISQL += " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
             try
             {
+                show_loading_panel(361, 174, 414, 36);
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
                 OracleDataReader reader = command.ExecuteReader();
@@ -236,9 +243,11 @@ namespace OrfeoScan_IDU_STRT
                 con.Dispose();
                 dataGridView1.DataSource = dt;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                hide_loading_panel();
             }
             catch (Exception ex)
             {
+                hide_loading_panel();
                 con.Close();
                 con.Dispose();
                 MessageBox.Show(ex.ToString());
@@ -293,6 +302,8 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoTP(string numradicado)
         {
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
@@ -306,6 +317,7 @@ namespace OrfeoScan_IDU_STRT
             IISQL = IISQL + " and a.radi_char_radi like '%" + tipoRad + "'";
             try
             {
+                show_loading_panel(361, 174, 414, 36);
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
                 OracleDataReader reader = command.ExecuteReader();
@@ -316,9 +328,11 @@ namespace OrfeoScan_IDU_STRT
                 con.Dispose();
                 dataGridView1.DataSource = dt;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                hide_loading_panel();
             }
             catch (Exception ex)
             {
+                hide_loading_panel();
                 con.Close();
                 con.Dispose();
                 MessageBox.Show(ex.ToString());
@@ -343,6 +357,8 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoMasiva(string numradicado)
         {
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
             string IISQL = string.Empty;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
@@ -354,6 +370,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 try
                 {
+                    show_loading_panel(361, 174, 414, 36);
                     con.Open();
                     OracleCommand command = new OracleCommand(IISQL, con);
                     OracleDataReader reader = command.ExecuteReader();
@@ -364,9 +381,11 @@ namespace OrfeoScan_IDU_STRT
                     con.Dispose();
                     dataGridView1.DataSource = dt;
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                    hide_loading_panel();
                 }
                 catch (Exception ex)
                 {
+                    hide_loading_panel();
                     con.Close();
                     con.Dispose();
                     MessageBox.Show(ex.ToString());
@@ -1447,7 +1466,10 @@ namespace OrfeoScan_IDU_STRT
                                 FUN = "";
                             if (int.TryParse(reader[2].ToString(), out OEM))
                                 FUN = "";
-                            FUN = (string)reader[3];
+                            if (reader[3] != null)
+                            {
+                                FUN = reader[3].ToString();
+                            }
                             funciones.desconectar(con);
                         }
                         else
@@ -1557,6 +1579,7 @@ namespace OrfeoScan_IDU_STRT
             lbl_InfoRadicado3.Text = "";
             lbl_InfoRadicado4.Text = "";
             lbl_InfoRadicado5.Text = "";
+            lbl_num_doc.Text = "";
             codbarras.Image = null;
         }
         private void button3_Click(object sender, EventArgs e)
@@ -1674,7 +1697,9 @@ namespace OrfeoScan_IDU_STRT
 
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
         {
+
             //Recorrer pagina por pagina e identificar el tamaño ideal
+            
             Document doc = new Document(PageSize.LETTER);
             doc.SetMargins(0, 0, 0, 0);
             PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
@@ -1719,6 +1744,7 @@ namespace OrfeoScan_IDU_STRT
             //Enviar archivo si existe
             try
             {
+                show_loading_panel(361, 174, 414, 36);
                 using (var client = new WebClient())
                 {
                     client.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
@@ -1743,9 +1769,11 @@ namespace OrfeoScan_IDU_STRT
                         MessageBox.Show("El archivo no se subió correctamente, por favor vuelva a intentar");
                     }
                 }
+                hide_loading_panel();
             }
             catch (Exception ex)
             {
+                hide_loading_panel();
                 MessageBox.Show(ex.ToString());
             }
         }
@@ -1850,10 +1878,11 @@ namespace OrfeoScan_IDU_STRT
             }
         }
 
-        private void btnEtiqueta_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             //text1
-            int numeroCopias = (int)numCopias.Value;
+            //int numeroCopias = (int)numCopias.Value;
+            int numeroCopias = 1;
             if (!imprimirSoloStickerToolStripMenuItem.Checked)
             {
                 //RADI_NUME_RADI
@@ -1862,7 +1891,7 @@ namespace OrfeoScan_IDU_STRT
                 //Recorrer todas las filas del gridview
                 if (dataGridView1.Rows.Count > 0)
                 {
-                    if (dataGridView1.SelectedRows.Count == 0)
+                    if (dataGridView1.SelectedRows.Count > 0)
                     {
 
                         string tipo = "";
@@ -1890,8 +1919,8 @@ namespace OrfeoScan_IDU_STRT
 
                         if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(numero_documento))
                         {
-                            string IISQL = "Select r.RA_ASUN,a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,SGD_DOC_FUN, a.SGD_DIR_NOMREMDES, r.RADI_DESC_ANEX, d.DEPE_NOMB from sgd_dir_drecciones a, radicado r, dependencia d where a.sgd_dir_tipo = 1 and r.radi_depe_radi = d.depe_codi and a.radi_nume_radi=r.radi_nume_radi and  a.radi_nume_radi=" + numero_documento;
-                            IISQL = IISQL + " ORDER BY a.SGD_DIR_TIPO  ";
+                            string IISQL = "Select a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,a.SGD_DOC_FUN, r.RADI_DESC_ANEX from sgd_dir_drecciones a, radicado r where a.radi_nume_radi=r.radi_nume_radi and a.radi_nume_radi=" + numero_documento;
+                            IISQL = IISQL + " ORDER BY SGD_DIR_TIPO  ";
                             OracleConnection con = new OracleConnection(funciones.conni);
                             try
                             {
@@ -1906,17 +1935,20 @@ namespace OrfeoScan_IDU_STRT
                                         FUN = "";
                                     if (int.TryParse(reader[2].ToString(), out OEM))
                                         FUN = "";
-                                    FUN = (string)reader[3];
-                                    if (reader[6] != null)
+                                    if (reader[3] != null)
                                     {
-                                        anex_desc = reader[6].ToString();
+                                        FUN = reader[3].ToString();
+                                    }
+                                    if (reader[4] != null)
+                                    {
+                                        anex_desc = reader[4].ToString();
                                     }
                                     funciones.desconectar(con);
                                 }
                                 else
                                     funciones.desconectar(con);
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
                                 funciones.desconectar(con);
                             }
@@ -2016,7 +2048,11 @@ namespace OrfeoScan_IDU_STRT
                                 nombre_dep = nombre_dep.Replace("OFICINA", "OFIC");
                                 nombre_dep = nombre_dep.Replace("SUPERINTENDENCIA", "SUP");
 
-                                anex_desc = anex_desc.Substring(0, 58);
+                                if (anex_desc.Length>=58)
+                                    anex_desc = anex_desc.Substring(0, 58);
+                                else
+                                    anex_desc = anex_desc.Substring(0, anex_desc.Length);
+
                                 anex_desc = anex_desc.Replace(System.Environment.NewLine, " ");
                             }
                             else if (tipo == "EXPEDIENTE")
@@ -2040,7 +2076,19 @@ namespace OrfeoScan_IDU_STRT
                             //IMPRIMIR
                             for (int i = 0; i < numeroCopias; i++)
                             {
-
+                                PrintDocument pd = new PrintDocument();
+                                System.Drawing.Printing.PaperSize tamañoPapel = new PaperSize("Custom Paper Size", 1200, 1200);
+                                pd.PrinterSettings.DefaultPageSettings.PaperSize = tamañoPapel;
+                                pd.DefaultPageSettings.PaperSize = tamañoPapel;
+                                pd.PrintPage += PrintPage;
+                                //here to select the printer attached to user PC
+                                PrintDialog printDialog1 = new PrintDialog();
+                                printDialog1.Document = pd;
+                                DialogResult result = printDialog1.ShowDialog();
+                                if (result == DialogResult.OK)
+                                {
+                                    pd.Print();//this will trigger the Print Event handeler PrintPage
+                                }
                             }
                             PrintDocument p = new PrintDocument();
 
@@ -2071,6 +2119,40 @@ namespace OrfeoScan_IDU_STRT
             {
 
             }
+        }
+        //The Print Event handeler
+        private void PrintPage(object o, PrintPageEventArgs e)
+        {
+            try
+            {
+                if (File.Exists(@"D:\logoEntidad.bmp"))
+                {
+                    //Load the image from the file
+                    System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\logoEntidad.bmp");
+
+                    //Adjust the size of the image to the page to print the full image without loosing any part of it
+                    //System.Drawing.Rectangle m = e.MarginBounds;
+
+                    //if ((double)img.Width / (double)img.Height > (double)m.Width / (double)m.Height) // image is wider
+                    //{
+                    //    m.Height = (int)((double)img.Height / (double)img.Width * (double)m.Width);
+                    //}
+                    //else
+                    //{
+                    //    m.Width = (int)((double)img.Width / (double)img.Height * (double)m.Height);
+                    //}
+                    e.Graphics.DrawImage(img, new System.Drawing.Rectangle(0, 0, 1000, 400));
+
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
         }
     }
 

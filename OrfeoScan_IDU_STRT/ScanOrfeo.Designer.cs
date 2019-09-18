@@ -57,9 +57,6 @@
             this.seleccionarEscanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurarEscanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imprimirImagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.guardarImagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarSelecciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -157,6 +154,7 @@
             this.button18 = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -412,9 +410,6 @@
             this.seleccionarEscanerToolStripMenuItem,
             this.configurarEscanerToolStripMenuItem,
             this.toolStripSeparator1,
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem,
-            this.imprimirImagenToolStripMenuItem,
-            this.toolStripSeparator2,
             this.guardarImagenToolStripMenuItem,
             this.borrarSelecciónToolStripMenuItem,
             this.toolStripSeparator4,
@@ -428,7 +423,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -438,7 +433,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -447,69 +442,46 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(344, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(344, 6);
-            // 
-            // impresoraDePuntoImpresiónPorPuertoToolStripMenuItem
-            // 
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.CheckOnClick = true;
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Name = "impresoraDePuntoImpresiónPorPuertoToolStripMenuItem";
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + L";
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
-            this.impresoraDePuntoImpresiónPorPuertoToolStripMenuItem.Text = "Impresora de Punto (Impresión por Puerto)";
-            // 
-            // imprimirImagenToolStripMenuItem
-            // 
-            this.imprimirImagenToolStripMenuItem.Name = "imprimirImagenToolStripMenuItem";
-            this.imprimirImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + P";
-            this.imprimirImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.imprimirImagenToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
-            this.imprimirImagenToolStripMenuItem.Text = "Imprimir Imagen";
-            this.imprimirImagenToolStripMenuItem.Click += new System.EventHandler(this.imprimirImagenToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(344, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -518,18 +490,18 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(344, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(271, 6);
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(347, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
             // 
@@ -845,7 +817,7 @@
             // button11
             // 
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(869, 164);
+            this.button11.Location = new System.Drawing.Point(869, 161);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(29, 21);
             this.button11.TabIndex = 51;
@@ -874,7 +846,7 @@
             this.btnBorrarSeleccion.FlatAppearance.BorderSize = 0;
             this.btnBorrarSeleccion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnBorrarSeleccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBorrarSeleccion.Location = new System.Drawing.Point(357, 207);
+            this.btnBorrarSeleccion.Location = new System.Drawing.Point(314, 207);
             this.btnBorrarSeleccion.Name = "btnBorrarSeleccion";
             this.btnBorrarSeleccion.Size = new System.Drawing.Size(35, 35);
             this.btnBorrarSeleccion.TabIndex = 48;
@@ -884,7 +856,7 @@
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(799, 163);
+            this.button9.Location = new System.Drawing.Point(799, 161);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(29, 21);
             this.button9.TabIndex = 49;
@@ -895,7 +867,7 @@
             // button10
             // 
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(834, 164);
+            this.button10.Location = new System.Drawing.Point(834, 161);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(29, 21);
             this.button10.TabIndex = 50;
@@ -912,7 +884,7 @@
             this.button12.FlatAppearance.BorderSize = 0;
             this.button12.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(457, 207);
+            this.button12.Location = new System.Drawing.Point(414, 207);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(35, 35);
             this.button12.TabIndex = 52;
@@ -941,7 +913,7 @@
             this.button13.FlatAppearance.BorderSize = 0;
             this.button13.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Location = new System.Drawing.Point(414, 207);
+            this.button13.Location = new System.Drawing.Point(371, 207);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(35, 35);
             this.button13.TabIndex = 53;
@@ -1225,7 +1197,6 @@
             this.btnEnviarPDF1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnEnviarPDF1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEnviarPDF1.FlatAppearance.BorderSize = 0;
-            this.btnEnviarPDF1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnEnviarPDF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEnviarPDF1.Location = new System.Drawing.Point(197, 21);
             this.btnEnviarPDF1.Name = "btnEnviarPDF1";
@@ -1370,22 +1341,25 @@
             // 
             // pan_loading
             // 
-            this.pan_loading.BackColor = System.Drawing.Color.White;
+            this.pan_loading.BackColor = System.Drawing.Color.DarkOrange;
+            this.pan_loading.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pan_loading.Controls.Add(this.label1);
             this.pan_loading.Enabled = false;
-            this.pan_loading.Location = new System.Drawing.Point(1408, 43);
+            this.pan_loading.Location = new System.Drawing.Point(0, 29);
+            this.pan_loading.Margin = new System.Windows.Forms.Padding(10);
             this.pan_loading.Name = "pan_loading";
-            this.pan_loading.Size = new System.Drawing.Size(53, 34);
+            this.pan_loading.Size = new System.Drawing.Size(22, 15);
             this.pan_loading.TabIndex = 63;
             this.pan_loading.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(484, 76);
+            this.label1.Font = new System.Drawing.Font("Calibri", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(65, 57);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 36);
+            this.label1.Size = new System.Drawing.Size(246, 59);
             this.label1.TabIndex = 0;
             this.label1.Text = "Cargando...";
             // 
@@ -1429,8 +1403,8 @@
             // 
             this.lbl_num_doc.AutoSize = true;
             this.lbl_num_doc.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_num_doc.ForeColor = System.Drawing.Color.White;
-            this.lbl_num_doc.Location = new System.Drawing.Point(120, 162);
+            this.lbl_num_doc.ForeColor = System.Drawing.Color.DarkOrange;
+            this.lbl_num_doc.Location = new System.Drawing.Point(116, 164);
             this.lbl_num_doc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_num_doc.Name = "lbl_num_doc";
             this.lbl_num_doc.Size = new System.Drawing.Size(295, 29);
@@ -1489,7 +1463,7 @@
             this.btnAbrirImagen.FlatAppearance.BorderSize = 0;
             this.btnAbrirImagen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAbrirImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAbrirImagen.Location = new System.Drawing.Point(511, 207);
+            this.btnAbrirImagen.Location = new System.Drawing.Point(468, 207);
             this.btnAbrirImagen.Name = "btnAbrirImagen";
             this.btnAbrirImagen.Size = new System.Drawing.Size(35, 35);
             this.btnAbrirImagen.TabIndex = 76;
@@ -1506,7 +1480,7 @@
             this.button17.FlatAppearance.BorderSize = 0;
             this.button17.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Location = new System.Drawing.Point(553, 207);
+            this.button17.Location = new System.Drawing.Point(509, 207);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(35, 35);
             this.button17.TabIndex = 77;
@@ -1521,7 +1495,7 @@
             this.button18.FlatAppearance.BorderSize = 0;
             this.button18.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.Location = new System.Drawing.Point(597, 207);
+            this.button18.Location = new System.Drawing.Point(554, 207);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(35, 35);
             this.button18.TabIndex = 78;
@@ -1536,7 +1510,7 @@
             this.button28.FlatAppearance.BorderSize = 0;
             this.button28.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button28.Location = new System.Drawing.Point(643, 207);
+            this.button28.Location = new System.Drawing.Point(600, 207);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(35, 35);
             this.button28.TabIndex = 79;
@@ -1557,6 +1531,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Opciones de Escaneo";
             // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(907, 159);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(29, 25);
+            this.button1.TabIndex = 81;
+            this.button1.Text = "F";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // ScanOrfeo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1565,6 +1550,9 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1370, 772);
             this.ControlBox = false;
+            this.Controls.Add(this.pan_loading);
+            this.Controls.Add(this.numericUpDown3);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button28);
             this.Controls.Add(this.button18);
@@ -1595,7 +1583,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnBorrarSeleccion);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.pan_loading);
             this.Controls.Add(this.groupDPI);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.numericUpDown2);
@@ -1606,7 +1593,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupDuplex);
@@ -1682,9 +1668,6 @@
         private System.Windows.Forms.ToolStripMenuItem seleccionarEscanerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurarEscanerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem impresoraDePuntoImpresiónPorPuertoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imprimirImagenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem guardarImagenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borrarSelecciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verToolStripMenuItem;
@@ -1788,5 +1771,6 @@
         private System.Windows.Forms.Button button28;
         private System.Windows.Forms.Button btnEnviarPDF1;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button button1;
     }
 }

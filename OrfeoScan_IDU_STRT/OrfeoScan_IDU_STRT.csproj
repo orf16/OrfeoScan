@@ -145,6 +145,10 @@
     <Folder Include="clases\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\funciones\funciones.csproj">
+      <Project>{4EF98DC4-AC58-4248-9A40-CC9BCB5F2112}</Project>
+      <Name>funciones</Name>
+    </ProjectReference>
     <ProjectReference Include="..\model\model.csproj">
       <Project>{d50bea59-7129-42a1-828d-436992a91b96}</Project>
       <Name>model</Name>
