@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanOrfeo));
             this.label2 = new System.Windows.Forms.Label();
             this.cBoxtRadicado = new System.Windows.Forms.ComboBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numCopias = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -45,7 +45,7 @@
             this.codbarras = new System.Windows.Forms.PictureBox();
             this.btn_enviar_1 = new System.Windows.Forms.Button();
             this.btnStartCapture = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnEtiqueta = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.opcionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -157,7 +157,7 @@
             this.button18 = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCopias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -202,14 +202,13 @@
             this.cBoxtRadicado.Size = new System.Drawing.Size(206, 22);
             this.cBoxtRadicado.TabIndex = 6;
             // 
-            // numericUpDown3
+            // numCopias
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(652, 165);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(83, 22);
-            this.numericUpDown3.TabIndex = 26;
-            this.numericUpDown3.Visible = false;
-            this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
+            this.numCopias.Location = new System.Drawing.Point(652, 165);
+            this.numCopias.Name = "numCopias";
+            this.numCopias.Size = new System.Drawing.Size(83, 22);
+            this.numCopias.TabIndex = 26;
+            this.numCopias.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // label4
             // 
@@ -222,7 +221,6 @@
             this.label4.Size = new System.Drawing.Size(42, 15);
             this.label4.TabIndex = 25;
             this.label4.Text = "Copias";
-            this.label4.Visible = false;
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
@@ -236,7 +234,6 @@
             this.label3.Size = new System.Drawing.Size(40, 15);
             this.label3.TabIndex = 24;
             this.label3.Text = "Rango";
-            this.label3.Visible = false;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // numericUpDown2
@@ -245,7 +242,6 @@
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(68, 22);
             this.numericUpDown2.TabIndex = 23;
-            this.numericUpDown2.Visible = false;
             this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // numericUpDown1
@@ -254,7 +250,6 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(59, 22);
             this.numericUpDown1.TabIndex = 22;
-            this.numericUpDown1.Visible = false;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // groupBox1
@@ -359,18 +354,18 @@
             this.btnStartCapture.UseVisualStyleBackColor = false;
             this.btnStartCapture.Click += new System.EventHandler(this.btnStartCapture_Click);
             // 
-            // button2
+            // btnEtiqueta
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(105, 21);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(45, 45);
-            this.button2.TabIndex = 29;
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnEtiqueta.BackColor = System.Drawing.Color.White;
+            this.btnEtiqueta.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnEtiqueta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEtiqueta.Image = ((System.Drawing.Image)(resources.GetObject("btnEtiqueta.Image")));
+            this.btnEtiqueta.Location = new System.Drawing.Point(105, 21);
+            this.btnEtiqueta.Name = "btnEtiqueta";
+            this.btnEtiqueta.Size = new System.Drawing.Size(45, 45);
+            this.btnEtiqueta.TabIndex = 29;
+            this.btnEtiqueta.UseVisualStyleBackColor = false;
+            this.btnEtiqueta.Click += new System.EventHandler(this.btnEtiqueta_Click);
             // 
             // dataGridView1
             // 
@@ -613,13 +608,13 @@
             // pQRTelefónicasToolStripMenuItem
             // 
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             // 
             // pQRPersonalToolStripMenuItem
             // 
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             // 
             // herramientasToolStripMenuItem
@@ -670,6 +665,7 @@
             // 
             // imprimirSoloStickerToolStripMenuItem
             // 
+            this.imprimirSoloStickerToolStripMenuItem.CheckOnClick = true;
             this.imprimirSoloStickerToolStripMenuItem.Name = "imprimirSoloStickerToolStripMenuItem";
             this.imprimirSoloStickerToolStripMenuItem.Size = new System.Drawing.Size(345, 22);
             this.imprimirSoloStickerToolStripMenuItem.Text = "Imprimir solo sticker de registro Seleccionado";
@@ -686,7 +682,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             // 
             // impresiónEtiquetaToolStripMenuItem
@@ -694,7 +690,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -702,7 +698,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // ayudaToolStripMenuItem
@@ -1205,7 +1201,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnEnviarPDF1);
-            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.btnEtiqueta);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.cBoxtRadicado);
             this.groupBox2.Controls.Add(this.btnStopScan);
@@ -1606,7 +1602,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.numericUpDown3);
+            this.Controls.Add(this.numCopias);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupDuplex);
@@ -1624,7 +1620,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ScanOrfeo_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ScanOrfeo_KeyUp);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCopias)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -1662,7 +1658,7 @@
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cBoxtRadicado;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numCopias;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
@@ -1671,7 +1667,7 @@
         private System.Windows.Forms.PictureBox codbarras;
         private System.Windows.Forms.Button btn_enviar_1;
         private System.Windows.Forms.Button btnStartCapture;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnEtiqueta;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem opcionesToolStripMenuItem;
