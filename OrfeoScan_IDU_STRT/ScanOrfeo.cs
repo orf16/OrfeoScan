@@ -28,6 +28,10 @@ using System.Drawing.Drawing2D;
 
 namespace OrfeoScan_IDU_STRT
 {
+    /// <summary>
+	/// Class used to store the result of an InputBox.Show message.
+	/// </summary>
+	
     public partial class ScanOrfeo : Form
     {
         //Variables de Scanner
@@ -38,27 +42,29 @@ namespace OrfeoScan_IDU_STRT
         List<System.Drawing.Image> imagenes = new List<System.Drawing.Image>();
         List<PictureBox> boxes = new List<PictureBox>();
         int numero_box = 0;
+
+
         bool btnAllSettings = false;
-        private int HoJas;
-        private string Inf_radicadoIMG1;
-        private string Inf_radicadoIMG2;
-        private string Inf_radicadoIMG3;
-        private string numeroExpediente;
-        private string espCodi;
-        private string varFechaSistema = "";
-        private string varIsNull = "";
-        private bool Doc_Anexo;
-        private int paginaActual = 0;
 
         //Variables de formularios
         funciones.funciones funciones = new funciones.funciones();
         private string varConcat = "";
         private string varSubstr = "";
         private string varRadi_Fech_radi = "";
+        private string varFechaSistema = "";
+        private string varIsNull = "";
+        private bool Doc_Anexo;
         private USUARIO usuarioScanOrfeo;
+        private int HoJas; 
+        private string Inf_radicadoIMG1; 
+        private string Inf_radicadoIMG2; 
+        private string Inf_radicadoIMG3;
+        private string numeroExpediente;
+        private string espCodi;
         private string DEPRADICADO;
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         private string DirTraB;
+        private int paginaActual = 0;
         string digitalizador_user = "digitalizador40";
         string digitalizador = "D1g1t4l#0129";
         int[] pageRange = new int[2] { 0, 2 };
@@ -118,7 +124,7 @@ namespace OrfeoScan_IDU_STRT
                         LoadSourceCaps();
                     }
                 }
-                primerEscaner = false;
+                primerEscaner=false;
             }
         }
         private void cBoxtRadicado_load()
@@ -138,7 +144,7 @@ namespace OrfeoScan_IDU_STRT
                         int SGD_TRAD_CODIGO = 0;
                         if (int.TryParse(reader[0].ToString(), out SGD_TRAD_CODIGO))
                         {
-                            cBoxtRadicado.Items.Add(SGD_TRAD_CODIGO.ToString() + " " + (string)reader[1]);
+                            cBoxtRadicado.Items.Add(SGD_TRAD_CODIGO.ToString()+" "+(string)reader[1]);
                         }
                     }
                     funciones.desconectar(con);
@@ -343,7 +349,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoMasiva(string numradicado)
         {
-            string IISQL = string.Empty;
+            string IISQL=string.Empty;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
             {
@@ -438,7 +444,7 @@ namespace OrfeoScan_IDU_STRT
 
         private void button13_Click(object sender, EventArgs e)
         {
-            var imagen = RotateImage(TiffCarga[0], 90, true, true, System.Drawing.Color.White);
+            var imagen=RotateImage(TiffCarga[0], 90, true, true, System.Drawing.Color.White);
             TiffCarga[0] = imagen;
             PageEdit.Image = imagen;
         }
@@ -493,15 +499,21 @@ namespace OrfeoScan_IDU_STRT
                 var img = Bitmap.FromFile(fileName);
                 var pages = img.GetFrameCount(FrameDimension.Page);
                 List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
-                cargarImagen0(pageRange, true, fileName);
+                cargar= Split(fileName);
+                if (cargar.Count>0)
+                    cargarImagen(cargar, pageRange, true);
             }
         }
         private List<System.Drawing.Image> Split(string pstrInputFilePath)
         {
             List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
+            //Get the frame dimension list from the image of the file and
             System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(pstrInputFilePath);
+            //get the globally unique identifier (GUID)
             Guid objGuid = tiffImage.FrameDimensionsList[0];
+            //create the frame dimension
             FrameDimension dimension = new FrameDimension(objGuid);
+            //Gets the total number of frames in the .tiff file
             int noOfPages = tiffImage.GetFrameCount(dimension);
 
             ImageCodecInfo encodeInfo = null;
@@ -515,6 +527,10 @@ namespace OrfeoScan_IDU_STRT
                 }
             }
 
+            // Save the tiff file in the output directory.
+            //if (!Directory.Exists(pstrOutputPath))
+            //    Directory.CreateDirectory(pstrOutputPath);
+
             foreach (Guid guid in tiffImage.FrameDimensionsList)
             {
                 for (int index = 0; index < noOfPages; index++)
@@ -523,6 +539,8 @@ namespace OrfeoScan_IDU_STRT
                     tiffImage.SelectActiveFrame(currentFrame, index);
                     Bitmap nextFrame = new Bitmap(tiffImage);
                     cargar.Add(nextFrame);
+                    //nextFrame.Dispose();
+                    //tiffImage.Save(string.Concat(pstrOutputPath, @"\", index, ".TIF"), encodeInfo, null);
                 }
             }
             return cargar;
@@ -541,7 +559,7 @@ namespace OrfeoScan_IDU_STRT
             bool pageEmpty2 = true;
             bool pageEmpty3 = true;
 
-            for (int i = range[0]; i < range[1] + 1; i++)
+            for (int i = range[0]; i < range[1]+1; i++)
             {
                 bool asigno = false;
                 if (pageEmpty1 && !asigno)
@@ -580,170 +598,24 @@ namespace OrfeoScan_IDU_STRT
                 PageScreen1.Image = null;
                 lblScreen1.Text = "";
             }
-
+                
             if (pageEmpty2)
             {
                 PageScreen2.Image = null;
                 lblScreen2.Text = "";
             }
-
+                
             if (pageEmpty3)
             {
                 PageScreen3.Image = null;
                 lblScreen3.Text = "";
             }
+                
 
             if (inicial && TiffCarga.Count >= 1)
                 PageEdit.Image = TiffCarga[0];
         }
         private void cargarImagen1(int[] range)
-        {
-
-            bool pageEmpty1 = true;
-            bool pageEmpty2 = true;
-            bool pageEmpty3 = true;
-
-            for (int i = range[0]; i < range[1] + 1; i++)
-            {
-                bool asigno = false;
-                if (pageEmpty1 && !asigno)
-                {
-                    if (TiffCarga.Count >= i + 1)
-                    {
-                        PageScreen1.Image = TiffCarga[i];
-                        lblScreen1.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty1 = false;
-                        asigno = true;
-                    }
-                }
-                if (pageEmpty2 && !asigno)
-                {
-                    if (TiffCarga.Count >= i + 1)
-                    {
-                        PageScreen2.Image = TiffCarga[i];
-                        lblScreen2.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty2 = false;
-                        asigno = true;
-                    }
-                }
-                if (pageEmpty3 && !asigno)
-                {
-                    if (TiffCarga.Count >= i + 1)
-                    {
-                        PageScreen3.Image = TiffCarga[i];
-                        lblScreen3.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty3 = false;
-                        asigno = true;
-                    }
-                }
-            }
-            if (pageEmpty1)
-            {
-                PageScreen1.Image = null;
-                lblScreen1.Text = "";
-            }
-
-            if (pageEmpty2)
-            {
-                PageScreen2.Image = null;
-                lblScreen2.Text = "";
-            }
-
-            if (pageEmpty3)
-            {
-                PageScreen3.Image = null;
-                lblScreen3.Text = "";
-            }
-        }
-
-        private void cargarImagen0(int[] range, bool inicial, string path)
-        {
-            List<System.Drawing.Image> cargue = new List<System.Drawing.Image>();
-            System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(path);
-            Guid objGuid = tiffImage.FrameDimensionsList[0];
-            FrameDimension dimension = new FrameDimension(objGuid);
-            int noOfPages = tiffImage.GetFrameCount(dimension);
-            ImageCodecInfo encodeInfo = null;
-            ImageCodecInfo[] imageEncoders = ImageCodecInfo.GetImageEncoders();
-            for (int j = 0; j < imageEncoders.Length; j++)
-            {
-                if (imageEncoders[j].MimeType == "image/tiff")
-                {
-                    encodeInfo = imageEncoders[j];
-                    break;
-                }
-            }
-            foreach (Guid guid in tiffImage.FrameDimensionsList)
-            {
-                for (int index = range[0]; index < range[1]+1; index++)
-                {
-                    FrameDimension currentFrame = new FrameDimension(guid);
-                    tiffImage.SelectActiveFrame(currentFrame, index);
-                    Bitmap nextFrame = new Bitmap(tiffImage);
-                    cargue.Add(nextFrame);
-                }
-            }
-
-            bool pageEmpty1 = true;
-            bool pageEmpty2 = true;
-            bool pageEmpty3 = true;
-
-            for (int i = range[0]; i < range[1] + 1; i++)
-            {
-                bool asigno = false;
-                if (pageEmpty1 && !asigno)
-                {
-                    if (cargue.Count >= i + 1)
-                    {
-                        PageScreen1.Image = cargue[i];
-                        lblScreen1.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty1 = false;
-                        asigno = true;
-                    }
-                }
-                if (pageEmpty2 && !asigno)
-                {
-                    if (cargue.Count >= i + 1)
-                    {
-                        PageScreen2.Image = cargue[i];
-                        lblScreen2.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty2 = false;
-                        asigno = true;
-                    }
-                }
-                if (pageEmpty3 && !asigno)
-                {
-                    if (cargue.Count >= i + 1)
-                    {
-                        PageScreen3.Image = cargue[i];
-                        lblScreen3.Text = pref_pag + (i + 1).ToString();
-                        pageEmpty3 = false;
-                        asigno = true;
-                    }
-                }
-            }
-            if (pageEmpty1)
-            {
-                PageScreen1.Image = null;
-                lblScreen1.Text = "";
-            }
-
-            if (pageEmpty2)
-            {
-                PageScreen2.Image = null;
-                lblScreen2.Text = "";
-            }
-
-            if (pageEmpty3)
-            {
-                PageScreen3.Image = null;
-                lblScreen3.Text = "";
-            }
-
-            if (inicial && cargue.Count >= 1)
-                PageEdit.Image = cargue[0];
-        }
-        private void cargarImagen2(int[] range, string path)
         {
 
             bool pageEmpty1 = true;
@@ -878,7 +750,7 @@ namespace OrfeoScan_IDU_STRT
             pan_loading.Enabled = false;
             pan_loading.Refresh();
         }
-
+        
 
 
 
@@ -1350,7 +1222,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                 {
-                    if (Rect.Width <= PageEdit.Image.Width)
+                    if (Rect.Width<= PageEdit.Image.Width)
                     {
                         Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
                         e.Graphics.DrawRectangle(blackPen, Rect);
@@ -1375,7 +1247,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void panel2_MouseMove(object sender, MouseEventArgs e)
         {
-
+            
             //if (e.Button == MouseButtons.Left)
             //{
             //    Point changePoint = new Point(e.Location.X - _StartPoint.X,
@@ -1394,6 +1266,11 @@ namespace OrfeoScan_IDU_STRT
             var rectangulo = Rect;
             var imagen = PageEdit.Image;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
         private System.Drawing.Image generarCodigoBarras(string numero_documento)
         {
             Barcode39 b = new Barcode39();
@@ -1407,7 +1284,7 @@ namespace OrfeoScan_IDU_STRT
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             limpiar_informacion_radicado();
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count>0)
             {
                 string tipo_rem = "";
                 string tipo = "";
@@ -1424,7 +1301,7 @@ namespace OrfeoScan_IDU_STRT
                 string FUN = "";
                 string remitente = "";
 
-                if (dataGridView1.Rows[e.RowIndex].Cells[0].Value != null)
+                if (dataGridView1.Rows[e.RowIndex].Cells[0].Value!=null)
                     tipo = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 if (dataGridView1.Rows[e.RowIndex].Cells[2].Value != null)
                     numero_documento = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -1472,7 +1349,7 @@ namespace OrfeoScan_IDU_STRT
                             path = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
 
                         lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
-                        lbl_InfoRadicado2.Text = "Fecha" + fecha + "->" + dependencia;
+                        lbl_InfoRadicado2.Text ="Fecha" + fecha +"->"+ dependencia;
 
                         if (OEM > 0)
                         {
@@ -1503,7 +1380,7 @@ namespace OrfeoScan_IDU_STRT
                             OracleDataReader reader = command.ExecuteReader();
                             if (reader.Read())
                             {
-                                if (reader[0] != null)
+                                if (reader[0]!=null)
                                     remitente = reader[0].ToString();
                                 funciones.desconectar(con);
                             }
@@ -1518,15 +1395,15 @@ namespace OrfeoScan_IDU_STRT
                         lbl_InfoRadicado3.Text += tipo_rem;
                         lbl_InfoRadicado3.Text += remitente;
 
-                        if (numero_documento.Length == 14)
+                        if (numero_documento.Length==14)
                             codbarras.Image = generarCodigoBarras(numero_documento);
 
-                        lbl_num_doc.Text = "RADICADO " + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(numero_documento.Length - 1);
+                        lbl_num_doc.Text = "RADICADO " + numero_documento.Substring(0,4) + "-"+ numero_documento.Substring(4, 3) +"-"+ numero_documento.Substring(7, 6) + "-"+ numero_documento.Substring(numero_documento.Length - 1);
 
                         if (path.Contains("pdf") || path.Contains("tif") || path.Contains("tiff"))
                             MessageBox.Show("El radicado seleccionado ya tiene un archivo asociado. Si continua, el pdf será remplazado.");
                     }
-                    else if (tipo == "EXPEDIENTE")
+                    else if(tipo == "EXPEDIENTE")
                     {
                         if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
@@ -1534,7 +1411,7 @@ namespace OrfeoScan_IDU_STRT
                             nombre_documento = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
 
                         lbl_InfoRadicado1.Text = tipo + " No." + numero_documento;
-                        lbl_InfoRadicado2.Text = "Título:";
+                        lbl_InfoRadicado2.Text ="Título:";
                         lbl_InfoRadicado3.Text = asunto;
                         lbl_InfoRadicado4.Text = "Nombre-CC-Nit:";
                         lbl_InfoRadicado5.Text = nombre_documento;
@@ -1571,7 +1448,7 @@ namespace OrfeoScan_IDU_STRT
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (pageRange[0] != 0)
+            if (pageRange[0]!=0)
             {
                 pageRange[0]--;
                 pageRange[1]--;
@@ -1796,7 +1673,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 pageRange[0]--;
                 pageRange[1]--;
-                txtPage.Text = (pageRange[0] + 1).ToString();
+                txtPage.Text = (pageRange[0]+1).ToString();
                 cargarImagen1(pageRange);
             }
         }
@@ -1839,239 +1716,17 @@ namespace OrfeoScan_IDU_STRT
         private void txtPage_KeyUp(object sender, KeyEventArgs e)
         {
             int page;
-            if (int.TryParse(txtPage.Text.Replace(" ", ""), out page))
+            if (int.TryParse(txtPage.Text.Replace(" ",""), out page))
             {
-                if (TiffCarga.Count >= page && TiffCarga.Count > 0)
+                if (TiffCarga.Count>=page && TiffCarga.Count > 0)
                 {
-                    pageRange[0] = page - 1;
-                    pageRange[1] += 2;
+                    pageRange[0]= page-1;
+                    pageRange[1]+= 2;
                     cargarImagen1(pageRange);
                 }
             }
         }
-
-        private void btnEtiqueta_Click(object sender, EventArgs e)
-        {
-            //text1
-            int numeroCopias = (int)numCopias.Value;
-            if (!imprimirSoloStickerToolStripMenuItem.Checked)
-            {
-                //RADI_NUME_RADI
-                //RADI_DEPE_ACTU
-                //RA_ASUN
-                //Recorrer todas las filas del gridview
-                if (dataGridView1.Rows.Count > 0)
-                {
-                    if (dataGridView1.SelectedRows.Count == 0)
-                    {
-                        
-                        string tipo = "";
-                        string numero_documento = "";
-                        string tipo_rem = "";
-                        string paginas = "";
-                        string fecha = "";
-                        string asunto = "";
-                        string dependencia = "";
-                        string path = "";
-                        string nombre_documento = "";
-                        int OEM = 0;
-                        int ESP = 0;
-                        int CIU = 0;
-                        string FUN = "";
-                        string remitente = "";
-                        string nombre_dep = "";
-                        string anex_desc = "";
-
-
-                        if (dataGridView1.SelectedRows[0].Cells[0].Value != null)
-                            tipo = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                        if (dataGridView1.Rows[0].Cells[2].Value != null)
-                            numero_documento = dataGridView1.Rows[0].Cells[2].Value.ToString();
-
-                        if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(numero_documento))
-                        {
-                            string IISQL = "Select r.RA_ASUN,a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,SGD_DOC_FUN, a.SGD_DIR_NOMREMDES, r.RADI_DESC_ANEX, d.DEPE_NOMB from sgd_dir_drecciones a, radicado r, dependencia d where a.sgd_dir_tipo = 1 and r.radi_depe_radi = d.depe_codi and a.radi_nume_radi=r.radi_nume_radi and  a.radi_nume_radi=" + numero_documento;
-                            IISQL = IISQL + " ORDER BY a.SGD_DIR_TIPO  ";
-                            OracleConnection con = new OracleConnection(funciones.conni);
-                            try
-                            {
-                                con.Open();
-                                OracleCommand command = new OracleCommand(IISQL, con);
-                                OracleDataReader reader = command.ExecuteReader();
-                                if (reader.Read())
-                                {
-                                    if (int.TryParse(reader[0].ToString(), out CIU))
-                                        FUN = "";
-                                    if (int.TryParse(reader[1].ToString(), out ESP))
-                                        FUN = "";
-                                    if (int.TryParse(reader[2].ToString(), out OEM))
-                                        FUN = "";
-                                    FUN = (string)reader[3];
-                                    if (reader[6]!=null)
-                                    {
-                                        anex_desc = reader[6].ToString();
-                                    }
-                                    funciones.desconectar(con);
-                                }
-                                else
-                                    funciones.desconectar(con);
-                            }
-                            catch (Exception)
-                            {
-                                funciones.desconectar(con);
-                            }
-                            if (tipo == "RADICADO")
-                            {
-                                    paginas = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                                if (dataGridView1.SelectedRows[0].Cells[3].Value != null)
-                                    fecha = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
-                                if (dataGridView1.SelectedRows[0].Cells[4].Value != null)
-                                    asunto = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
-                                if (dataGridView1.SelectedRows[0].Cells[5].Value != null)
-                                    dependencia = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
-                                if (dataGridView1.SelectedRows[0].Cells[6].Value != null)
-                                    path = dataGridView1.SelectedRows[0].Cells[6].Value.ToString();
-
-
-                                if (OEM > 0)
-                                {
-                                    IISQL = "Select a.sgd_oem_oempresa REMITENTE from SGD_OEM_OEMPRESAS a where a.SGD_OEM_CODIGO=" + OEM.ToString();
-                                    tipo_rem += "(OEM) ";
-                                }
-                                if (CIU > 0)
-                                {
-                                    IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
-                                    tipo_rem += "(CIU) ";
-                                }
-                                if (ESP > 0)
-                                {
-                                    IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
-                                    tipo_rem += "(ESP) ";
-                                }
-                                if (FUN != string.Empty)
-                                {
-                                    IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
-                                    tipo_rem += "(FUN) ";
-                                }
-
-                                con = new OracleConnection(funciones.conni);
-                                try
-                                {
-                                    con.Open();
-                                    OracleCommand command = new OracleCommand(IISQL, con);
-                                    OracleDataReader reader = command.ExecuteReader();
-                                    if (reader.Read())
-                                    {
-                                        if (reader[0] != null)
-                                            remitente = reader[0].ToString();
-                                        funciones.desconectar(con);
-                                    }
-                                    else
-                                        funciones.desconectar(con);
-                                }
-                                catch (Exception ex)
-                                {
-                                    funciones.desconectar(con);
-                                }
-
-
-                                IISQL = "SELECT DEPE_NOMB FROM dependencia where DEPE_CODI=" + dependencia;
-                                    con = new OracleConnection(funciones.conni);
-                                try
-                                {
-                                    con.Open();
-                                    OracleCommand command = new OracleCommand(IISQL, con);
-                                    OracleDataReader reader = command.ExecuteReader();
-                                    if (reader.Read())
-                                    {
-                                        if (reader[0] != null)
-                                            nombre_dep = reader[0].ToString();
-                                        funciones.desconectar(con);
-                                    }
-                                    else
-                                        funciones.desconectar(con);
-                                }
-                                catch (Exception ex)
-                                {
-                                    funciones.desconectar(con);
-                                }
-
-                                string numRad = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
-                                string fechaRad = string.Format(fecha, "dd/mm/yyyy hh:mm AMPM");
-                                string depeRad = dependencia;
-                                tipo_rem += remitente;
-                                string año = numero_documento.Substring(0, 4);
-                                string dependencia_str = numero_documento.Substring(4, 3);
-                                string consecutivo = numero_documento.Substring(7, 6);
-                                string tipo_rad = numero_documento.Substring(numero_documento.Length - 1);
-                                System.Drawing.Image CodigoBarras = generarCodigoBarras(numero_documento);
-
-                                tipo_rem = tipo_rem.Replace("DIRECCION", "DIR");
-                                tipo_rem = tipo_rem.Replace("DEPENDENCIA", "DEP");
-                                tipo_rem = tipo_rem.Replace("OFICINA", "OFIC");
-                                tipo_rem = tipo_rem.Replace("SUPERINTENDENCIA", "SUP");
-
-                                nombre_dep = nombre_dep.Replace("DIRECCION", "DIR");
-                                nombre_dep = nombre_dep.Replace("DEPENDENCIA", "DEP");
-                                nombre_dep = nombre_dep.Replace("OFICINA", "OFIC");
-                                nombre_dep = nombre_dep.Replace("SUPERINTENDENCIA", "SUP");
-
-                                anex_desc = anex_desc.Substring(0, 58);
-                                anex_desc = anex_desc.Replace(System.Environment.NewLine, " ");
-                            }
-                            else if (tipo == "EXPEDIENTE")
-                            {
-                                if (dataGridView1.SelectedRows[0].Cells[4].Value != null)
-                                    asunto = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
-                                if (dataGridView1.SelectedRows[0].Cells[5].Value != null)
-                                    nombre_documento = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
-
-                                //lbl_InfoRadicado1.Text = tipo + " No." + numero_documento;
-                                //lbl_InfoRadicado2.Text = "Título:";
-                                //lbl_InfoRadicado3.Text = asunto;
-                                //lbl_InfoRadicado4.Text = "Nombre-CC-Nit:";
-                                //lbl_InfoRadicado5.Text = nombre_documento;
-                                //lbl_num_doc.Text = "EXPEDIENTE " + numero_documento;
-
-                                //if (numero_documento.Length > 14)
-                                //    codbarras.Image = generarCodigoBarras(numero_documento);
-                            }
-
-                            //IMPRIMIR
-                            for (int i = 0; i < numeroCopias; i++)
-                            {
-
-                            }
-                            PrintDocument p = new PrintDocument();
-
-                            //imprimir logo
-                            //Imprime el codigo de barras
-            //                Printer.Print numRadicado &" de " & fechRadicado
-            //Printer.Font.Size = 7
-            //Printer.Print "Remite: " & RemitenteT
-            //Printer.Print "Dep.: " & DEPERADI
-            //Printer.Print "Anexos: " & Replace(Left(RADIANEX, 58), vbCrLf, " ")
-            //Printer.Print "Novedad: " & NOVEDAD
-
-
-
-                            //                p.
-                            //                Printer.PrintQuality = 3000
-                            //Printer.Font.Name = "Arial"
-                            //Printer.Font.Size = 4
-                            //Printer.Font.Bold = True
-                            //Printer.Print vbCrLf &vbCrLf
-
-
-                        }
-                    }
-                }
-            }
-            else
-            {
-
-            }
-        }
+        //Falta metodo para recargar la lista de items
     }
 
     public class InputBoxResult
@@ -2079,6 +1734,11 @@ namespace OrfeoScan_IDU_STRT
         public DialogResult ReturnCode;
         public string Text;
     }
+
+    
+
+
+
     public class InputBox
     {
 
