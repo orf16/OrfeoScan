@@ -1428,6 +1428,16 @@ namespace OrfeoScan_IDU_STRT
             img = b.GenerateBarcodeImage(codbarras.Width, codbarras.Height, numero_documento);
             return img;
         }
+        private System.Drawing.Image generarCodigoBarras_sinver(string numero_documento)
+        {
+            Barcode39 b = new Barcode39();
+            System.Drawing.Image img;
+            b.ShowString = false;
+            b.IncludeCheckSumDigit = false;
+            b.TextFont = new System.Drawing.Font("Courier New", 10);
+            img = b.GenerateBarcodeImage(codbarras.Width, codbarras.Height, numero_documento);
+            return img;
+        }
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             codbarras_private = null;
@@ -2042,7 +2052,7 @@ namespace OrfeoScan_IDU_STRT
                                 string dependencia_str = numero_documento.Substring(4, 3);
                                 string consecutivo = numero_documento.Substring(7, 6);
                                 string tipo_rad = numero_documento.Substring(numero_documento.Length - 1);
-                                codbarras_private = generarCodigoBarras(numero_documento);
+                                codbarras_private = generarCodigoBarras_sinver(numero_documento);
 
                                 tipo_rem = tipo_rem.Replace("DIRECCION", "DIR");
                                 tipo_rem = tipo_rem.Replace("DEPENDENCIA", "DEP");
@@ -2082,21 +2092,24 @@ namespace OrfeoScan_IDU_STRT
                             //IMPRIMIR
                             for (int i = 0; i < numeroCopias; i++)
                             {
-                                PrintDocument pd = new PrintDocument();
-                                PrinterSettings ps = new PrinterSettings();
-                                PaperSize psize = new PaperSize("Custom", 2000, 130);
+
+                                print();
+
+                                //PrintDocument pd = new PrintDocument();
+                                //PrinterSettings ps = new PrinterSettings();
+                                //PaperSize psize = new PaperSize("Custom", 340, 151);
 
 
-                                pd.PrintPage += PrintPage;
-                                //here to select the printer attached to user PC
-                                PrintDialog printDialog1 = new PrintDialog();
-                                printDialog1.Document = pd;
-                                printDialog1.Document.DefaultPageSettings.PaperSize = psize;
-                                DialogResult result = printDialog1.ShowDialog();
-                                if (result == DialogResult.OK)
-                                {
-                                    pd.Print();//this will trigger the Print Event handeler PrintPage
-                                }
+                                //pd.PrintPage += PrintPage;
+                                ////here to select the printer attached to user PC
+                                //PrintDialog printDialog1 = new PrintDialog();
+                                //printDialog1.Document = pd;
+                                //printDialog1.Document.DefaultPageSettings.PaperSize = psize;
+                                //DialogResult result = printDialog1.ShowDialog();
+                                //if (result == DialogResult.OK)
+                                //{
+                                //    pd.Print();//this will trigger the Print Event handeler PrintPage
+                                //}
                             }
                             PrintDocument p = new PrintDocument();
 
@@ -2128,7 +2141,83 @@ namespace OrfeoScan_IDU_STRT
 
             }
         }
-        //The Print Event handeler
+        #region Properties and Variables
+        PrintDocument pdoc = null;
+        private decimal _price = 0;
+        #endregion
+        public void print()
+        {
+            try
+            {
+                PrintDialog pd = new PrintDialog();
+                string strDefaultPrinter = pd.PrinterSettings.PrinterName;//Code to get default printer name  
+                pdoc = new PrintDocument();
+                PrinterSettings ps = new PrinterSettings();
+                System.Drawing.Font font = new System.Drawing.Font("Courier New", 15);//set default font for page
+                PaperSize psize = new PaperSize("Custom", 303, 98);//set paper size sing code
+                pd.Document = pdoc;
+                pd.Document.DefaultPageSettings.PaperSize = psize;
+                pdoc.PrintPage += new PrintPageEventHandler(pdoc_PrintPage);
+
+                //*************************Code to set Default Printer*************************************
+                string defaultPrinterName = ps.PrinterName; // Code to get default printer
+                if (defaultPrinterName == "POSTEK G-3106")
+                {
+                    ps.PrinterName = "POSTEK G-3106";//Code to set default printer name
+                    pd.PrinterSettings.PrinterName = "POSTEK G-3106";//Code to set default printer name 
+                }
+                else
+                {
+                    ps.PrinterName = defaultPrinterName;//Code to set default printer name
+                    pd.PrinterSettings.PrinterName = defaultPrinterName;//Code to set default printer name 
+                }
+                DialogResult result = pd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    pdoc.Print();
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+        }
+
+        void pdoc_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            System.Drawing.Font fuente1 = new System.Drawing.Font("Arial", 8, FontStyle.Bold);
+            System.Drawing.Font fuente2 = new System.Drawing.Font("Arial", 7, FontStyle.Bold);
+            StringFormat sf = new StringFormat();
+
+            System.Drawing.Font font = new System.Drawing.Font("Courier New", 10);// set default font size
+            float fontHeight = font.GetHeight();
+            int startX = 5;// Position of x-axis
+            int startY = 0;//starting position of y-axis
+            int Offset = 2;
+            System.Drawing.Image img = System.Drawing.Image.FromFile(@"D:\logoEntidad.bmp");
+            
+            e.Graphics.DrawImage(img, new System.Drawing.Rectangle(startX, startY + Offset, 69, 28));
+            e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(75, startY + Offset, 300, 28));
+
+            Offset +=31;
+            e.Graphics.DrawString("No. 20195261100042 de 10/09/2019 09:01 a.m.", fuente1, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            Offset += 11;
+            e.Graphics.DrawString("Remite: (CIU) KELLY JOHANA DIAZ TEJADA", fuente1, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            Offset += 11;
+            e.Graphics.DrawString("Dep.:Subdirección Técnica de Recursos Humanos", fuente2, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            Offset += 11;
+            e.Graphics.DrawString("Anexos:1 FOLIO", fuente2, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            Offset += 11;
+            e.Graphics.DrawString("Novedad", fuente2, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            //Offset = Offset + 16;
+            //e.Graphics.DrawString("$" + "100", new System.Drawing.Font("Courier New", 12, FontStyle.Bold), new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
+            //Offset = Offset + 20;
+
+            Offset = 0;
+        }
+
         private void PrintPage(object o, PrintPageEventArgs e)
         {
             try
@@ -2149,19 +2238,19 @@ namespace OrfeoScan_IDU_STRT
                     //{
                     //    m.Width = (int)((double)img.Width / (double)img.Height * (double)m.Height);
                     //}
-                    int t_fuente = 19;
+                    int t_fuente = 12;
                     System.Drawing.Color color_fuente_Problema = System.Drawing.Color.FromArgb(0, 0, 0);
                     System.Drawing.Font FuenteProblema = new System.Drawing.Font("Century Gothic", t_fuente, FontStyle.Bold, GraphicsUnit.Pixel);
                     StringFormat stringFormat = new StringFormat();
-                    stringFormat.Alignment = StringAlignment.Center;
-                    stringFormat.LineAlignment = StringAlignment.Center;
+                    stringFormat.Alignment = StringAlignment.Near;
+                    stringFormat.LineAlignment = StringAlignment.Near;
 
                     SolidBrush LetraProblema = new SolidBrush(color_fuente_Problema);
                     
 
-                    e.Graphics.DrawImage(img, new System.Drawing.Rectangle(0, 0, 100, 40));
-                    e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(101, 0, 300, 40));
-                    e.Graphics.DrawString("No. 20195261100082", FuenteProblema, LetraProblema, new System.Drawing.Rectangle(0, 200, 300, 40), stringFormat);
+                    e.Graphics.DrawImage(img, new System.Drawing.Rectangle(0, 0, 70, 40));
+                    e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(101, 0, 211, 40));
+                    e.Graphics.DrawString("No. 20195261100082", FuenteProblema, LetraProblema, new System.Drawing.Rectangle(0, 42, 300, 40), stringFormat);
 
                 }
             }
