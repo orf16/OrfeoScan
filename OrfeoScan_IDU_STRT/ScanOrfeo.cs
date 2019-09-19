@@ -65,6 +65,7 @@ namespace OrfeoScan_IDU_STRT
         string digitalizador = "D1g1t4l#0129";
         int[] pageRange = new int[2] { 0, 2 };
         string pref_pag = "PAG ";
+        private System.Drawing.Image codbarras_private;
 
         public List<System.Drawing.Image> TiffCarga = new List<System.Drawing.Image>();
 
@@ -185,6 +186,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoExpediente(string numradicado)
         {
+            codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
             string IISQL;
@@ -220,6 +222,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicado(string numradicado)
         {
+            codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
             string IISQL;
@@ -302,6 +305,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoTP(string numradicado)
         {
+            codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
             string IISQL;
@@ -357,6 +361,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void BuscarRadicadoMasiva(string numradicado)
         {
+            codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
             string IISQL = string.Empty;
@@ -1425,6 +1430,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            codbarras_private = null;
             limpiar_informacion_radicado();
             if (dataGridView1.Rows.Count > 0)
             {
@@ -2036,7 +2042,7 @@ namespace OrfeoScan_IDU_STRT
                                 string dependencia_str = numero_documento.Substring(4, 3);
                                 string consecutivo = numero_documento.Substring(7, 6);
                                 string tipo_rad = numero_documento.Substring(numero_documento.Length - 1);
-                                System.Drawing.Image CodigoBarras = generarCodigoBarras(numero_documento);
+                                codbarras_private = generarCodigoBarras(numero_documento);
 
                                 tipo_rem = tipo_rem.Replace("DIRECCION", "DIR");
                                 tipo_rem = tipo_rem.Replace("DEPENDENCIA", "DEP");
@@ -2077,13 +2083,15 @@ namespace OrfeoScan_IDU_STRT
                             for (int i = 0; i < numeroCopias; i++)
                             {
                                 PrintDocument pd = new PrintDocument();
-                                System.Drawing.Printing.PaperSize tamañoPapel = new PaperSize("Custom Paper Size", 1200, 1200);
-                                pd.PrinterSettings.DefaultPageSettings.PaperSize = tamañoPapel;
-                                pd.DefaultPageSettings.PaperSize = tamañoPapel;
+                                PrinterSettings ps = new PrinterSettings();
+                                PaperSize psize = new PaperSize("Custom", 2000, 130);
+
+
                                 pd.PrintPage += PrintPage;
                                 //here to select the printer attached to user PC
                                 PrintDialog printDialog1 = new PrintDialog();
                                 printDialog1.Document = pd;
+                                printDialog1.Document.DefaultPageSettings.PaperSize = psize;
                                 DialogResult result = printDialog1.ShowDialog();
                                 if (result == DialogResult.OK)
                                 {
@@ -2141,7 +2149,19 @@ namespace OrfeoScan_IDU_STRT
                     //{
                     //    m.Width = (int)((double)img.Width / (double)img.Height * (double)m.Height);
                     //}
-                    e.Graphics.DrawImage(img, new System.Drawing.Rectangle(0, 0, 1000, 400));
+                    int t_fuente = 19;
+                    System.Drawing.Color color_fuente_Problema = System.Drawing.Color.FromArgb(0, 0, 0);
+                    System.Drawing.Font FuenteProblema = new System.Drawing.Font("Century Gothic", t_fuente, FontStyle.Bold, GraphicsUnit.Pixel);
+                    StringFormat stringFormat = new StringFormat();
+                    stringFormat.Alignment = StringAlignment.Center;
+                    stringFormat.LineAlignment = StringAlignment.Center;
+
+                    SolidBrush LetraProblema = new SolidBrush(color_fuente_Problema);
+                    
+
+                    e.Graphics.DrawImage(img, new System.Drawing.Rectangle(0, 0, 100, 40));
+                    e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(101, 0, 300, 40));
+                    e.Graphics.DrawString("No. 20195261100082", FuenteProblema, LetraProblema, new System.Drawing.Rectangle(0, 200, 300, 40), stringFormat);
 
                 }
             }

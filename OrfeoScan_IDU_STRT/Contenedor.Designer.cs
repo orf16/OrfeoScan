@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Contenedor));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssl_label_dependencia = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssl_valor_dependencia = new System.Windows.Forms.ToolStripStatusLabel();
@@ -81,6 +82,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1284, 681);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(1300, 720);
             this.Name = "Contenedor";

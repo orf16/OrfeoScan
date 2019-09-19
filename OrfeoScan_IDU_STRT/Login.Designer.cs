@@ -161,6 +161,7 @@
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.txtContraseña);
             this.Controls.Add(this.btn_ingresar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
             this.Text = "w";
             this.Load += new System.EventHandler(this.Login_Load);
