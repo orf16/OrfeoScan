@@ -87,7 +87,7 @@
             this.MinimumSize = new System.Drawing.Size(1300, 720);
             this.Name = "Contenedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ScanOrfeo";
+            this.Text = "SCANORFEO - IDU";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Contenedor_FormClosed);
             this.Load += new System.EventHandler(this.Contenedor_Load);

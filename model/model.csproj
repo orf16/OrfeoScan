@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dependencia.cs" />
+    <Compile Include="etiquetas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="radicado.cs" />
     <Compile Include="sgd_renv_regenvio.cs" />

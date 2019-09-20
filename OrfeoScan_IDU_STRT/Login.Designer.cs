@@ -163,7 +163,7 @@
             this.Controls.Add(this.btn_ingresar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
-            this.Text = "w";
+            this.Text = "SCANORFEO - IDU";
             this.Load += new System.EventHandler(this.Login_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

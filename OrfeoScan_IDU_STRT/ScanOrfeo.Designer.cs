@@ -83,7 +83,6 @@
             this.expedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impresiónEtiquetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarExpedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelImagen = new System.Windows.Forms.Label();
             this.btn_enviar_2 = new System.Windows.Forms.Button();
@@ -207,7 +206,6 @@
             this.numericUpDown3.Size = new System.Drawing.Size(83, 22);
             this.numericUpDown3.TabIndex = 26;
             this.numericUpDown3.Visible = false;
-            this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // label4
             // 
@@ -391,11 +389,10 @@
             this.verToolStripMenuItem,
             this.incluirDocumentosToolStripMenuItem,
             this.herramientasToolStripMenuItem,
-            this.expedientesToolStripMenuItem,
-            this.ayudaToolStripMenuItem});
+            this.expedientesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1940, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -677,12 +674,6 @@
             this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
-            // ayudaToolStripMenuItem
-            // 
-            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.ayudaToolStripMenuItem.Text = "Ayuda";
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.labelImagen);
@@ -691,7 +682,6 @@
             this.panel1.Size = new System.Drawing.Size(98, 25);
             this.panel1.TabIndex = 36;
             this.panel1.Visible = false;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // labelImagen
             // 
@@ -1548,7 +1538,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1940, 1100);
+            this.ClientSize = new System.Drawing.Size(1924, 1084);
             this.ControlBox = false;
             this.Controls.Add(this.pan_loading);
             this.Controls.Add(this.numericUpDown3);
@@ -1674,7 +1664,6 @@
         private System.Windows.Forms.ToolStripMenuItem incluirDocumentosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expedientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomAcercarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomAlejarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomALaSelecciónToolStripMenuItem;
