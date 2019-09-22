@@ -1,0 +1,7 @@
+D:\My\Work\Bedri\TiffViewer\TiffViewer\bin\Debug\TiffViewer.dll
+D:\My\Work\Bedri\TiffViewer\TiffViewer\bin\Debug\TiffViewer.pdb
+D:\My\Work\Bedri\TiffViewer\TiffViewer\obj\Debug\TiffViewer.csprojResolveAssemblyReference.cache
+D:\My\Work\Bedri\TiffViewer\TiffViewer\obj\Debug\TiffViewer.TiffViewer.resources
+D:\My\Work\Bedri\TiffViewer\TiffViewer\obj\Debug\TiffViewer.csproj.GenerateResource.Cache
+D:\My\Work\Bedri\TiffViewer\TiffViewer\obj\Debug\TiffViewer.dll
+D:\My\Work\Bedri\TiffViewer\TiffViewer\obj\Debug\TiffViewer.pdb

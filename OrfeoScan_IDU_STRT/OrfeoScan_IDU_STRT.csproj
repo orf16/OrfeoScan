@@ -57,9 +57,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TiffViewerLib">
-      <HintPath>..\..\..\..\..\OneDrive\Escritorio\TiffViewerLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Barcode39.cs" />
@@ -155,6 +152,10 @@
     <ProjectReference Include="..\model\model.csproj">
       <Project>{d50bea59-7129-42a1-828d-436992a91b96}</Project>
       <Name>model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TiffViewerLib\TiffViewerLib.csproj">
+      <Project>{2803addc-3241-4b62-92d0-e6ba978610ae}</Project>
+      <Name>TiffViewerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
