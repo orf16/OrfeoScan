@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 using Oracle.ManagedDataAccess.Client;
-using System.Security.Cryptography;
-using OrfeoScan_IDU_STRT.funciones;
 using model;
 using System.Configuration;
 
@@ -96,28 +86,30 @@ namespace OrfeoScan_IDU_STRT
             {
                 con.Open();
                 OracleCommand command = new OracleCommand(sql, con);
-                OracleDataReader reader = command.ExecuteReader();
-                if (reader.Read())
+                using (OracleDataReader reader = command.ExecuteReader())
                 {
-                    usuario = new USUARIO();
-                    int USUA_CODI = 0;
-                    int USUA_DIGITALIZADOR = 0;
-                    int DEPE_CODI = 0;
-                    if (int.TryParse(reader[0].ToString(), out USUA_CODI))
-                        usuario.USUA_CODI = USUA_CODI;
-                    if (int.TryParse(reader[1].ToString(), out USUA_DIGITALIZADOR))
-                        usuario.USUA_DIGITALIZADOR = USUA_DIGITALIZADOR;
-                    if (int.TryParse(reader[2].ToString(), out DEPE_CODI))
-                        usuario.DEPE_CODI = DEPE_CODI;
-                    usuario.PERM_RADI = (string)reader[3];
-                    usuario.USUA_NOMB = (string)reader[4];
-                    usuario.USUA_LOGIN= (string)reader[5];
-                    usuario.USUA_DOC= (string)reader[6];
-                    funciones.desconectar(con);
-                    return usuario;
+                    if (reader.Read())
+                    {
+                        usuario = new USUARIO();
+                        int USUA_CODI = 0;
+                        int USUA_DIGITALIZADOR = 0;
+                        int DEPE_CODI = 0;
+                        if (int.TryParse(reader[0].ToString(), out USUA_CODI))
+                            usuario.USUA_CODI = USUA_CODI;
+                        if (int.TryParse(reader[1].ToString(), out USUA_DIGITALIZADOR))
+                            usuario.USUA_DIGITALIZADOR = USUA_DIGITALIZADOR;
+                        if (int.TryParse(reader[2].ToString(), out DEPE_CODI))
+                            usuario.DEPE_CODI = DEPE_CODI;
+                        usuario.PERM_RADI = (string)reader[3];
+                        usuario.USUA_NOMB = (string)reader[4];
+                        usuario.USUA_LOGIN = (string)reader[5];
+                        usuario.USUA_DOC = (string)reader[6];
+                        funciones.desconectar(con);
+                        return usuario;
+                    }
+                    else
+                        funciones.desconectar(con);
                 }
-                else
-                    funciones.desconectar(con);
             }
             catch (Exception)
             {

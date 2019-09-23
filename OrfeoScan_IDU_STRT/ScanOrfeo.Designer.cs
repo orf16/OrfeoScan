@@ -151,8 +151,7 @@
             this.button28 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.tiffViewer1 = new TiffViewerLib.TiffViewer();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -174,7 +173,6 @@
             this.groupDPI.SuspendLayout();
             this.pan_loading.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -686,7 +684,6 @@
             // PageEdit
             // 
             this.PageEdit.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.PageEdit.Image = ((System.Drawing.Image)(resources.GetObject("PageEdit.Image")));
             this.PageEdit.Location = new System.Drawing.Point(3, 5);
             this.PageEdit.Name = "PageEdit";
             this.PageEdit.Size = new System.Drawing.Size(3001, 3000);
@@ -707,9 +704,9 @@
             this.panel2.Controls.Add(this.PageEdit);
             this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.button6);
-            this.panel2.Location = new System.Drawing.Point(813, 192);
+            this.panel2.Location = new System.Drawing.Point(125, 246);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(50, 44);
+            this.panel2.Size = new System.Drawing.Size(1230, 514);
             this.panel2.TabIndex = 43;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
@@ -918,16 +915,16 @@
             this.panel3.Controls.Add(this.PageScreen3);
             this.panel3.Controls.Add(this.PageScreen2);
             this.panel3.Controls.Add(this.PageScreen1);
-            this.panel3.Location = new System.Drawing.Point(12, 162);
+            this.panel3.Location = new System.Drawing.Point(0, 162);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(103, 598);
+            this.panel3.Size = new System.Drawing.Size(115, 598);
             this.panel3.TabIndex = 44;
             // 
             // lblScreen3
             // 
             this.lblScreen3.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScreen3.ForeColor = System.Drawing.Color.White;
-            this.lblScreen3.Location = new System.Drawing.Point(3, 397);
+            this.lblScreen3.Location = new System.Drawing.Point(4, 346);
             this.lblScreen3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen3.Name = "lblScreen3";
             this.lblScreen3.Size = new System.Drawing.Size(94, 29);
@@ -937,7 +934,7 @@
             // 
             this.lblScreen2.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScreen2.ForeColor = System.Drawing.Color.White;
-            this.lblScreen2.Location = new System.Drawing.Point(4, 203);
+            this.lblScreen2.Location = new System.Drawing.Point(4, 185);
             this.lblScreen2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen2.Name = "lblScreen2";
             this.lblScreen2.Size = new System.Drawing.Size(93, 29);
@@ -952,7 +949,7 @@
             this.button25.FlatAppearance.BorderSize = 0;
             this.button25.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button25.Location = new System.Drawing.Point(64, 562);
+            this.button25.Location = new System.Drawing.Point(64, 484);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(20, 20);
             this.button25.TabIndex = 87;
@@ -967,7 +964,7 @@
             this.button26.FlatAppearance.BorderSize = 0;
             this.button26.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button26.Location = new System.Drawing.Point(38, 562);
+            this.button26.Location = new System.Drawing.Point(38, 484);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(20, 20);
             this.button26.TabIndex = 86;
@@ -982,7 +979,7 @@
             this.button27.FlatAppearance.BorderSize = 0;
             this.button27.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button27.Location = new System.Drawing.Point(12, 562);
+            this.button27.Location = new System.Drawing.Point(12, 484);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(20, 20);
             this.button27.TabIndex = 85;
@@ -997,7 +994,7 @@
             this.button22.FlatAppearance.BorderSize = 0;
             this.button22.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button22.Location = new System.Drawing.Point(64, 368);
+            this.button22.Location = new System.Drawing.Point(64, 323);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(20, 20);
             this.button22.TabIndex = 84;
@@ -1012,7 +1009,7 @@
             this.button23.FlatAppearance.BorderSize = 0;
             this.button23.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button23.Location = new System.Drawing.Point(38, 368);
+            this.button23.Location = new System.Drawing.Point(38, 323);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(20, 20);
             this.button23.TabIndex = 83;
@@ -1027,7 +1024,7 @@
             this.button24.FlatAppearance.BorderSize = 0;
             this.button24.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button24.Location = new System.Drawing.Point(12, 368);
+            this.button24.Location = new System.Drawing.Point(12, 323);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(20, 20);
             this.button24.TabIndex = 82;
@@ -1042,7 +1039,7 @@
             this.button19.FlatAppearance.BorderSize = 0;
             this.button19.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button19.Location = new System.Drawing.Point(77, 170);
+            this.button19.Location = new System.Drawing.Point(72, 152);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(20, 20);
             this.button19.TabIndex = 81;
@@ -1057,7 +1054,7 @@
             this.button20.FlatAppearance.BorderSize = 0;
             this.button20.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button20.Location = new System.Drawing.Point(39, 170);
+            this.button20.Location = new System.Drawing.Point(39, 152);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(20, 20);
             this.button20.TabIndex = 80;
@@ -1067,11 +1064,12 @@
             // 
             this.lblScreen1.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScreen1.ForeColor = System.Drawing.Color.White;
-            this.lblScreen1.Location = new System.Drawing.Point(3, 4);
+            this.lblScreen1.Location = new System.Drawing.Point(7, 11);
             this.lblScreen1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen1.Name = "lblScreen1";
             this.lblScreen1.Size = new System.Drawing.Size(96, 29);
             this.lblScreen1.TabIndex = 76;
+            this.lblScreen1.Click += new System.EventHandler(this.lblScreen1_Click);
             // 
             // button21
             // 
@@ -1082,7 +1080,7 @@
             this.button21.FlatAppearance.BorderSize = 0;
             this.button21.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button21.Location = new System.Drawing.Point(3, 170);
+            this.button21.Location = new System.Drawing.Point(9, 152);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(20, 20);
             this.button21.TabIndex = 79;
@@ -1100,10 +1098,9 @@
             // 
             // PageScreen3
             // 
-            this.PageScreen3.Image = ((System.Drawing.Image)(resources.GetObject("PageScreen3.Image")));
-            this.PageScreen3.Location = new System.Drawing.Point(4, 429);
+            this.PageScreen3.Location = new System.Drawing.Point(3, 378);
             this.PageScreen3.Name = "PageScreen3";
-            this.PageScreen3.Size = new System.Drawing.Size(97, 128);
+            this.PageScreen3.Size = new System.Drawing.Size(100, 100);
             this.PageScreen3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PageScreen3.TabIndex = 47;
             this.PageScreen3.TabStop = false;
@@ -1111,10 +1108,9 @@
             // 
             // PageScreen2
             // 
-            this.PageScreen2.Image = ((System.Drawing.Image)(resources.GetObject("PageScreen2.Image")));
-            this.PageScreen2.Location = new System.Drawing.Point(4, 235);
+            this.PageScreen2.Location = new System.Drawing.Point(4, 217);
             this.PageScreen2.Name = "PageScreen2";
-            this.PageScreen2.Size = new System.Drawing.Size(97, 128);
+            this.PageScreen2.Size = new System.Drawing.Size(100, 100);
             this.PageScreen2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PageScreen2.TabIndex = 46;
             this.PageScreen2.TabStop = false;
@@ -1122,10 +1118,9 @@
             // 
             // PageScreen1
             // 
-            this.PageScreen1.Image = ((System.Drawing.Image)(resources.GetObject("PageScreen1.Image")));
-            this.PageScreen1.Location = new System.Drawing.Point(3, 36);
+            this.PageScreen1.Location = new System.Drawing.Point(3, 44);
             this.PageScreen1.Name = "PageScreen1";
-            this.PageScreen1.Size = new System.Drawing.Size(97, 128);
+            this.PageScreen1.Size = new System.Drawing.Size(100, 100);
             this.PageScreen1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PageScreen1.TabIndex = 45;
             this.PageScreen1.TabStop = false;
@@ -1510,22 +1505,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // tiffViewer1
+            // button3
             // 
-            this.tiffViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tiffViewer1.Location = new System.Drawing.Point(0, 0);
-            this.tiffViewer1.Name = "tiffViewer1";
-            this.tiffViewer1.Path = "";
-            this.tiffViewer1.Size = new System.Drawing.Size(1233, 507);
-            this.tiffViewer1.TabIndex = 82;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.tiffViewer1);
-            this.panel4.Location = new System.Drawing.Point(125, 253);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1233, 507);
-            this.panel4.TabIndex = 83;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(729, 163);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(29, 21);
+            this.button3.TabIndex = 82;
+            this.button3.Text = "L";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // ScanOrfeo
             // 
@@ -1535,7 +1524,7 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1370, 772);
             this.ControlBox = false;
-            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.pan_loading);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
@@ -1622,7 +1611,6 @@
             this.pan_loading.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1752,7 +1740,6 @@
         private System.Windows.Forms.Button btnEnviarPDF1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button1;
-        private TiffViewerLib.TiffViewer tiffViewer1;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button button3;
     }
 }
