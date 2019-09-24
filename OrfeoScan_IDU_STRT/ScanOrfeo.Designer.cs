@@ -34,7 +34,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbl_InfoRadicado5 = new System.Windows.Forms.Label();
             this.lbl_InfoRadicado4 = new System.Windows.Forms.Label();
             this.lbl_InfoRadicado3 = new System.Windows.Forms.Label();
@@ -152,9 +151,20 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.dtHoraAnexo = new System.Windows.Forms.DateTimePicker();
+            this.btnLimpiarAnexo = new System.Windows.Forms.Button();
+            this.dtFechaAnexo = new System.Windows.Forms.DateTimePicker();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cBoxtDocumento = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codbarras)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -173,6 +183,9 @@
             this.groupDPI.SuspendLayout();
             this.pan_loading.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -180,7 +193,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(23, 78);
+            this.label2.Location = new System.Drawing.Point(7, 74);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(198, 18);
@@ -190,7 +203,7 @@
             // cBoxtRadicado
             // 
             this.cBoxtRadicado.FormattingEnabled = true;
-            this.cBoxtRadicado.Location = new System.Drawing.Point(26, 98);
+            this.cBoxtRadicado.Location = new System.Drawing.Point(4, 94);
             this.cBoxtRadicado.Margin = new System.Windows.Forms.Padding(4);
             this.cBoxtRadicado.Name = "cBoxtRadicado";
             this.cBoxtRadicado.Size = new System.Drawing.Size(206, 22);
@@ -201,7 +214,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(418, 169);
+            this.label3.Location = new System.Drawing.Point(122, 162);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 15);
@@ -212,7 +225,7 @@
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(530, 165);
+            this.numericUpDown2.Location = new System.Drawing.Point(234, 158);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(68, 22);
             this.numericUpDown2.TabIndex = 23;
@@ -221,86 +234,80 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(465, 165);
+            this.numericUpDown1.Location = new System.Drawing.Point(169, 158);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(59, 22);
             this.numericUpDown1.TabIndex = 22;
             this.numericUpDown1.Visible = false;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.lbl_InfoRadicado5);
-            this.groupBox1.Controls.Add(this.lbl_InfoRadicado4);
-            this.groupBox1.Controls.Add(this.lbl_InfoRadicado3);
-            this.groupBox1.Controls.Add(this.lbl_InfoRadicado2);
-            this.groupBox1.Controls.Add(this.lbl_InfoRadicado1);
-            this.groupBox1.Controls.Add(this.codbarras);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(966, 29);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 148);
-            this.groupBox1.TabIndex = 27;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Información";
-            // 
             // lbl_InfoRadicado5
             // 
             this.lbl_InfoRadicado5.AutoSize = true;
             this.lbl_InfoRadicado5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_InfoRadicado5.Location = new System.Drawing.Point(4, 80);
+            this.lbl_InfoRadicado5.ForeColor = System.Drawing.Color.White;
+            this.lbl_InfoRadicado5.Location = new System.Drawing.Point(6, 71);
             this.lbl_InfoRadicado5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_InfoRadicado5.Name = "lbl_InfoRadicado5";
-            this.lbl_InfoRadicado5.Size = new System.Drawing.Size(0, 15);
+            this.lbl_InfoRadicado5.Size = new System.Drawing.Size(26, 15);
             this.lbl_InfoRadicado5.TabIndex = 72;
+            this.lbl_InfoRadicado5.Text = "kjbj";
             // 
             // lbl_InfoRadicado4
             // 
             this.lbl_InfoRadicado4.AutoSize = true;
             this.lbl_InfoRadicado4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_InfoRadicado4.Location = new System.Drawing.Point(4, 64);
+            this.lbl_InfoRadicado4.ForeColor = System.Drawing.Color.White;
+            this.lbl_InfoRadicado4.Location = new System.Drawing.Point(6, 55);
             this.lbl_InfoRadicado4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_InfoRadicado4.Name = "lbl_InfoRadicado4";
-            this.lbl_InfoRadicado4.Size = new System.Drawing.Size(0, 15);
+            this.lbl_InfoRadicado4.Size = new System.Drawing.Size(26, 15);
             this.lbl_InfoRadicado4.TabIndex = 71;
+            this.lbl_InfoRadicado4.Text = "kjbj";
             // 
             // lbl_InfoRadicado3
             // 
             this.lbl_InfoRadicado3.AutoSize = true;
             this.lbl_InfoRadicado3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_InfoRadicado3.Location = new System.Drawing.Point(4, 47);
+            this.lbl_InfoRadicado3.ForeColor = System.Drawing.Color.White;
+            this.lbl_InfoRadicado3.Location = new System.Drawing.Point(6, 38);
             this.lbl_InfoRadicado3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_InfoRadicado3.Name = "lbl_InfoRadicado3";
-            this.lbl_InfoRadicado3.Size = new System.Drawing.Size(0, 15);
+            this.lbl_InfoRadicado3.Size = new System.Drawing.Size(26, 15);
             this.lbl_InfoRadicado3.TabIndex = 70;
+            this.lbl_InfoRadicado3.Text = "kjbj";
             // 
             // lbl_InfoRadicado2
             // 
             this.lbl_InfoRadicado2.AutoSize = true;
             this.lbl_InfoRadicado2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_InfoRadicado2.Location = new System.Drawing.Point(4, 30);
+            this.lbl_InfoRadicado2.ForeColor = System.Drawing.Color.White;
+            this.lbl_InfoRadicado2.Location = new System.Drawing.Point(6, 21);
             this.lbl_InfoRadicado2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_InfoRadicado2.Name = "lbl_InfoRadicado2";
-            this.lbl_InfoRadicado2.Size = new System.Drawing.Size(0, 15);
+            this.lbl_InfoRadicado2.Size = new System.Drawing.Size(26, 15);
             this.lbl_InfoRadicado2.TabIndex = 69;
+            this.lbl_InfoRadicado2.Text = "kjbj";
             // 
             // lbl_InfoRadicado1
             // 
             this.lbl_InfoRadicado1.AutoSize = true;
             this.lbl_InfoRadicado1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_InfoRadicado1.Location = new System.Drawing.Point(5, 14);
+            this.lbl_InfoRadicado1.ForeColor = System.Drawing.Color.White;
+            this.lbl_InfoRadicado1.Location = new System.Drawing.Point(7, 5);
             this.lbl_InfoRadicado1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_InfoRadicado1.Name = "lbl_InfoRadicado1";
-            this.lbl_InfoRadicado1.Size = new System.Drawing.Size(0, 15);
+            this.lbl_InfoRadicado1.Size = new System.Drawing.Size(26, 15);
             this.lbl_InfoRadicado1.TabIndex = 68;
+            this.lbl_InfoRadicado1.Text = "kjbj";
             // 
             // codbarras
             // 
             this.codbarras.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.codbarras.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.codbarras.Location = new System.Drawing.Point(3, 96);
+            this.codbarras.Location = new System.Drawing.Point(3, 89);
             this.codbarras.Name = "codbarras";
-            this.codbarras.Size = new System.Drawing.Size(386, 49);
+            this.codbarras.Size = new System.Drawing.Size(489, 41);
             this.codbarras.TabIndex = 18;
             this.codbarras.TabStop = false;
             // 
@@ -324,7 +331,7 @@
             this.btnStartCapture.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnStartCapture.FlatAppearance.BorderSize = 0;
             this.btnStartCapture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartCapture.Location = new System.Drawing.Point(20, 21);
+            this.btnStartCapture.Location = new System.Drawing.Point(9, 21);
             this.btnStartCapture.Name = "btnStartCapture";
             this.btnStartCapture.Size = new System.Drawing.Size(45, 45);
             this.btnStartCapture.TabIndex = 30;
@@ -338,7 +345,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(107, 21);
+            this.button2.Location = new System.Drawing.Point(84, 21);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(45, 45);
             this.button2.TabIndex = 29;
@@ -349,13 +356,14 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(278, 36);
+            this.dataGridView1.Location = new System.Drawing.Point(234, 36);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(682, 120);
+            this.dataGridView1.Size = new System.Drawing.Size(615, 120);
             this.dataGridView1.TabIndex = 33;
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             // 
@@ -397,7 +405,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -407,7 +415,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -416,46 +424,46 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -464,18 +472,18 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(271, 6);
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
             // 
@@ -560,14 +568,14 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             // 
             // pQRPersonalToolStripMenuItem
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             // 
             // herramientasToolStripMenuItem
@@ -630,7 +638,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             // 
             // impresiónEtiquetaToolStripMenuItem
@@ -638,7 +646,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -646,7 +654,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // panel1
@@ -781,7 +789,7 @@
             // button11
             // 
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(869, 161);
+            this.button11.Location = new System.Drawing.Point(796, 218);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(29, 21);
             this.button11.TabIndex = 51;
@@ -792,7 +800,7 @@
             // button7
             // 
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(764, 162);
+            this.button7.Location = new System.Drawing.Point(761, 193);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(29, 21);
             this.button7.TabIndex = 47;
@@ -820,7 +828,7 @@
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(799, 161);
+            this.button9.Location = new System.Drawing.Point(830, 218);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(29, 21);
             this.button9.TabIndex = 49;
@@ -831,7 +839,7 @@
             // button10
             // 
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(834, 161);
+            this.button10.Location = new System.Drawing.Point(831, 191);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(29, 21);
             this.button10.TabIndex = 50;
@@ -1150,7 +1158,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(13, 29);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(259, 127);
+            this.groupBox2.Size = new System.Drawing.Size(215, 127);
             this.groupBox2.TabIndex = 58;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
@@ -1163,7 +1171,7 @@
             this.btnEnviarPDF1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEnviarPDF1.FlatAppearance.BorderSize = 0;
             this.btnEnviarPDF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnviarPDF1.Location = new System.Drawing.Point(197, 21);
+            this.btnEnviarPDF1.Location = new System.Drawing.Point(156, 21);
             this.btnEnviarPDF1.Name = "btnEnviarPDF1";
             this.btnEnviarPDF1.Size = new System.Drawing.Size(45, 45);
             this.btnEnviarPDF1.TabIndex = 80;
@@ -1179,7 +1187,7 @@
             this.btnStopScan.Enabled = false;
             this.btnStopScan.FlatAppearance.BorderSize = 0;
             this.btnStopScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStopScan.Location = new System.Drawing.Point(20, 21);
+            this.btnStopScan.Location = new System.Drawing.Point(9, 21);
             this.btnStopScan.Name = "btnStopScan";
             this.btnStopScan.Size = new System.Drawing.Size(45, 45);
             this.btnStopScan.TabIndex = 39;
@@ -1221,7 +1229,7 @@
             this.groupDuplex.Controls.Add(this.label6);
             this.groupDuplex.Controls.Add(this.comboSize);
             this.groupDuplex.ForeColor = System.Drawing.Color.White;
-            this.groupDuplex.Location = new System.Drawing.Point(682, 166);
+            this.groupDuplex.Location = new System.Drawing.Point(696, 173);
             this.groupDuplex.Name = "groupDuplex";
             this.groupDuplex.Size = new System.Drawing.Size(38, 14);
             this.groupDuplex.TabIndex = 60;
@@ -1370,7 +1378,7 @@
             this.lbl_num_doc.AutoSize = true;
             this.lbl_num_doc.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_num_doc.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lbl_num_doc.Location = new System.Drawing.Point(116, 164);
+            this.lbl_num_doc.Location = new System.Drawing.Point(123, 176);
             this.lbl_num_doc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_num_doc.Name = "lbl_num_doc";
             this.lbl_num_doc.Size = new System.Drawing.Size(295, 29);
@@ -1490,7 +1498,7 @@
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.comboDPI);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(894, 192);
+            this.groupBox3.Location = new System.Drawing.Point(891, 193);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(464, 47);
             this.groupBox3.TabIndex = 80;
@@ -1500,7 +1508,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(907, 159);
+            this.button1.Location = new System.Drawing.Point(796, 189);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(29, 25);
             this.button1.TabIndex = 81;
@@ -1511,13 +1519,155 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(729, 163);
+            this.button3.Location = new System.Drawing.Point(761, 217);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(29, 21);
             this.button3.TabIndex = 82;
             this.button3.Text = "L";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.White;
+            this.button5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button5.BackgroundImage")));
+            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button5.FlatAppearance.BorderSize = 0;
+            this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.Location = new System.Drawing.Point(647, 206);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(35, 35);
+            this.button5.TabIndex = 83;
+            this.button5.UseVisualStyleBackColor = false;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(855, 27);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(503, 160);
+            this.tabControl1.TabIndex = 84;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.Color.DimGray;
+            this.tabPage1.Controls.Add(this.codbarras);
+            this.tabPage1.Controls.Add(this.lbl_InfoRadicado5);
+            this.tabPage1.Controls.Add(this.lbl_InfoRadicado1);
+            this.tabPage1.Controls.Add(this.lbl_InfoRadicado4);
+            this.tabPage1.Controls.Add(this.lbl_InfoRadicado2);
+            this.tabPage1.Controls.Add(this.lbl_InfoRadicado3);
+            this.tabPage1.Location = new System.Drawing.Point(4, 23);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(495, 133);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Información Radicado";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.DimGray;
+            this.tabPage2.Controls.Add(this.label13);
+            this.tabPage2.Controls.Add(this.dtHoraAnexo);
+            this.tabPage2.Controls.Add(this.btnLimpiarAnexo);
+            this.tabPage2.Controls.Add(this.dtFechaAnexo);
+            this.tabPage2.Controls.Add(this.txtObservaciones);
+            this.tabPage2.Controls.Add(this.label12);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.cBoxtDocumento);
+            this.tabPage2.Location = new System.Drawing.Point(4, 23);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(495, 133);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Información Anexo";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(8, 100);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(76, 15);
+            this.label13.TabIndex = 87;
+            this.label13.Text = "Fecha y Hora";
+            // 
+            // dtHoraAnexo
+            // 
+            this.dtHoraAnexo.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtHoraAnexo.Location = new System.Drawing.Point(205, 95);
+            this.dtHoraAnexo.Name = "dtHoraAnexo";
+            this.dtHoraAnexo.Size = new System.Drawing.Size(87, 22);
+            this.dtHoraAnexo.TabIndex = 86;
+            // 
+            // btnLimpiarAnexo
+            // 
+            this.btnLimpiarAnexo.BackColor = System.Drawing.Color.White;
+            this.btnLimpiarAnexo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLimpiarAnexo.BackgroundImage")));
+            this.btnLimpiarAnexo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnLimpiarAnexo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiarAnexo.FlatAppearance.BorderSize = 0;
+            this.btnLimpiarAnexo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnLimpiarAnexo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiarAnexo.Location = new System.Drawing.Point(469, 10);
+            this.btnLimpiarAnexo.Name = "btnLimpiarAnexo";
+            this.btnLimpiarAnexo.Size = new System.Drawing.Size(20, 20);
+            this.btnLimpiarAnexo.TabIndex = 85;
+            this.btnLimpiarAnexo.UseVisualStyleBackColor = false;
+            this.btnLimpiarAnexo.Click += new System.EventHandler(this.btnLimpiarAnexo_Click);
+            // 
+            // dtFechaAnexo
+            // 
+            this.dtFechaAnexo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFechaAnexo.Location = new System.Drawing.Point(112, 95);
+            this.dtFechaAnexo.Name = "dtFechaAnexo";
+            this.dtFechaAnexo.Size = new System.Drawing.Size(87, 22);
+            this.dtFechaAnexo.TabIndex = 72;
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(113, 54);
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(376, 22);
+            this.txtObservaciones.TabIndex = 71;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(8, 57);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(86, 15);
+            this.label12.TabIndex = 70;
+            this.label12.Text = "Observaciones";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(8, 12);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 15);
+            this.label4.TabIndex = 69;
+            this.label4.Text = "Tipo Documento";
+            // 
+            // cBoxtDocumento
+            // 
+            this.cBoxtDocumento.FormattingEnabled = true;
+            this.cBoxtDocumento.Location = new System.Drawing.Point(112, 10);
+            this.cBoxtDocumento.Name = "cBoxtDocumento";
+            this.cBoxtDocumento.Size = new System.Drawing.Size(322, 22);
+            this.cBoxtDocumento.TabIndex = 0;
             // 
             // ScanOrfeo
             // 
@@ -1527,6 +1677,8 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1370, 772);
             this.ControlBox = false;
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.pan_loading);
             this.Controls.Add(this.button1);
@@ -1569,7 +1721,6 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupDuplex);
             this.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1588,8 +1739,6 @@
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ScanOrfeo_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codbarras)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -1614,6 +1763,11 @@
             this.pan_loading.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1626,7 +1780,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox codbarras;
         private System.Windows.Forms.Button btn_enviar_1;
         private System.Windows.Forms.Button btnStartCapture;
@@ -1744,5 +1897,17 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DateTimePicker dtFechaAnexo;
+        private System.Windows.Forms.TextBox txtObservaciones;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cBoxtDocumento;
+        private System.Windows.Forms.Button btnLimpiarAnexo;
+        private System.Windows.Forms.DateTimePicker dtHoraAnexo;
+        private System.Windows.Forms.Label label13;
     }
 }

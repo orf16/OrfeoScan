@@ -284,17 +284,10 @@ namespace OrfeoScan_IDU_STRT
             toolTip1.SetToolTip(this.btnGirarDerecha, "Girar Página 90° a la Derecha");
             toolTip1.SetToolTip(this.btnGirarIzquierda, "Girar Página 90° a la Izquierda");
             toolTip1.SetToolTip(this.btnEnviarPDF1, "Enviar Archivo");
-            
 
 
 
-
-
-
-
-
-
-
+            limpiar_anexos();
             cBoxtRadicado_load();
             int index_cBoxtRadicado = 0;
             foreach (var item in cBoxtRadicado.Items)
@@ -337,6 +330,46 @@ namespace OrfeoScan_IDU_STRT
                     }
                 }
                 primerEscaner = false;
+            }
+        }
+        private void limpiar_anexos()
+        {
+            DateTime fechaAnexo = DateTime.Now.AddDays(1);
+            dtFechaAnexo.Value = fechaAnexo;
+            dtHoraAnexo.Value = fechaAnexo;
+            txtObservaciones.Text = string.Empty;
+            cBoxtDocumento.Items.Clear();
+            cargarTipoDocumental();
+
+        }
+        private void cargarTipoDocumental()
+        {
+            string IISQL = "select distinct a.SGD_TPR_CODIGO as cod, a.SGD_TPR_DESCRIP as des";
+            IISQL += " FROM SGD_TPR_TPDCUMENTO a WHERE a.SGD_TPR_ESTADO=1 order by a.SGD_TPR_CODIGO ASC ";
+            OracleConnection con = new OracleConnection(funciones.conni);
+            try
+            {
+                con.Open();
+                OracleCommand command = new OracleCommand(IISQL, con);
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int SGD_TPR_CODIGO = 0;
+                        if (int.TryParse(reader[0].ToString(), out SGD_TPR_CODIGO))
+                        {
+                            if (reader[1]!=null)
+                            {
+                                cBoxtDocumento.Items.Add(SGD_TPR_CODIGO.ToString() + " " + (string)reader[1]);
+                            }
+                        }
+                    }
+                }
+                funciones.desconectar(con);
+            }
+            catch (Exception ex)
+            {
+                funciones.desconectar(con);
             }
         }
         private void cBoxtRadicado_load()
@@ -1829,9 +1862,110 @@ namespace OrfeoScan_IDU_STRT
 
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
         {
+            //tiene que tener una fila seleccionada
+            if (dataGridView1.Rows.Count > 0)
+            {
+                if (dataGridView1.SelectedCells.Count > 0)
+                {
+                    if (actualBitmap!=null)
+                    {
+                        string tipo = "";
+                        string numero_documento = "";
+                        int rad_exp = -1;
 
+
+                        string tipo_rem = "";
+                        string fecha = "";
+                        string dependencia = "";
+                        
+                        int ESP = 0;
+                        int CIU = 0;
+                        string FUN = "";
+                        string remitente = "";
+                        string nombre_dep = "";
+                        string anex_desc = "";
+                        string novedad = "";
+
+                        if (dataGridView1.CurrentRow.Cells[0].Value != null)
+                        {
+                            tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                            if (tipo.Replace(" ","")==string.Empty)
+                            {
+                                MessageBox.Show("El registro no especifica un tipo (radicado o expediente)");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("El registro no especifica un tipo (radicado o expediente)");
+                            return;
+                        }
+                        if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                        {
+                            numero_documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                            if (tipo.Replace(" ", "") == string.Empty)
+                            {
+                                MessageBox.Show("El registro no especifica un numero de documento");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("El registro no especifica un numero de documento");
+                            return;
+                        }
+                        
+                        if (tipo == "RADICADO")
+                            rad_exp = 1;
+                        if (tipo == "EXPEDIENTE")
+                            rad_exp = 2;
+
+                        int EsAnexo = -1;
+
+                        if (anexarImagenAUnRadicadoToolStripMenuItem.Checked==true && rad_exp==1)
+                            EsAnexo = 1;
+                        if (rad_exp == 2)
+                            EsAnexo = 1;
+
+                        int tipoDocumentalIndex = -1;
+                        string observacion = "";
+                        DateTime fechaAnexo=DateTime.Now.AddDays(1);
+                        if (EsAnexo==1)
+                        {
+                            if (cBoxtDocumento.SelectedIndex > 0)
+                                tipoDocumentalIndex = cBoxtDocumento.SelectedIndex;
+                            if (tipoDocumentalIndex == -1)
+                            {
+                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.");
+                                return;
+                            }
+                            if (!string.IsNullOrEmpty(txtObservaciones.Text))
+                            {
+                                observacion = txtObservaciones.Text;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.");
+                                return;
+                            }
+                            fechaAnexo = new DateTime(dtFechaAnexo.Value.Year, dtFechaAnexo.Value.Month, dtFechaAnexo.Value.Day).AddHours(dtHoraAnexo.Value.Hour).AddMinutes(dtHoraAnexo.Value.Minute).AddSeconds(dtHoraAnexo.Value.Second); 
+                            if (fechaAnexo > DateTime.Now)
+                            {
+                                MessageBox.Show("La fecha y hora ingresadas deben ser inferiores a la fecha y hora actuales.");
+                                return;
+                            }
+                        }
+                    }
+                    else
+                        MessageBox.Show("No existe una imagen a convertir para enviar como PDF/A");
+                }
+                else
+                    MessageBox.Show("Debe seleccionar una registro de radicado o expediente antes de continuar");
+            }
+            else
+                MessageBox.Show("No existen filas seleccionadas, debe realizar la busqueda de un registro y seleccionar una fila");
             //Recorrer pagina por pagina e identificar el tamaño ideal
-            
+            return;
             Document doc = new Document(PageSize.LETTER);
             doc.SetMargins(0, 0, 0, 0);
             PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream("D:\\hello_A1-b_cs.pdf", FileMode.Create));
@@ -2463,6 +2597,11 @@ namespace OrfeoScan_IDU_STRT
         private void lblScreen1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnLimpiarAnexo_Click(object sender, EventArgs e)
+        {
+            limpiar_anexos();
         }
     }
 
