@@ -19,7 +19,6 @@ C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\funcion
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\iTextSharp.dll
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\model.dll
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\NTwain.dll
-C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Oracle.ManagedDataAccess.dll
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\funciones.pdb
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\model.pdb
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\NTwain.pdb
