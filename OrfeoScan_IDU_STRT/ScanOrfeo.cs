@@ -168,9 +168,9 @@ namespace OrfeoScan_IDU_STRT
                 {
                     this.workingBitmap = GetWorkingImage(GetViewSize());
                     this.PageEdit.Image = workingBitmap;
-                    actualBitmap1 = GetThumbnail(1, new Size(100, 100));
-                    actualBitmap2 = GetThumbnail(2, new Size(100, 100));
-                    actualBitmap3 = GetThumbnail(3, new Size(100, 100));
+                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
                     PageScreen1.Image = actualBitmap1;
                     PageScreen2.Image = actualBitmap2;
                     PageScreen3.Image = actualBitmap3;
@@ -1872,13 +1872,13 @@ namespace OrfeoScan_IDU_STRT
                         string tipo = "";
                         string numero_documento = "";
                         int rad_exp = -1;
-
+                        int anexo_count = 0;
 
                         string tipo_rem = "";
                         string fecha = "";
                         string dependencia = "";
                         
-                        int ESP = 0;
+                        
                         int CIU = 0;
                         string FUN = "";
                         string remitente = "";
@@ -1954,6 +1954,52 @@ namespace OrfeoScan_IDU_STRT
                                 MessageBox.Show("La fecha y hora ingresadas deben ser inferiores a la fecha y hora actuales.");
                                 return;
                             }
+                            string ISQL_aux_count = " SELECT MAX(SGD_AEX_NUMERO) as MAXIMO FROM SGD_AEX_ANEXOEXPEDIENTE WHERE SGD_AEX_EXPEDIENTE = '" + numero_documento + "' ";
+
+                            OracleConnection con = new OracleConnection(funciones.conni);
+                            try
+                            {
+                                con.Open();
+                                OracleCommand command = new OracleCommand(ISQL_aux_count, con);
+                                using (OracleDataReader reader = command.ExecuteReader())
+                                {
+                                    if (reader.Read())
+                                    {
+                                        if (reader[0]!=null)
+                                        {
+                                            anexo_count = (int)reader[0]+1;
+                                        }
+                                        funciones.desconectar(con);
+                                    }
+                                    else
+                                        funciones.desconectar(con);
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                funciones.desconectar(con);
+                            }
+
+                            actualBitmap.Save(@"D:\imgidu\2019\526\docs\imagen.tiff", ImageFormat.Tiff);
+                            //byte[] buffer = System.IO.File.ReadAllBytes(@"yourimage.ext");
+                            //int size = buffer.Length;
+
+                            ////long jpegByteSize;
+                            ////using (var ms = new MemoryStream(actualBitmap)) // estimatedLength can be original fileLength
+                            ////{
+                            ////    image.Save(ms, ImageFormat.Jpeg); // save image to stream in Jpeg format
+                            ////    jpegByteSize = ms.Length;
+                            ////}
+
+                            //string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
+                            //ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,'" + actualBitmap. + "', '" + observacion + "'";
+                            //ISQL_aux = ISQL_aux + ", '" + nombrearchivo + "','N'," + horayfecha + "," + varFechaSistema + "," + Us_Doc_tipo + "," + NumeroDeHojas + ")";
+
+
+                            //string ISQL_aux1 = " Insert into SGD_HFLD_HISTFLUJODOC (SGD_HFLD_CODIGO,SGD_FEXP_CODIGO,SGD_EXP_FECHFLUJOANT,SGD_HFLD_FECH,SGD_EXP_NUMERO,RADI_NUME_RADI,USUA_DOC,USUA_CODI,DEPE_CODI,SGD_TTR_CODIGO,SGD_FEXP_OBSERVA,SGD_HFLD_OBSERVA,SGD_FARS_CODIGO,SGD_HFLD_AUTOMATICO) values ( "
+                            //ISQL_aux1 = ISQL_aux1 + " null,0,null,sysdate,'" + expedienteAnexo + "'," + numAnexo + ",'" + DocUMento + "'," + US_Codusuario + "," + US_Dependencia + "," + codTTR + ",null,'" + ObservacioneS + "',null,null)";
+
                         }
                     }
                     else
