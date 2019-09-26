@@ -123,6 +123,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ScanConfig.resx">
       <DependentUpon>ScanConfig.cs</DependentUpon>
@@ -130,6 +131,7 @@
     <EmbeddedResource Include="ScanOrfeo.resx">
       <DependentUpon>ScanOrfeo.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="fuentes\arial.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

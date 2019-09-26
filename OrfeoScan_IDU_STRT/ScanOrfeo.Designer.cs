@@ -931,7 +931,7 @@
             this.lblScreen3.Location = new System.Drawing.Point(4, 346);
             this.lblScreen3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen3.Name = "lblScreen3";
-            this.lblScreen3.Size = new System.Drawing.Size(94, 29);
+            this.lblScreen3.Size = new System.Drawing.Size(99, 29);
             this.lblScreen3.TabIndex = 89;
             // 
             // lblScreen2
@@ -942,7 +942,7 @@
             this.lblScreen2.Location = new System.Drawing.Point(4, 185);
             this.lblScreen2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen2.Name = "lblScreen2";
-            this.lblScreen2.Size = new System.Drawing.Size(93, 29);
+            this.lblScreen2.Size = new System.Drawing.Size(100, 29);
             this.lblScreen2.TabIndex = 88;
             // 
             // button25
@@ -1070,10 +1070,10 @@
             this.lblScreen1.BackColor = System.Drawing.Color.SeaGreen;
             this.lblScreen1.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScreen1.ForeColor = System.Drawing.Color.White;
-            this.lblScreen1.Location = new System.Drawing.Point(7, 11);
+            this.lblScreen1.Location = new System.Drawing.Point(3, 11);
             this.lblScreen1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScreen1.Name = "lblScreen1";
-            this.lblScreen1.Size = new System.Drawing.Size(96, 29);
+            this.lblScreen1.Size = new System.Drawing.Size(100, 29);
             this.lblScreen1.TabIndex = 76;
             this.lblScreen1.Click += new System.EventHandler(this.lblScreen1_Click);
             // 
@@ -1182,7 +1182,7 @@
             this.btnStopScan.Enabled = false;
             this.btnStopScan.FlatAppearance.BorderSize = 0;
             this.btnStopScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStopScan.Location = new System.Drawing.Point(9, 21);
+            this.btnStopScan.Location = new System.Drawing.Point(26, 21);
             this.btnStopScan.Name = "btnStopScan";
             this.btnStopScan.Size = new System.Drawing.Size(45, 45);
             this.btnStopScan.TabIndex = 39;
