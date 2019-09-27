@@ -536,9 +536,11 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 show_loading_panel(361, 174, 414, 36);
+                lblTipoEnvio.Text = "";
+                btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
+                btnEnviarPDF1.FlatAppearance.BorderSize = 0;
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
-                //OracleDataReader reader = command.ExecuteReader();
                 OracleDataAdapter sda = new OracleDataAdapter(command);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
@@ -622,9 +624,11 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 show_loading_panel(361, 174, 414, 36);
+                lblTipoEnvio.Text = "";
+                btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
+                btnEnviarPDF1.FlatAppearance.BorderSize = 0;
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
-                //OracleDataReader reader = command.ExecuteReader();
                 OracleDataAdapter sda = new OracleDataAdapter(command);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
@@ -676,9 +680,11 @@ namespace OrfeoScan_IDU_STRT
                 try
                 {
                     show_loading_panel(361, 174, 414, 36);
+                    lblTipoEnvio.Text = "";
+                    btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
+                    btnEnviarPDF1.FlatAppearance.BorderSize = 0;
                     con.Open();
                     OracleCommand command = new OracleCommand(IISQL, con);
-                    //OracleDataReader reader = command.ExecuteReader();
                     OracleDataAdapter sda = new OracleDataAdapter(command);
                     DataTable dt = new DataTable();
                     sda.Fill(dt);
@@ -1636,6 +1642,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            lblTipoEnvio.Text = "";
             codbarras_private = null;
             limpiar_informacion_radicado();
             if (dataGridView1.Rows.Count > 0)
@@ -1696,6 +1703,18 @@ namespace OrfeoScan_IDU_STRT
 
                     if (tipo == "RADICADO")
                     {
+                        if (anexarImagenAUnRadicadoToolStripMenuItem.Checked)
+                        {
+                            btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            lblTipoEnvio.Text = "Anexo de Radicado";
+                        }
+                        else
+                        {
+                            btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            lblTipoEnvio.Text = "Documento Principal de Radicado";
+                        }
                         if (dataGridView1.Rows[e.RowIndex].Cells[1].Value != null)
                             paginas = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
                         if (dataGridView1.Rows[e.RowIndex].Cells[3].Value != null)
@@ -1767,6 +1786,9 @@ namespace OrfeoScan_IDU_STRT
                     }
                     else if (tipo == "EXPEDIENTE")
                     {
+                        btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+                        btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        lblTipoEnvio.Text = "Anexo de Expediente";
                         if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
                         if (dataGridView1.Rows[e.RowIndex].Cells[5].Value != null)
@@ -1934,7 +1956,8 @@ namespace OrfeoScan_IDU_STRT
                         string ObservacioneS = "";
                         int NumeroDeHojas = 11;
                         int codTTR = 0;
-                        string servidor = "ftp://"+ConfigurationManager.AppSettings["FTP_SERVER"]+ ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"];
+                        int anex_codigo = 0;
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"];
 
                         if (dataGridView1.CurrentRow.Cells[0].Value != null)
                         {
@@ -1987,7 +2010,7 @@ namespace OrfeoScan_IDU_STRT
                             ObservacioneS = " (" + NumeroDeHojas.ToString() + " Paginas)";
 
                             //Tiene una imagen ya registrada? (base de datos y bodega)
-                            string TPSQL = "SELECT RADI_PATH FROM RADICADO WHERE RADI_NUME_RADI="+numero_documento;
+                            string TPSQL = "SELECT RADI_PATH FROM RADICADO WHERE RADI_NUME_RADI=" + numero_documento;
                             string RADI_PATH = string.Empty;
                             OracleConnection con = new OracleConnection(funciones.conni);
                             try
@@ -2034,7 +2057,7 @@ namespace OrfeoScan_IDU_STRT
                                     return;
                                 }
                             }
-                            string queryNumHoj = "select RADI_NUME_HOJA from RADICADO where RADI_NUME_RADI = "+numero_documento;
+                            string queryNumHoj = "select RADI_NUME_HOJA from RADICADO where RADI_NUME_RADI = " + numero_documento;
                             con = new OracleConnection(funciones.conni);
                             try
                             {
@@ -2065,10 +2088,10 @@ namespace OrfeoScan_IDU_STRT
                             //lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
                             imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + ".pdf";
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
-                            if (sendFile("","",""))
+                            if (sendFile("", "", ""))
                             {
                                 //guardar registro
-                                string IISQL = "update radicado set RADI_NUME_HOJA=" + NumeroDeHojas + ", radi_path='" + imagenf.Replace(" ","") + "'  where radi_nume_radi=" + numero_documento;
+                                string IISQL = "update radicado set RADI_NUME_HOJA=" + NumeroDeHojas + ", radi_path='" + imagenf.Replace(" ", "") + "'  where radi_nume_radi=" + numero_documento;
                                 con = new OracleConnection(funciones.conni);
                                 try
                                 {
@@ -2112,7 +2135,115 @@ namespace OrfeoScan_IDU_STRT
                         #region AnexoRadicado
                         if (EsAnexo == 1 && rad_exp == 1)
                         {
-                            MessageBox.Show("es anexo a radicado");
+                            codTTR = 29;
+                            string ISQL_HL = "select anex_codigo,ANEX_NUMERO from anexos where anex_codigo like '" + numero_documento + "%' ORDER BY ANEX_NUMERO DESC";
+                            OracleConnection con = new OracleConnection(funciones.conni);
+                            try
+                            {
+                                con.Open();
+                                OracleCommand command = new OracleCommand(ISQL_HL, con);
+                                using (OracleDataReader reader = command.ExecuteReader())
+                                {
+                                    if (reader.Read())
+                                    {
+                                        if (reader[0] != null)
+                                        {
+                                            int.TryParse(reader[1].ToString(), out anex_codigo);
+                                        }
+                                        funciones.desconectar(con);
+                                    }
+                                    else
+                                        funciones.desconectar(con);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                funciones.desconectar(con);
+                            }
+                            anex_codigo++;
+                            if (cBoxtDocumento.SelectedIndex > 0)
+                            {
+                                tipoDocumentalIndex = cBoxtDocumento.SelectedIndex;
+                                string[] tipoDocumentalSplit = this.cBoxtDocumento.GetItemText(this.cBoxtDocumento.SelectedItem).Split(' ');
+                                if (tipoDocumentalSplit != null)
+                                {
+                                    if (tipoDocumentalSplit.Length > 0)
+                                    {
+                                        int parse = 0;
+                                        if (tipoDocumentalSplit[0] != null)
+                                        {
+                                            if (int.TryParse(tipoDocumentalSplit[0], out parse))
+                                            {
+                                                tDocumental = parse.ToString();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (tipoDocumentalIndex == -1)
+                            {
+                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.");
+                                return;
+                            }
+                            if (!string.IsNullOrEmpty(txtObservaciones.Text))
+                            {
+                                observacion = txtObservaciones.Text;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.");
+                                return;
+                            }
+                            ObservacioneS = "(" + NumeroDeHojas.ToString() + " Paginas) " + observacion;
+
+                            string imagenf = "";
+                            string dirserver = "";
+                            string nombrearchivo = numero_documento + "_" + anex_codigo.ToString().PadLeft(5, '0') + ".pdf";
+
+                            //lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
+                            dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
+
+                            if (sendFile("", "", ""))
+                            {
+                                string IISQL = "insert into anexos";
+                                IISQL = IISQL + "        (sgd_rem_destino,anex_radi_nume ,anex_codigo ,anex_tipo,anex_tamano ,anex_solo_lect,anex_creador ,anex_desc ,anex_numero ,anex_nomb_archivo ,anex_borrado,anex_salida ,sgd_dir_tipo,anex_depe_creador,sgd_tpr_codigo ,anex_fech_anex)";
+                                IISQL = IISQL + " values (1 ," + numero_documento + "," + numero_documento + anex_codigo.ToString().PadLeft(5, '0') + ",'4'      ,1000,'n'           ,'" + usuarioScanOrfeo.USUA_LOGIN + "' ,'" + ObservacioneS + "' ,'" + anex_codigo + "','" + nombrearchivo + "','N'         ,'0'         ,'0'         ,'0'              ,'" + tDocumental + "'," + varFechaSistema + ")";
+
+                                con = new OracleConnection(funciones.conni);
+                                try
+                                {
+                                    con.Open();
+                                    using (OracleCommand command = new OracleCommand(IISQL, con))
+                                    {
+                                        int result = command.ExecuteNonQuery();
+                                    }
+                                    funciones.desconectar(con);
+                                }
+                                catch (Exception)
+                                {
+                                    funciones.desconectar(con);
+                                }
+
+                                ObservacioneS = "(" + NumeroDeHojas + " Paginas)" + " (Anexo No. " + anex_codigo.ToString().PadLeft(5, '0') + ") " + observacion + "";
+                                string codusdp = usuarioScanOrfeo.DEPE_CODI.ToString().PadLeft(3, '0') + usuarioScanOrfeo.USUA_CODI.ToString().PadLeft(3, '0');
+                                ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (" + numero_documento.Substring(4, 3) + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + NumeroDeHojas + ")";
+                                con = new OracleConnection(funciones.conni);
+
+                                try
+                                {
+                                    con.Open();
+                                    using (OracleCommand command = new OracleCommand(ISQL_HL, con))
+                                    {
+                                        int result = command.ExecuteNonQuery();
+                                    }
+                                    funciones.desconectar(con);
+                                }
+                                catch (Exception)
+                                {
+                                    funciones.desconectar(con);
+                                }
+                            }
                         }
                         #endregion
                         #region AnexoExpediente
@@ -2198,12 +2329,12 @@ namespace OrfeoScan_IDU_STRT
                             }
                             //Envio de archivo al servidor
                             //guardar registro
-                            
-                            if (sendFile("","",""))
+
+                            if (sendFile("", "", ""))
                             {
                                 string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
                                 ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,1000, '" + observacion + "'";
-                                ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + nPaginas.ToString() + ")";
+                                ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + NumeroDeHojas.ToString() + ")";
 
                                 con = new OracleConnection(funciones.conni);
                                 try
@@ -2220,7 +2351,7 @@ namespace OrfeoScan_IDU_STRT
                                     funciones.desconectar(con);
                                 }
                                 string ISQL_aux1 = " Insert into SGD_HFLD_HISTFLUJODOC (SGD_HFLD_CODIGO,SGD_FEXP_CODIGO,SGD_EXP_FECHFLUJOANT,SGD_HFLD_FECH,SGD_EXP_NUMERO,RADI_NUME_RADI,USUA_DOC,USUA_CODI,DEPE_CODI,SGD_TTR_CODIGO,SGD_FEXP_OBSERVA,SGD_HFLD_OBSERVA,SGD_FARS_CODIGO,SGD_HFLD_AUTOMATICO) values ( ";
-                                ISQL_aux1 = ISQL_aux1 + " null,0,null,sysdate,'" + numero_documento + "'," + anexo_count + ",'" + usuarioScanOrfeo.USUA_DOC + "'," + usuarioScanOrfeo.USUA_CODI + "," + usuarioScanOrfeo.DEPE_CODI + ",29,null,'" + "(" + nPaginas.ToString() + " Paginas) " + observacion + "',null,null)";
+                                ISQL_aux1 = ISQL_aux1 + " null,0,null,sysdate,'" + numero_documento + "'," + anexo_count + ",'" + usuarioScanOrfeo.USUA_DOC + "'," + usuarioScanOrfeo.USUA_CODI + "," + usuarioScanOrfeo.DEPE_CODI + ",29,null,'" + "(" + NumeroDeHojas.ToString() + " Paginas) " + observacion + "',null,null)";
 
                                 con = new OracleConnection(funciones.conni);
                                 try
@@ -2955,6 +3086,55 @@ namespace OrfeoScan_IDU_STRT
         private void btnLimpiarAnexo_Click(object sender, EventArgs e)
         {
             limpiar_anexos();
+        }
+
+        private void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void anexarImagenAUnRadicadoToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            string tipo = "";
+            lblTipoEnvio.Text = "";
+            if (dataGridView1.Rows.Count > 0)
+            {
+                if (dataGridView1.CurrentRow.Cells[0].Value != null)
+                {
+                    tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                }
+                if (tipo!="")
+                {
+                    if (tipo == "RADICADO")
+                    {
+                        if (anexarImagenAUnRadicadoToolStripMenuItem.Checked)
+                        {
+                            btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            lblTipoEnvio.Text = "Anexo de Radicado";
+                        }
+                        else
+                        {
+                            btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            lblTipoEnvio.Text = "Documento Principal de Radicado";
+                        }
+                    }
+                    if (tipo == "EXPEDIENTE")
+                    {
+                        btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+                        btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        lblTipoEnvio.Text = "Anexo de Expediente";
+                    }
+                }
+
+            }
+            
+        }
+
+        private void dataGridView1_DataSourceChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 
