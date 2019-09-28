@@ -25,9 +25,11 @@ namespace OrfeoScan_IDU_STRT
 {
     public partial class configuracion : Form
     {
-        string IDU_path_img = @"D:\imgidu\";
-        string IDU_path_pdf = @"D:\pdfidu\";
-        string digitalizador = "D1g1t4l#0129";
+        string IDU_path_img = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).AppSettings.Settings["DPATH1"].Value;
+        string IDU_path_pdf = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).AppSettings.Settings["EPATH1"].Value;
+        string[,] nombresconpass = new string[2, 53];
+        List<string> ListaUsuarios = new List<string>();
+        
         public string configvalue1 = ConfigurationManager.AppSettings["FTP_IDU_USER"];
         funciones.funciones funciones = new funciones.funciones();
         public configuracion()
@@ -37,7 +39,21 @@ namespace OrfeoScan_IDU_STRT
         private void button1_Click(object sender, EventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["FTP_IDU_USER"].Value = comboBox1.Text;
+            config.AppSettings.Settings["FTP_IDU_USER"].Value = cbUsuarios.Text;
+            for (int i = 0; i < 53; i++)
+            {
+                for (int i1 = 0; i1 < 2; i1++)
+                {
+                    if (i1 == 0)
+                    {
+                        if (cbUsuarios.Text== nombresconpass[0,i])
+                        {
+                            config.AppSettings.Settings["FTP_IDU_PASSWORD"].Value = nombresconpass[1, i];
+                        }
+                    }
+                }
+            }
+
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
@@ -96,6 +112,10 @@ namespace OrfeoScan_IDU_STRT
                 }
                 crear_folder_dependencia(path + año.ToString() + @"\");
             }
+            if (!Directory.Exists(path + "temp" + @"\"))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(path + "temp" + @"\");
+            }
         }
         private void crear_folder_docs(string path)
         {
@@ -106,7 +126,22 @@ namespace OrfeoScan_IDU_STRT
         }
         private void configuracion_Load(object sender, EventArgs e)
         {
-
+            for (int i = 0; i < 53; i++)
+            {
+                for (int i1 = 0; i1 < 2; i1++)
+                {
+                    if (i1==0)
+                    {
+                        string valorUsuario = "digitalizador" + (i + 1).ToString().PadLeft(2, '0');
+                        nombresconpass[i1, i] = valorUsuario;
+                        cbUsuarios.Items.Add(valorUsuario);
+                    }
+                    else
+                    {
+                        nombresconpass[i1, i] = "D1g1t4l#0129";
+                    }
+                }
+            }
         }
     }
 }

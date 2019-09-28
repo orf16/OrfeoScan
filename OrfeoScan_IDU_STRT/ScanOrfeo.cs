@@ -32,6 +32,7 @@ namespace OrfeoScan_IDU_STRT
         bool _stopScan;
         bool _loadingCaps;
         List<System.Drawing.Image> imagenes = new List<System.Drawing.Image>();
+        List<byte[]> streamer = new List<byte[]>();
         List<PictureBox> boxes = new List<PictureBox>();
 
         int numero_box = 0;
@@ -1096,11 +1097,87 @@ namespace OrfeoScan_IDU_STRT
             pan_loading.Enabled = false;
             pan_loading.Refresh();
         }
+        public static byte[] MergeTiff(List<byte[]> tiffFiles)
+        {
+            byte[] tiffMerge = null;
+            using (var msMerge = new MemoryStream())
+            {
+                //get the codec for tiff files
+                ImageCodecInfo ici = null;
+                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+                    if (i.MimeType == "image/tiff")
+                        ici = i;
 
+                Encoder enc = Encoder.SaveFlag;
+                EncoderParameters ep = new EncoderParameters(1);
 
+                Bitmap pages = null;
+                int frame = 0;
 
+                foreach (var tiffFile in tiffFiles)
+                {
+                    using (var imageStream = new MemoryStream(tiffFile))
+                    {
+                        using (System.Drawing.Image tiffImage = System.Drawing.Image.FromStream(imageStream))
+                        {
+                            foreach (Guid guid in tiffImage.FrameDimensionsList)
+                            {
+                                //create the frame dimension 
+                                FrameDimension dimension = new FrameDimension(guid);
+                                //Gets the total number of frames in the .tiff file 
+                                int noOfPages = tiffImage.GetFrameCount(dimension);
 
+                                for (int index = 0; index < noOfPages; index++)
+                                {
+                                    FrameDimension currentFrame = new FrameDimension(guid);
+                                    tiffImage.SelectActiveFrame(currentFrame, index);
+                                    using (MemoryStream tempImg = new MemoryStream())
+                                    {
+                                        tiffImage.Save(tempImg, ImageFormat.Tiff);
+                                        {
+                                            if (frame == 0)
+                                            {
+                                                //save the first frame
+                                                pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
+                                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+                                                pages.Save(msMerge, ici, ep);
+                                            }
+                                            else
+                                            {
+                                                //save the intermediate frames
+                                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                                                pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
+                                            }
+                                        }
+                                        frame++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (frame > 0)
+                {
+                    //flush and close.
+                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.Flush);
+                    pages.SaveAdd(ep);
+                }
 
+                msMerge.Position = 0;
+                tiffMerge = msMerge.ToArray();
+            }
+            return tiffMerge;
+        }
+        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageIn.Save(ms, imageIn.RawFormat);
+                garbage_collector();
+                return ms.ToArray();
+            }
+            
+        }
         //Metodos y funciones para Escaner
         protected override void OnHandleCreated(EventArgs e)
         {
@@ -1131,7 +1208,6 @@ namespace OrfeoScan_IDU_STRT
                     PlatformInfo.Current.Log.Info(string.Format("{0} = {1}", it.InfoID, values.FirstOrDefault()));
                     break;
                 }
-
                 // handle image data
                 System.Drawing.Image img = null;
                 if (e.NativeData != IntPtr.Zero)
@@ -1150,20 +1226,7 @@ namespace OrfeoScan_IDU_STRT
                 {
                     this.BeginInvoke(new Action(() =>
                     {
-                        if (PageEdit.Image != null)
-                        {
-                            PageEdit.Image.Dispose();
-                            PageEdit.Image = null;
-                        }
-                        PageEdit.Image = img;
-                        var stream = new System.IO.MemoryStream();
-                        img.Save(stream, System.Drawing.Imaging.ImageFormat.Tiff);
-                        stream.Position = 0;
-                        var image = System.Drawing.Image.FromStream(stream);
-                        imagenes.Add(image);
-                        pageRange[0] = 0;
-                        pageRange[1] = 2;
-                        cargarImagen(imagenes, pageRange, true);
+                        streamer.Add(ImageToByteArray(img));
                     }));
                 }
             };
@@ -1172,14 +1235,39 @@ namespace OrfeoScan_IDU_STRT
                 PlatformInfo.Current.Log.Info("Source disabled event on thread " + Thread.CurrentThread.ManagedThreadId);
                 this.BeginInvoke(new Action(() =>
                 {
+                    if (dataGridView1.Rows.Count>0)
+                    {
+                        if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                        {
+                            string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                            string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                            if (documento.Length==14 || documento.Length == 19)
+                            {
+                                var merge = MergeTiff(streamer);
+                                string path = ConfigurationManager.AppSettings["DPATH"] + @"/temp/" + documento + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".tif";
+                                System.IO.File.WriteAllBytes(path, merge);
+                                TiffImage(path);
+                                if (actualBitmap != null)
+                                {
+                                    this.workingBitmap = GetWorkingImage(GetViewSize());
+                                    this.PageEdit.Image = workingBitmap;
+                                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                                    PageScreen1.Image = actualBitmap1;
+                                    PageScreen2.Image = actualBitmap2;
+                                    PageScreen3.Image = actualBitmap3;
+                                }
+                            }
+                        }
+                    }
                     btnStopScan.Enabled = false;
                     btnStopScan.Visible = false;
                     btnStartCapture.Enabled = true;
                     btnStartCapture.Visible = true;
-                    //panelOptions.Enabled = true;
                     LoadSourceCaps();
-                    //clean_picturebox();
-                    //cargar_picturebox();
+                    streamer.Clear();
+                    garbage_collector();
                 }));
             };
             _twain.TransferReady += (s, e) =>
@@ -1269,38 +1357,67 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
-            imagenes.Clear();
-            PageEdit.Image = null;
-            if (_twain.State == 4)
+            if (dataGridView1.Rows.Count > 0)
             {
-                //_twain.CurrentSource.CapXferCount.Set(4);
-
-                _stopScan = false;
-
-                if (_twain.CurrentSource.Capabilities.CapUIControllable.IsSupported)//.SupportedCaps.Contains(CapabilityId.CapUIControllable))
+                if (dataGridView1.CurrentRow.Cells[2].Value != null)
                 {
-                    // hide scanner ui if possible
-                    if (_twain.CurrentSource.Enable(SourceEnableMode.NoUI, false, this.Handle) == ReturnCode.Success)
+                    string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                    string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                    if (documento.Length == 14 || documento.Length == 19)
                     {
-                        btnStopScan.Enabled = true;
-                        btnStopScan.Visible = true;
-                        btnStartCapture.Enabled = false;
-                        btnStartCapture.Visible = false;
+                        if (tipo == "RADICADO" || tipo == "EXPEDIENTE")
+                        {
+                            imagenes.Clear();
+                            PageEdit.Image = null;
+                            if (_twain.State == 4)
+                            {
+                                //_twain.CurrentSource.CapXferCount.Set(4);
+
+                                _stopScan = false;
+
+                                if (_twain.CurrentSource.Capabilities.CapUIControllable.IsSupported)//.SupportedCaps.Contains(CapabilityId.CapUIControllable))
+                                {
+                                    // hide scanner ui if possible
+                                    if (_twain.CurrentSource.Enable(SourceEnableMode.NoUI, false, this.Handle) == ReturnCode.Success)
+                                    {
+                                        btnStopScan.Enabled = true;
+                                        btnStopScan.Visible = true;
+                                        btnStartCapture.Enabled = false;
+                                        btnStartCapture.Visible = false;
+                                    }
+                                }
+                                else
+                                {
+                                    if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
+                                    {
+                                        btnStopScan.Enabled = true;
+                                        btnStopScan.Visible = true;
+                                        btnStartCapture.Enabled = false;
+                                        btnStartCapture.Visible = false;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
                     }
                 }
                 else
                 {
-                    if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
-                    {
-                        btnStopScan.Enabled = true;
-                        btnStopScan.Visible = true;
-                        btnStartCapture.Enabled = false;
-                        btnStartCapture.Visible = false;
-                    }
+                    MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
                 }
             }
+            else
+            {
+                MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+            }
         }
-
         private void btnStopScan_Click(object sender, EventArgs e)
         {
             _stopScan = true;
@@ -1901,37 +2018,26 @@ namespace OrfeoScan_IDU_STRT
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
-            if (Directory.Exists(@"D:\imgidu\"))
-            {
-                dialog.InitialDirectory = @"D:\imgidu\";
-            }
-            else
-            {
-                if (Directory.Exists(@"D:\"))
-                {
-                    dialog.InitialDirectory = @"D:\";
-                }
-                else
-                {
-                    if (Directory.Exists(@"C:\"))
-                    {
-                        dialog.InitialDirectory = @"C:\";
-                    }
-                }
-            }
-
+            dialog.InitialDirectory = @"C:\";
             dialog.Title = "Abrir Imagen";
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = dialog.FileName;
-                var img = Bitmap.FromFile(fileName);
-                var pages = img.GetFrameCount(FrameDimension.Page);
-                List<System.Drawing.Image> cargar = new List<System.Drawing.Image>();
-                cargar = Split(fileName);
-                if (cargar.Count > 0)
-                    cargarImagen(cargar, pageRange, true);
+                rutaTiff = dialog.FileName;
+                TiffImage(rutaTiff);
+                if (actualBitmap != null)
+                {
+                    this.workingBitmap = GetWorkingImage(GetViewSize());
+                    this.PageEdit.Image = workingBitmap;
+                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                    PageScreen1.Image = actualBitmap1;
+                    PageScreen2.Image = actualBitmap2;
+                    PageScreen3.Image = actualBitmap3;
+                }
             }
+            garbage_collector();
         }
 
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
