@@ -51,7 +51,7 @@
             this.tSSL3});
             this.statusStrip1.Location = new System.Drawing.Point(0, 383);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(903, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(793, 22);
             this.statusStrip1.TabIndex = 49;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -78,11 +78,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(141, 274);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(130, 24);
+            this.label5.Size = new System.Drawing.Size(130, 25);
             this.label5.TabIndex = 48;
             this.label5.Text = "Contraseña";
             // 
@@ -90,19 +90,19 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(190, 220);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 24);
+            this.label4.Size = new System.Drawing.Size(87, 25);
             this.label4.TabIndex = 47;
             this.label4.Text = "Usuario";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(59, 12);
+            this.pictureBox1.Image = global::OrfeoScan_IDU_STRT.Properties.Resources.ORFEO_LOGO;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(770, 180);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -136,7 +136,7 @@
             // 
             this.btn_ingresar.BackColor = System.Drawing.Color.Transparent;
             this.btn_ingresar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_ingresar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btn_ingresar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             this.btn_ingresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_ingresar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ingresar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
@@ -153,7 +153,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
-            this.ClientSize = new System.Drawing.Size(903, 405);
+            this.ClientSize = new System.Drawing.Size(793, 405);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);

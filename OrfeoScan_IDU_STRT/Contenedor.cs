@@ -43,10 +43,16 @@ namespace OrfeoScan_IDU_STRT
                 }
             }
             this.Text = "SCANORFEO";
-            //this.Icon = ADALETVERIFICADOR.Properties.Resources.logo_adalet1;
+            this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
             ScanOrfeo ScanOrfeo = new ScanOrfeo(usuarioScanOrfeo);
             ScanOrfeo.MdiParent = this;
             ScanOrfeo.Show();
+            ScanOrfeo.Dock = DockStyle.Fill;
+        }
+
+        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

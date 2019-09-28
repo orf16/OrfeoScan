@@ -1,0 +1,5 @@
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\bin\Release\funciones.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\bin\Release\funciones.pdb
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\bin\Release\Oracle.ManagedDataAccess.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\obj\Release\funciones.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\obj\Release\funciones.pdb

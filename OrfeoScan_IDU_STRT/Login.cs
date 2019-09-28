@@ -11,18 +11,13 @@ namespace OrfeoScan_IDU_STRT
         funciones.funciones funciones = new funciones.funciones();
         public USUARIO usuario;
         public int tipo_usuario=0;
-        Single z;
-        public string configvalue1 = ConfigurationManager.AppSettings["FTP_IDU_USER"];
         public Login()
         {
             InitializeComponent();
         }
         private void Login_Load(object sender, EventArgs e)
         {
-            //Inicializar Sockets
-            //Obtener IPlocal
-            //Limpiar Sockets
-
+            this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
             if (funciones.conexion_test(funciones.conni))
             {
                 tSSL2.Text = "Conectado";
@@ -31,21 +26,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 tSSL2.Text = "Sin Conexión";
             }
-            
-            bool Doc_Anexo = false;
-            string ord = " radi_nume_radi desc ";
             string[] Dependencia = new string[4];
-        }
-        private char unrot(char letter)
-        {
-            int number;
-            number = (int)letter;
-            number = number + (int)-z;
-            if (number > 255)
-                number = number - 255;
-            else
-                number = number + 255;
-            return (char)number;
         }
         private void btn_ingresar_Click(object sender, EventArgs e)
         {

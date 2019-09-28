@@ -70,11 +70,11 @@
             // button2
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(640, 248);
+            this.button2.Location = new System.Drawing.Point(623, 248);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(159, 32);
+            this.button2.Size = new System.Drawing.Size(176, 32);
             this.button2.TabIndex = 46;
-            this.button2.Text = "Crear Carpetas IDU";
+            this.button2.Text = "Crear Carpetas IDU locales";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -95,6 +95,7 @@
             this.button3.TabIndex = 51;
             this.button3.Text = "Guardar Configuración Servidor FTP";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // configuracion
             // 

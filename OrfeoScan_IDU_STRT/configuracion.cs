@@ -1,24 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client;
-using System.Security.Cryptography;
-using OrfeoScan_IDU_STRT.funciones;
-using model;
 using System.Configuration;
-using System.Drawing.Printing;
-using NTwain;
-using NTwain.Data;
-using System.Reflection;
-using System.Drawing.Imaging;
-using System.Threading;
-using System.Diagnostics;
 using System.IO;
 
 namespace OrfeoScan_IDU_STRT
@@ -29,7 +14,7 @@ namespace OrfeoScan_IDU_STRT
         string IDU_path_pdf = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).AppSettings.Settings["EPATH1"].Value;
         string[,] nombresconpass = new string[2, 53];
         List<string> ListaUsuarios = new List<string>();
-        
+        string ftp = "";
         public string configvalue1 = ConfigurationManager.AppSettings["FTP_IDU_USER"];
         funciones.funciones funciones = new funciones.funciones();
         public configuracion()
@@ -53,9 +38,9 @@ namespace OrfeoScan_IDU_STRT
                     }
                 }
             }
-
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
+            MessageBox.Show("Usuario FTP guardado");
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -69,6 +54,7 @@ namespace OrfeoScan_IDU_STRT
             }
             crear_folder_año(IDU_path_img);
             crear_folder_año(IDU_path_pdf);
+            MessageBox.Show("Creación de carpetas IDU ejecutado");
         }
         private void crear_folder_dependencia(string path)
         {
@@ -95,7 +81,7 @@ namespace OrfeoScan_IDU_STRT
                     }
                     funciones.desconectar(con);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     funciones.desconectar(con);
                 }
@@ -126,6 +112,8 @@ namespace OrfeoScan_IDU_STRT
         }
         private void configuracion_Load(object sender, EventArgs e)
         {
+            this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             for (int i = 0; i < 53; i++)
             {
                 for (int i1 = 0; i1 < 2; i1++)
@@ -142,6 +130,35 @@ namespace OrfeoScan_IDU_STRT
                     }
                 }
             }
+            var ftp_user = config.AppSettings.Settings["FTP_IDU_USER"].Value;
+            foreach (var item in cbUsuarios.Items)
+            {
+                if (item.ToString()== ftp_user)
+                {
+                    cbUsuarios.Text = ftp_user;
+                }
+            }
+            ftp = config.AppSettings.Settings["FTP_SERVER"].Value + config.AppSettings.Settings["FTP_P1"].Value+ config.AppSettings.Settings["FTP_ROUTE"].Value+ config.AppSettings.Settings["FTP_P2"].Value;
+            txtFTP.Text = ftp;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string st = txtFTP.Text;
+            if (st.Length==8)
+            {
+                string s1 = st.Substring(0, 2);
+                string s2 = st.Substring(2, 2);
+                string s3 = st.Substring(4, 2);
+                string s4 = st.Substring(6, 2);
+                config.AppSettings.Settings["FTP_SERVER"].Value = s1;
+                config.AppSettings.Settings["FTP_P1"].Value = s2;
+                config.AppSettings.Settings["FTP_ROUTE"].Value = s3;
+                config.AppSettings.Settings["FTP_P2"].Value = s4;
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+            MessageBox.Show("Servidor Guardado");
         }
     }
 }

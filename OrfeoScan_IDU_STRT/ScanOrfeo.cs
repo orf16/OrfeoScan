@@ -315,6 +315,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void ScanOrfeo_Load(object sender, EventArgs e)
         {
+
             limpiar_imagen();
             ToolTip toolTip1 = new ToolTip();
             toolTip1.AutoPopDelay = 5000;
