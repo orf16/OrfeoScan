@@ -732,7 +732,7 @@
             // button11
             // 
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(1543, 54);
+            this.button11.Location = new System.Drawing.Point(795, 23);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(29, 21);
             this.button11.TabIndex = 51;
@@ -1496,6 +1496,7 @@
             this.groupBox4.Controls.Add(this.btnGirarIzquierda);
             this.groupBox4.Controls.Add(this.button5);
             this.groupBox4.Controls.Add(this.btnGirarDerecha);
+            this.groupBox4.Controls.Add(this.button11);
             this.groupBox4.ForeColor = System.Drawing.Color.White;
             this.groupBox4.Location = new System.Drawing.Point(4, 183);
             this.groupBox4.Name = "groupBox4";
@@ -1710,7 +1711,6 @@
             this.panel6.Controls.Add(this.textBox1);
             this.panel6.Controls.Add(this.groupDuplex);
             this.panel6.Controls.Add(this.groupDPI);
-            this.panel6.Controls.Add(this.button11);
             this.panel6.Controls.Add(this.numericUpDown1);
             this.panel6.Controls.Add(this.label16);
             this.panel6.Controls.Add(this.numericUpDown2);
