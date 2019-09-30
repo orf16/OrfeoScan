@@ -1,0 +1,31 @@
+﻿1. error con 3 paginas
+2. al hacer click en la imagen no aparece
+3. cantidad de kilobytes en insert
+4. limpiar despues de envio exitoso
+5. si se carga de nuevo las imagenes se carga dos veces el combobox de paginas
+6. mensaje de envio correcto
+7. deshabilitar fecha y hora y se anexo a radicado
+8. Error al enviar archivo, cierre de conexión? adjunto imagen
+9. Consiguración por defecto de un scanner
+9. Consiguración por defecto de una impresora
+10 error al intentar configurar impresora. memoeria:
+11. radicado por tipo
+12. radicados por masiva
+13. 2 botones pqrs
+14. ocultar configuración para usuarios normales
+15. 
+
+
+201843519120000029E
+
+20195260817531
+
+Consulte el final de este mensaje para obtener más detalles sobre cómo invocar a la depuración 
+Just-In-Time (JIT) en lugar de a este cuadro de diálogo.
+
+************** Texto de la excepción **************
+System.OutOfMemoryException: Memoria insuficiente.
+   en System.Drawing.Image.FromFile(String filename, Boolean useEmbeddedColorManagement)
+   en System.Drawing.Image.FromFile(String filename)
+   en OrfeoScan_IDU_STRT.ScanOrfeo.TiffImage(String path) en C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\ScanOrfeo.cs:línea 139
+   en OrfeoScan_IDU_STRT.ScanOrfeo.<SetupTwain>b__112_6() en C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\ScanOrfeo.cs:línea 1375
