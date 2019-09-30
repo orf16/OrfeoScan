@@ -57,6 +57,7 @@
             // 
             // tSSL1
             // 
+            this.tSSL1.BackColor = System.Drawing.Color.Transparent;
             this.tSSL1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tSSL1.Name = "tSSL1";
             this.tSSL1.Size = new System.Drawing.Size(98, 17);
@@ -64,11 +65,13 @@
             // 
             // tSSL2
             // 
+            this.tSSL2.BackColor = System.Drawing.Color.Transparent;
             this.tSSL2.Name = "tSSL2";
             this.tSSL2.Size = new System.Drawing.Size(0, 17);
             // 
             // tSSL3
             // 
+            this.tSSL3.BackColor = System.Drawing.Color.Transparent;
             this.tSSL3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tSSL3.Name = "tSSL3";
             this.tSSL3.Size = new System.Drawing.Size(71, 17);
@@ -152,7 +155,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Honeydew;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(793, 405);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label5);

@@ -2466,7 +2466,7 @@ namespace OrfeoScan_IDU_STRT
                             imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
 
-                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + nombrearchivo;
+                            string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
                             string imagenf3 = servidor + imagenf;
 
                             if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
@@ -2475,7 +2475,7 @@ namespace OrfeoScan_IDU_STRT
                                 {
                                     string IISQL = "insert into anexos";
                                     IISQL = IISQL + "        (sgd_rem_destino,anex_radi_nume ,anex_codigo ,anex_tipo,anex_tamano ,anex_solo_lect,anex_creador ,anex_desc ,anex_numero ,anex_nomb_archivo ,anex_borrado,anex_salida ,sgd_dir_tipo,anex_depe_creador,sgd_tpr_codigo ,anex_fech_anex)";
-                                    IISQL = IISQL + " values (1 ," + numero_documento + "," + numero_documento + anex_codigo.ToString().PadLeft(5, '0') + ",'4'      ,1000,'n'           ,'" + usuarioScanOrfeo.USUA_LOGIN + "' ,'" + ObservacioneS + "' ,'" + anex_codigo + "','" + nombrearchivo + "','N'         ,'0'         ,'0'         ,'0'              ,'" + tDocumental + "'," + varFechaSistema + ")";
+                                    IISQL = IISQL + " values (1 ," + numero_documento + "," + numero_documento + anex_codigo.ToString().PadLeft(5, '0') + ",'4'      ,1000,'S'           ,'" + usuarioScanOrfeo.USUA_LOGIN + "' ,'" + ObservacioneS + "' ,'" + anex_codigo + "','" + nombrearchivo + "','N'         ,'0'         ,'0'         ,'0'              ,'" + tDocumental + "'," + varFechaSistema + ")";
 
                                     con = new OracleConnection(funciones.conni);
                                     try
@@ -2606,9 +2606,9 @@ namespace OrfeoScan_IDU_STRT
                             string imagenf = "";
                             string dirserver = "";
 
-                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + anexo_count_file;
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento +"_"+ anexo_count_file;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
-                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + anexo_count_file;
+                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + numero_documento + "_" + anexo_count_file;
                             string imagenf3 = servidor + imagenf;
 
                             if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
@@ -2631,6 +2631,7 @@ namespace OrfeoScan_IDU_STRT
                                     }
                                     catch (Exception)
                                     {
+                                        MessageBox.Show("Error al insertar registro de anexo de expediente");
                                         funciones.desconectar(con);
                                     }
                                     string ISQL_aux1 = " Insert into SGD_HFLD_HISTFLUJODOC (SGD_HFLD_CODIGO,SGD_FEXP_CODIGO,SGD_EXP_FECHFLUJOANT,SGD_HFLD_FECH,SGD_EXP_NUMERO,RADI_NUME_RADI,USUA_DOC,USUA_CODI,DEPE_CODI,SGD_TTR_CODIGO,SGD_FEXP_OBSERVA,SGD_HFLD_OBSERVA,SGD_FARS_CODIGO,SGD_HFLD_AUTOMATICO) values ( ";
@@ -2645,9 +2646,11 @@ namespace OrfeoScan_IDU_STRT
                                             int result = command.ExecuteNonQuery();
                                         }
                                         funciones.desconectar(con);
+                                        MessageBox.Show("Archivo enviado correctamente");
                                     }
                                     catch (Exception)
                                     {
+                                        MessageBox.Show("Error al insertar registro historico de anexo de expediente");
                                         funciones.desconectar(con);
                                     }
 
