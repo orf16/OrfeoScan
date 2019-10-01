@@ -189,7 +189,10 @@ namespace OrfeoScan_IDU_STRT
         {
             if (actualBitmap!=null)
             {
-                actualBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, page);
+                if (numeroPaginas()-1>= page)
+                {
+                    actualBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, page);
+                }
             }
             double zoom = 1;
             this.workingBitmap = new Bitmap(this.actualBitmap,
@@ -336,9 +339,10 @@ namespace OrfeoScan_IDU_STRT
         }
         private void PageScreen1_Click(object sender, EventArgs e)
         {
-            this.workingBitmap = GetWorkingImage(GetViewSize());
+            this.workingBitmap = GetWorkingImage1(GetViewSize(), actualpage1);
             pageRange[0] = actualpage1;
             pageRange[1] = actualpage1+2;
+            
             cambio_flecha = true;
             comboBox1.Text = (actualpage1 + 1).ToString();
             cambio_flecha = true;
@@ -347,9 +351,10 @@ namespace OrfeoScan_IDU_STRT
         }
         private void PageScreen2_Click(object sender, EventArgs e)
         {
-            this.workingBitmap=GetWorkingImage(GetViewSize());
+            this.workingBitmap = GetWorkingImage1(GetViewSize(), actualpage2);
             pageRange[0] = actualpage2;
             pageRange[1] = actualpage2 + 2;
+            
             cambio_flecha = true;
             comboBox1.Text = (actualpage2 + 1).ToString();
             cambio_flecha = true;
@@ -358,9 +363,10 @@ namespace OrfeoScan_IDU_STRT
         }
         private void PageScreen3_Click(object sender, EventArgs e)
         {
-            this.workingBitmap = GetWorkingImage(GetViewSize());
+            this.workingBitmap = GetWorkingImage1(GetViewSize(), actualpage3);
             pageRange[0] = actualpage3;
             pageRange[1] = actualpage3 + 2;
+            
             cambio_flecha = true;
             comboBox1.Text = (actualpage3 + 1).ToString();
             cambio_flecha = true;
@@ -556,6 +562,7 @@ namespace OrfeoScan_IDU_STRT
             dtHoraAnexo.Value = fechaAnexo;
             txtObservaciones.Text = string.Empty;
             cBoxtDocumento.Items.Clear();
+            cBoxtDocumento.Text = string.Empty;
             cargarTipoDocumental();
 
         }
@@ -710,6 +717,10 @@ namespace OrfeoScan_IDU_STRT
                 lblTipoEnvio.Text = "";
                 btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                 btnEnviarPDF1.FlatAppearance.BorderSize = 0;
+                label13.Visible = false;
+                dtFechaAnexo.Visible = false;
+                dtHoraAnexo.Visible = false;
+
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
                 OracleDataAdapter sda = new OracleDataAdapter(command);
@@ -785,6 +796,9 @@ namespace OrfeoScan_IDU_STRT
                 lblTipoEnvio.Text = "";
                 btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                 btnEnviarPDF1.FlatAppearance.BorderSize = 0;
+                label13.Visible = false;
+                dtFechaAnexo.Visible = false;
+                dtHoraAnexo.Visible = false;
                 con.Open();
                 OracleCommand command = new OracleCommand(IISQL, con);
                 OracleDataAdapter sda = new OracleDataAdapter(command);
@@ -841,6 +855,9 @@ namespace OrfeoScan_IDU_STRT
                     lblTipoEnvio.Text = "";
                     btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                     btnEnviarPDF1.FlatAppearance.BorderSize = 0;
+                    label13.Visible = false;
+                    dtFechaAnexo.Visible = false;
+                    dtHoraAnexo.Visible = false;
                     con.Open();
                     OracleCommand command = new OracleCommand(IISQL, con);
                     OracleDataAdapter sda = new OracleDataAdapter(command);
@@ -1384,9 +1401,21 @@ namespace OrfeoScan_IDU_STRT
                                     cambio_flecha = true;
                                     comboBox1.Text = "1";
                                     cambio_flecha = false;
-                                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
-                                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
-                                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                                    if (numeroPaginas()>=1)
+                                    {
+                                        actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                                    }
+                                    if (numeroPaginas() >= 2)
+                                    {
+                                        actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                                    }
+                                    if (numeroPaginas() >= 3)
+                                    {
+                                        actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                                    }
+                                    
+                                    
+                                    
                                     PageScreen1.Image = actualBitmap1;
                                     PageScreen2.Image = actualBitmap2;
                                     PageScreen3.Image = actualBitmap3;
@@ -1808,6 +1837,7 @@ namespace OrfeoScan_IDU_STRT
 
 
                     //New Drawing.Point((DeltaX - Panel1.AutoScrollPosition.X), (DeltaY - Panel1.AutoScrollPosition.Y));
+                    garbage_collector();
                 }
             }
             PageEdit.Invalidate();
@@ -1831,6 +1861,7 @@ namespace OrfeoScan_IDU_STRT
                         Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
                         e.Graphics.DrawRectangle(blackPen, Rect);
                         e.Graphics.FillRectangle(selectionBrush, Rect);
+                        garbage_collector();
                     }
                     else
                     {
@@ -1956,12 +1987,18 @@ namespace OrfeoScan_IDU_STRT
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
                             btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            label13.Visible = false;
+                            dtFechaAnexo.Visible = false;
+                            dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
                         }
                         else
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
                             btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            label13.Visible = false;
+                            dtFechaAnexo.Visible = false;
+                            dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
                         }
                         if (dataGridView1.Rows[e.RowIndex].Cells[1].Value != null)
@@ -2037,6 +2074,9 @@ namespace OrfeoScan_IDU_STRT
                     {
                         btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
                         btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        label13.Visible = true;
+                        dtFechaAnexo.Visible = true;
+                        dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
                         if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
@@ -2068,7 +2108,18 @@ namespace OrfeoScan_IDU_STRT
             lbl_InfoRadicado4.Text = "";
             lbl_InfoRadicado5.Text = "";
             lbl_num_doc.Text = "";
+            lblTipoEnvio.Text = "";
             codbarras.Image = null;
+            btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
+            btnEnviarPDF1.FlatAppearance.BorderSize = 0;
+            label13.Visible = false;
+            dtFechaAnexo.Visible = false;
+            dtHoraAnexo.Visible = false;
+        }
+        private void limpiar_gridview()
+        {
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -2168,9 +2219,21 @@ namespace OrfeoScan_IDU_STRT
                     cambio_flecha = true;
                     comboBox1.Text = "1";
                     cambio_flecha = false;
-                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
-                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
-                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                    if (numeroPaginas()>=1)
+                    {
+                        actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                    }
+                    if (numeroPaginas() >= 2)
+                    {
+                        actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                    }
+                    if (numeroPaginas() >= 3)
+                    {
+                        actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                    }
+                    
+                    
+                    
                     PageScreen1.Image = actualBitmap1;
                     PageScreen2.Image = actualBitmap2;
                     PageScreen3.Image = actualBitmap3;
@@ -2361,6 +2424,10 @@ namespace OrfeoScan_IDU_STRT
                                     catch (Exception)
                                     {
                                         MessageBox.Show("Error al actualizar registro de ruta de radicado");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         funciones.desconectar(con);
                                     }
 
@@ -2377,10 +2444,18 @@ namespace OrfeoScan_IDU_STRT
                                         }
                                         funciones.desconectar(con);
                                         MessageBox.Show("Archivo enviado correctamente");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                     }
                                     catch (Exception)
                                     {
                                         MessageBox.Show("Error en insertar registro historico");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         funciones.desconectar(con);
                                     }
                                 }
@@ -2490,6 +2565,10 @@ namespace OrfeoScan_IDU_STRT
                                     catch (Exception)
                                     {
                                         MessageBox.Show("Error al insertar registro de anexo de radicado");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         funciones.desconectar(con);
                                         return;
                                     }
@@ -2508,12 +2587,20 @@ namespace OrfeoScan_IDU_STRT
                                         }
                                         funciones.desconectar(con);
                                         MessageBox.Show("Archivo enviado correctamente");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                     }
                                     catch (Exception)
                                     {
 
                                         MessageBox.Show("Error al insertar registro historico de anexo de radicado");
                                         funciones.desconectar(con);
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         return;
                                     }
                                 }
@@ -2632,6 +2719,10 @@ namespace OrfeoScan_IDU_STRT
                                     catch (Exception)
                                     {
                                         MessageBox.Show("Error al insertar registro de anexo de expediente");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         funciones.desconectar(con);
                                     }
                                     string ISQL_aux1 = " Insert into SGD_HFLD_HISTFLUJODOC (SGD_HFLD_CODIGO,SGD_FEXP_CODIGO,SGD_EXP_FECHFLUJOANT,SGD_HFLD_FECH,SGD_EXP_NUMERO,RADI_NUME_RADI,USUA_DOC,USUA_CODI,DEPE_CODI,SGD_TTR_CODIGO,SGD_FEXP_OBSERVA,SGD_HFLD_OBSERVA,SGD_FARS_CODIGO,SGD_HFLD_AUTOMATICO) values ( ";
@@ -2647,10 +2738,18 @@ namespace OrfeoScan_IDU_STRT
                                         }
                                         funciones.desconectar(con);
                                         MessageBox.Show("Archivo enviado correctamente");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                     }
                                     catch (Exception)
                                     {
                                         MessageBox.Show("Error al insertar registro historico de anexo de expediente");
+                                        limpiar_anexos();
+                                        limpiar_imagen();
+                                        limpiar_informacion_radicado();
+                                        limpiar_gridview();
                                         funciones.desconectar(con);
                                     }
 
@@ -3526,12 +3625,18 @@ namespace OrfeoScan_IDU_STRT
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
                             btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            label13.Visible = false;
+                            dtFechaAnexo.Visible = false;
+                            dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
                         }
                         else
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
                             btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            label13.Visible = false;
+                            dtFechaAnexo.Visible = false;
+                            dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
                         }
                     }
@@ -3539,6 +3644,9 @@ namespace OrfeoScan_IDU_STRT
                     {
                         btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
                         btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        label13.Visible = true;
+                        dtFechaAnexo.Visible = true;
+                        dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
                     }
                 }
