@@ -34,6 +34,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.txtFTP = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // cbUsuarios
@@ -44,13 +47,13 @@
             this.cbUsuarios.Location = new System.Drawing.Point(15, 26);
             this.cbUsuarios.MaxDropDownItems = 10;
             this.cbUsuarios.Name = "cbUsuarios";
-            this.cbUsuarios.Size = new System.Drawing.Size(784, 22);
+            this.cbUsuarios.Size = new System.Drawing.Size(324, 22);
             this.cbUsuarios.TabIndex = 42;
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(610, 54);
+            this.button1.Location = new System.Drawing.Point(150, 54);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(189, 29);
             this.button1.TabIndex = 43;
@@ -70,7 +73,7 @@
             // button2
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(623, 248);
+            this.button2.Location = new System.Drawing.Point(623, 126);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(176, 32);
             this.button2.TabIndex = 46;
@@ -81,7 +84,7 @@
             // txtFTP
             // 
             this.txtFTP.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFTP.Location = new System.Drawing.Point(658, 111);
+            this.txtFTP.Location = new System.Drawing.Point(658, 19);
             this.txtFTP.Name = "txtFTP";
             this.txtFTP.Size = new System.Drawing.Size(141, 31);
             this.txtFTP.TabIndex = 50;
@@ -89,7 +92,7 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(583, 148);
+            this.button3.Location = new System.Drawing.Point(583, 56);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(216, 29);
             this.button3.TabIndex = 51;
@@ -97,12 +100,44 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // button4
+            // 
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(99, 126);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(240, 29);
+            this.button4.TabIndex = 53;
+            this.button4.Text = "Guardar Nombre Impresora por defecto";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(198, 89);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(141, 31);
+            this.textBox1.TabIndex = 52;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(610, 91);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(189, 31);
+            this.textBox2.TabIndex = 54;
+            this.textBox2.Text = "D:\\imgidu & D:\\pdfidu";
+            // 
             // configuracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(811, 293);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.txtFTP);
             this.Controls.Add(this.button2);
@@ -125,5 +160,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox txtFTP;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

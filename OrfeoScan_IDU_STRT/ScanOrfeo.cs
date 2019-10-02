@@ -83,9 +83,17 @@ namespace OrfeoScan_IDU_STRT
         string pref_pag = "PAG ";
         string path_ = null;
         int actual_page = 0;
+        Bitmap[] editor = new Bitmap[1];
+
 
         private void limpiar_imagen()
         {
+            for (int i = 0; i < editor.Length; i++)
+            {
+                editor[i] = null;
+            }
+            Array.Resize<Bitmap>(ref editor, 1);
+            
             if (actualBitmap!=null)
             {
                 actualBitmap.Dispose();
@@ -302,36 +310,7 @@ namespace OrfeoScan_IDU_STRT
         {
             
         }
-        private bool guardarTiffActual(string path)
-        {
-            int i = 0;
-            try
-            {
-                
-                if (actualBitmap != null)
-                {
-                    List<byte[]> li = new List<byte[]>();
-                    int npag = numeroPaginas();
-                    for (i = 0; i < npag; i++)
-                    {
-                        actualBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, i);
-                        li.Add(ImageToByte(actualBitmap));
-                        garbage_collector();
-                    }
-                    var bite = MergeTiff(li);
-                    System.IO.File.WriteAllBytes(path, bite);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
-        }
+        
         public static byte[] ImageToByte(System.Drawing.Image img)
         {
             ImageConverter converter = new ImageConverter();
@@ -345,7 +324,7 @@ namespace OrfeoScan_IDU_STRT
             
             cambio_flecha = true;
             comboBox1.Text = (actualpage1 + 1).ToString();
-            cambio_flecha = true;
+            cambio_flecha = false;
             this.PageEdit.Image = workingBitmap;
             garbage_collector();
         }
@@ -357,7 +336,7 @@ namespace OrfeoScan_IDU_STRT
             
             cambio_flecha = true;
             comboBox1.Text = (actualpage2 + 1).ToString();
-            cambio_flecha = true;
+            cambio_flecha = false;
             this.PageEdit.Image = workingBitmap;
             garbage_collector();
         }
@@ -369,7 +348,7 @@ namespace OrfeoScan_IDU_STRT
             
             cambio_flecha = true;
             comboBox1.Text = (actualpage3 + 1).ToString();
-            cambio_flecha = true;
+            cambio_flecha = false;
             this.PageEdit.Image = workingBitmap;
             garbage_collector();
         }
@@ -531,17 +510,33 @@ namespace OrfeoScan_IDU_STRT
                 var srcBtn = new ToolStripMenuItem(src.Name);
                 srcBtn.Tag = src;
                 srcBtn.Click += SourceMenuItem_Click;
-                srcBtn.Checked = _twain.CurrentSource != null && _twain.CurrentSource.Name == src.Name;
+               // srcBtn.Checked = _twain.CurrentSource != null && _twain.CurrentSource.Name == src.Name;
+                srcBtn.Checked = false;
                 seleccionarEscanerToolStripMenuItem.DropDownItems.Insert(0, srcBtn);
             }
             bool primerEscaner = true;
 
             foreach (var btn in seleccionarEscanerToolStripMenuItem.DropDownItems)
             {
+                var srcBtn = btn as ToolStripMenuItem;
+                var src = srcBtn.Tag as DataSource;
+                if (src.Name== config.AppSettings.Settings["SCAN_NAME"].Value)
+                {
+                    if (src.Open() == ReturnCode.Success)
+                    {
+                        srcBtn.Checked = true;
+                        btnStartCapture.Enabled = true;
+                        LoadSourceCaps();
+                        primerEscaner = false;
+                    }
+                }
+            }
+            foreach (var btn in seleccionarEscanerToolStripMenuItem.DropDownItems)
+            {
+                var srcBtn = btn as ToolStripMenuItem;
+                var src = srcBtn.Tag as DataSource;
                 if (primerEscaner)
                 {
-                    var srcBtn = btn as ToolStripMenuItem;
-                    var src = srcBtn.Tag as DataSource;
                     if (src.Open() == ReturnCode.Success)
                     {
                         srcBtn.Checked = true;
@@ -551,6 +546,17 @@ namespace OrfeoScan_IDU_STRT
                 }
                 primerEscaner = false;
             }
+            List<string> administradores = new List<string>();
+            administradores.Add("CAESLAVA2");
+            administradores.Add("CLGARCIA8");
+            foreach (var ad in administradores)
+            {
+                if (usuarioScanOrfeo.USUA_LOGIN.ToUpper() == ad)
+                {
+                    configuraciónToolStripMenuItem.Visible = true;
+                }
+            }
+            
         }
 
 
@@ -710,6 +716,9 @@ namespace OrfeoScan_IDU_STRT
                 IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA,a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH  from Radicado a where a.radi_nume_radi is not null  ";
 
             IISQL += " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
+
+
+
             //IISQL += " and (a.radi_char_radi = '20190000850961' or a.radi_char_radi = '20195260194683')";
             try
             {
@@ -782,9 +791,9 @@ namespace OrfeoScan_IDU_STRT
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
-                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS, a.RADI_NUME_RADI NUMERO_RADICADO, a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL, a.RADI_PATH PATH, a.RADI_NOMB " + varConcat + " a.RADI_PRIM_APEL" + varConcat + " a.RADI_SEGU_APEL AS RADI_NOMB,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL, a.RADI_PATH PATH, a.RADI_NOMB " + varConcat + " a.RADI_PRIM_APEL" + varConcat + " a.RADI_SEGU_APEL AS RADI_NOMB,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
             else
-                IISQL = "Select a.RADI_NUME_HOJA,a.RADI_NUME_RADI,a.RADI_FECH_RADI,a.RA_ASUN, a.RADI_DEPE_ACTU,a.RADI_PATH,a.RADI_USUA_ACTU from Radicado a where a.radi_nume_radi is not null  ";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH,a.RADI_USUA_ACTU USUARIO from Radicado a where a.radi_nume_radi is not null  ";
             IISQL = IISQL + " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
 
             string tipoRad = cBoxtRadicado.Text.Trim().Substring(0, 1);
@@ -844,7 +853,7 @@ namespace OrfeoScan_IDU_STRT
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
             {
-                IISQL = "Select a.RADI_NUME_HOJA,a.RADI_NUME_RADI,a.RADI_FECH_RADI,a.RA_ASUN, CONCAT(CONCAT(CONCAT(CONCAT(a.RADI_NOMB , ' '), a.RADI_PRIM_APEL),' '), a.RADI_SEGU_APEL) AS RADI_NOMB,a.RADI_DEPE_ACTU,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  ";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS, a.RADI_NUME_RADI AS NUMERO_RADICADO, a.RADI_FECH_RADI AS FECHA,a.RA_ASUN ASUNTO, CONCAT(CONCAT(CONCAT(CONCAT(a.RADI_NOMB , ' '), a.RADI_PRIM_APEL),' '), a.RADI_SEGU_APEL) AS RADI_NOMB,a.RADI_DEPE_ACTU as DEPENDENCIA_ACTUAL,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU AS USUARIO,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  ";
                 IISQL = IISQL + " and renv.radi_nume_grupo like '" + numradicado.Trim() + "' ";
             }
             if (!string.IsNullOrEmpty(IISQL))
@@ -1467,6 +1476,13 @@ namespace OrfeoScan_IDU_STRT
             var src = curBtn.Tag as DataSource;
             if (src.Open() == ReturnCode.Success)
             {
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                if (!string.IsNullOrWhiteSpace(src.Name))
+                {
+                    config.AppSettings.Settings["SCAN_NAME"].Value = src.Name;
+                    config.Save(ConfigurationSaveMode.Modified);
+                    ConfigurationManager.RefreshSection("appSettings");
+                }
                 curBtn.Checked = true;
                 btnStartCapture.Enabled = true;
                 LoadSourceCaps();
@@ -2206,6 +2222,7 @@ namespace OrfeoScan_IDU_STRT
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                limpiar_imagen();
                 rutaTiff = dialog.FileName;
                 TiffImage(rutaTiff);
                 if (actualBitmap != null)
@@ -2238,6 +2255,7 @@ namespace OrfeoScan_IDU_STRT
                     PageScreen2.Image = actualBitmap2;
                     PageScreen3.Image = actualBitmap3;
                     cargarImagen0();
+                    Array.Resize<Bitmap>(ref editor, numeroPaginas());
                 }
             }
             garbage_collector();
@@ -2246,6 +2264,14 @@ namespace OrfeoScan_IDU_STRT
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
         {
             //tiene que tener una fila seleccionada
+
+            if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
+            {
+                MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
+                return;
+            }
+
+
             if (dataGridView1.Rows.Count > 0)
             {
                 if (dataGridView1.SelectedCells.Count > 0)
@@ -2265,7 +2291,6 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = numeroPaginas();
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        //string servidor = "ftp://" + "ftp.drivehq.com";
                         string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
 
                         if (dataGridView1.CurrentRow.Cells[0].Value != null)
@@ -2407,6 +2432,7 @@ namespace OrfeoScan_IDU_STRT
                             if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
                                 //client.UploadFile("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf", WebRequestMethods.Ftp.UploadFile, @"D:\hello_A1_b_cs.pdf");
+                                
                                 if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
                                 {
                                     //guardar registro
@@ -2548,9 +2574,11 @@ namespace OrfeoScan_IDU_STRT
                             {
                                 if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
                                 {
+                                    long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
+                                    length = length / 1024;
                                     string IISQL = "insert into anexos";
                                     IISQL = IISQL + "        (sgd_rem_destino,anex_radi_nume ,anex_codigo ,anex_tipo,anex_tamano ,anex_solo_lect,anex_creador ,anex_desc ,anex_numero ,anex_nomb_archivo ,anex_borrado,anex_salida ,sgd_dir_tipo,anex_depe_creador,sgd_tpr_codigo ,anex_fech_anex)";
-                                    IISQL = IISQL + " values (1 ," + numero_documento + "," + numero_documento + anex_codigo.ToString().PadLeft(5, '0') + ",'4'      ,1000,'S'           ,'" + usuarioScanOrfeo.USUA_LOGIN + "' ,'" + ObservacioneS + "' ,'" + anex_codigo + "','" + nombrearchivo + "','N'         ,'0'         ,'0'         ,'0'              ,'" + tDocumental + "'," + varFechaSistema + ")";
+                                    IISQL = IISQL + " values (1 ," + numero_documento + "," + numero_documento + anex_codigo.ToString().PadLeft(5, '0') + ",'4'      ,"+ length.ToString() + ",'S'           ,'" + usuarioScanOrfeo.USUA_LOGIN + "' ,'" + ObservacioneS + "' ,'" + anex_codigo + "','" + nombrearchivo + "','N'         ,'0'         ,'0'         ,'0'              ,'" + tDocumental + "'," + varFechaSistema + ")";
 
                                     con = new OracleConnection(funciones.conni);
                                     try
@@ -2702,8 +2730,9 @@ namespace OrfeoScan_IDU_STRT
                             {
                                 if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
                                 {
+                                    long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
                                     string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
-                                    ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,1000, '" + observacion + "'";
+                                    ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,"+ length.ToString() + ", '" + observacion + "'";
                                     ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + NumeroDeHojas.ToString() + ")";
 
                                     con = new OracleConnection(funciones.conni);
@@ -2768,6 +2797,52 @@ namespace OrfeoScan_IDU_STRT
                 MessageBox.Show("No existen filas seleccionadas, debe realizar la busqueda de un registro y seleccionar una fila");
             return;
         }
+        public static bool CheckForInternetConnection(string servidor)
+        {
+            try
+            {
+                var request = (FtpWebRequest)WebRequest.Create(servidor);
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.Method = WebRequestMethods.Ftp.GetFileSize;
+
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    return true;
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no existe o no funciona el ftp");
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return false;
+            }
+            return false;
+        }
+        private bool isValidConnection(string servidor)
+        {
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(servidor);
+                request.Method = WebRequestMethods.Ftp.ListDirectory;
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                return false;
+            }
+            return true;
+        }
         private bool sendFile(string ruta_archivo, string servidor, string ruta_servidor)
         {
             try
@@ -2780,7 +2855,7 @@ namespace OrfeoScan_IDU_STRT
                     client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
                 }
                 var request = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
-                request.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
                 request.Method = WebRequestMethods.Ftp.GetFileSize;
 
                 try
@@ -3087,7 +3162,16 @@ namespace OrfeoScan_IDU_STRT
                 //EncoderParams.Param[1] = SaveEncodeParam;
 
                 //Bitmap EditableImg = new Bitmap(actualBitmap);
-              
+
+                ImageCodecInfo info = null;
+                foreach (ImageCodecInfo ice in ImageCodecInfo.GetImageEncoders())
+                    if (ice.MimeType == "image/tiff")
+                        info = ice;
+                Encoder enc = Encoder.SaveFlag;
+                EncoderParameters ep = new EncoderParameters(1);
+                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+                Bitmap pages = null;
+                int frame = 0;
 
                 using (Bitmap bitmap = new Bitmap(Width, Height))
                 using (Graphics graphics = Graphics.FromImage(workingBitmap))
@@ -3096,8 +3180,10 @@ namespace OrfeoScan_IDU_STRT
                     graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
                     Invalidate();
                     PageEdit.Image= workingBitmap;
-                    TiffCarga.Add(workingBitmap);
-                    TiffCargaIndex.Add(actualpage1);
+
+                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                    actualBitmap.SaveAdd(workingBitmap, ep);
+
                 }
             }
         }
@@ -3526,10 +3612,10 @@ namespace OrfeoScan_IDU_STRT
                 pdoc.PrintPage += new PrintPageEventHandler(pdoc_PrintPage);
 
                 string defaultPrinterName = ps.PrinterName;
-                if (defaultPrinterName == "POSTEK G-3106")
+                if (config.AppSettings.Settings["SCAN_NAME"].Value!=null)
                 {
-                    ps.PrinterName = "POSTEK G-3106";
-                    pd.PrinterSettings.PrinterName = "POSTEK G-3106";
+                    ps.PrinterName = config.AppSettings.Settings["SCAN_NAME"].Value;
+                    pd.PrinterSettings.PrinterName = config.AppSettings.Settings["SCAN_NAME"].Value;
                 }
                 else
                 {
@@ -3718,6 +3804,55 @@ namespace OrfeoScan_IDU_STRT
         private void PageScreen3_MouseLeave(object sender, EventArgs e)
         {
             PageScreen3.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.InitialDirectory = @"C:\";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Title = "Browse Text Files";
+            saveFileDialog1.DefaultExt = "tiff";
+            saveFileDialog1.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string nombreArchivo = saveFileDialog1.FileName;
+                guardarTiffActual(nombreArchivo);
+            }
+        }
+        private bool guardarTiffActual(string path)
+        {
+            int i = 0;
+            try
+            {
+
+                if (actualBitmap != null)
+                {
+                    List<byte[]> li = new List<byte[]>();
+                    int npag = numeroPaginas();
+                    for (i = 0; i < npag; i++)
+                    {
+                        actualBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, i);
+                        li.Add(ImageToByte(actualBitmap));
+                        garbage_collector();
+                    }
+                    var bite = MergeTiff(li);
+                    System.IO.File.WriteAllBytes(path, bite);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

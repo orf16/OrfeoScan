@@ -139,7 +139,15 @@ namespace OrfeoScan_IDU_STRT
                 }
             }
             ftp = config.AppSettings.Settings["FTP_SERVER"].Value + config.AppSettings.Settings["FTP_P1"].Value+ config.AppSettings.Settings["FTP_ROUTE"].Value+ config.AppSettings.Settings["FTP_P2"].Value;
-            txtFTP.Text = ftp;
+            if (ftp!=null)
+            {
+                txtFTP.Text = ftp;
+            }
+
+            if (config.AppSettings.Settings["PRINTER_NAME"].Value!=null)
+            {
+                textBox1.Text = config.AppSettings.Settings["PRINTER_NAME"].Value;
+            }
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -159,6 +167,18 @@ namespace OrfeoScan_IDU_STRT
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
             MessageBox.Show("Servidor Guardado");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (!string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                config.AppSettings.Settings["PRINTER_NAME"].Value = textBox1.Text;
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+                MessageBox.Show("Impresora por defecto guardada");
+            }
         }
     }
 }

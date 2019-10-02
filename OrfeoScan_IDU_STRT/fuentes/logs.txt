@@ -2,25 +2,28 @@
 2. al hacer click en la imagen no aparece. listo
 4. limpiar despues de envio exitoso. listo
 7. deshabilitar fecha y hora y se anexo a radicado. listo
+6. mensaje de envio correcto. listo
+11. radicado por tipo. listo
+12. radicados por masiva. listo
+16. usuarios administrativos. listo
+9. Consiguración por defecto de un scanner. listo
+9. Consiguración por defecto de una impresora. listo
+3. Cantidad de kilobytes en insert. listo
+15. Ahora ajustar botones de atras y adelante navegacion imagenes.listo
+5. Si se carga de nuevo las imagenes se carga dos veces el combobox de paginas.listo.
 
-3. cantidad de kilobytes en insert
+8. Error al enviar archivo, cierre de conexión? adjunto imagen.
+10 Error al intentar configurar scanner. memoria.
+13. 2 botones pqrs.
+14. Ocultar configuración para usuarios normales.
 
-5. si se carga de nuevo las imagenes se carga dos veces el combobox de paginas
-6. mensaje de envio correcto
-8. Error al enviar archivo, cierre de conexión? adjunto imagen
-9. Consiguración por defecto de un scanner
-9. Consiguración por defecto de una impresora
-10 error al intentar configurar scanner. memoria:
-11. radicado por tipo
-12. radicados por masiva
-13. 2 botones pqrs
-14. ocultar configuración para usuarios normales
-15. 
+
 
 
 201843519120000029E
 
 20195260817531
+masiva: 20195660196523
 
 Consulte el final de este mensaje para obtener más detalles sobre cómo invocar a la depuración 
 Just-In-Time (JIT) en lugar de a este cuadro de diálogo.
