@@ -549,6 +549,8 @@ namespace OrfeoScan_IDU_STRT
             List<string> administradores = new List<string>();
             administradores.Add("CAESLAVA2");
             administradores.Add("CLGARCIA8");
+            administradores.Add("CJRODRI23");
+            administradores.Add("CFROJASC1");
             foreach (var ad in administradores)
             {
                 if (usuarioScanOrfeo.USUA_LOGIN.ToUpper() == ad)
@@ -3181,8 +3183,8 @@ namespace OrfeoScan_IDU_STRT
                     Invalidate();
                     PageEdit.Image= workingBitmap;
 
-                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
-                    actualBitmap.SaveAdd(workingBitmap, ep);
+                    //ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                    //actualBitmap.SaveAdd(workingBitmap, ep);
 
                 }
             }
@@ -3774,6 +3776,7 @@ namespace OrfeoScan_IDU_STRT
                     }
                 }
             }
+            PageEdit.Focus();
         }
 
         private void PageScreen1_MouseEnter(object sender, EventArgs e)
@@ -3843,7 +3846,7 @@ namespace OrfeoScan_IDU_STRT
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

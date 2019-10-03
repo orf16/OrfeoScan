@@ -11,11 +11,12 @@
 3. Cantidad de kilobytes en insert. listo
 15. Ahora ajustar botones de atras y adelante navegacion imagenes.listo
 5. Si se carga de nuevo las imagenes se carga dos veces el combobox de paginas.listo.
+14. Ocultar configuración para usuarios normales.listo
 
 8. Error al enviar archivo, cierre de conexión? adjunto imagen.
 10 Error al intentar configurar scanner. memoria.
 13. 2 botones pqrs.
-14. Ocultar configuración para usuarios normales.
+
 
 
 
