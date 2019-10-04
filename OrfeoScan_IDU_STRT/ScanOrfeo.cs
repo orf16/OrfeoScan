@@ -137,7 +137,7 @@ namespace OrfeoScan_IDU_STRT
             comboBox1.Text = "";
             comboBox1.Items.Clear();
             garbage_collector();
-
+            path_recycle = "";
         }
 
 
@@ -2262,7 +2262,7 @@ namespace OrfeoScan_IDU_STRT
             }
             garbage_collector();
         }
-
+        private string path_recycle = "";
         private void btnEnviarPDF1_Click(object sender, EventArgs e)
         {
             //tiene que tener una fila seleccionada
@@ -2431,69 +2431,100 @@ namespace OrfeoScan_IDU_STRT
 
                             //if (guardarTiffActual(@"D:\imgidu"+ imagenf1))
 
-                            if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
+                            string archivo_enviar = ConfigurationManager.AppSettings["EPATH"] + imagenf2;
+                            bool conversion = false;
+                            if (path_recycle.Contains(numero_documento))
                             {
-                                //client.UploadFile("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf", WebRequestMethods.Ftp.UploadFile, @"D:\hello_A1_b_cs.pdf");
-                                
-                                if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
+                                if (File.Exists(path_recycle))
                                 {
-                                    //guardar registro
-                                    string IISQL = "update radicado set RADI_NUME_HOJA=" + NumeroDeHojas + ", radi_path='" + imagenf.Replace(" ", "") + "'  where radi_nume_radi=" + numero_documento;
-                                    con = new OracleConnection(funciones.conni);
-                                    try
+                                    var confirmResult = MessageBox.Show("Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido",
+                                                     "Confirmación de conversión a PDF/A",
+                                                     MessageBoxButtons.YesNo);
+                                    if (confirmResult == DialogResult.Yes)
                                     {
-                                        con.Open();
-                                        using (OracleCommand command = new OracleCommand(IISQL, con))
-                                        {
-                                            int result = command.ExecuteNonQuery();
-                                        }
-                                        funciones.desconectar(con);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        MessageBox.Show("Error al actualizar registro de ruta de radicado");
-                                        limpiar_anexos();
-                                        limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
-                                        funciones.desconectar(con);
-                                    }
-
-                                    string codusdp = usuarioScanOrfeo.DEPE_CODI.ToString().PadLeft(3, '0') + usuarioScanOrfeo.USUA_CODI.ToString().PadLeft(3, '0');
-                                    string ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (";
-                                    ISQL_HL += usuarioScanOrfeo.DEPE_CODI + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + numHojasDigitalizadas + ")";
-                                    con = new OracleConnection(funciones.conni);
-                                    try
-                                    {
-                                        con.Open();
-                                        using (OracleCommand command = new OracleCommand(ISQL_HL, con))
-                                        {
-                                            int result = command.ExecuteNonQuery();
-                                        }
-                                        funciones.desconectar(con);
-                                        MessageBox.Show("Archivo enviado correctamente");
-                                        limpiar_anexos();
-                                        limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
-                                    }
-                                    catch (Exception)
-                                    {
-                                        MessageBox.Show("Error en insertar registro historico");
-                                        limpiar_anexos();
-                                        limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
-                                        funciones.desconectar(con);
+                                        archivo_enviar = path_recycle;
+                                        conversion = true;
                                     }
                                 }
-                                else
+                            }
+
+                            if (!conversion)
+                            {
+                                if (!crearPdf_(actualBitmap, archivo_enviar))
                                 {
                                     return;
                                 }
                             }
+                            
+
+                            FileInfo fi = new FileInfo(archivo_enviar);
+                            if (IsFileLocked(fi))
+                            {
+                                MessageBox.Show("El pdf a convertir está aun en uso, por favor vuelva a intentar");
+                                return;
+                            }
+
+                            if (sendFile(archivo_enviar, imagenf3, ""))
+                            {
+                                //guardar registro
+                                string IISQL = "update radicado set RADI_NUME_HOJA=" + NumeroDeHojas + ", radi_path='" + imagenf.Replace(" ", "") + "'  where radi_nume_radi=" + numero_documento;
+                                con = new OracleConnection(funciones.conni);
+                                try
+                                {
+                                    con.Open();
+                                    using (OracleCommand command = new OracleCommand(IISQL, con))
+                                    {
+                                        int result = command.ExecuteNonQuery();
+                                    }
+                                    funciones.desconectar(con);
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Error al actualizar registro de ruta de radicado");
+                                    limpiar_anexos();
+                                    limpiar_imagen();
+                                    limpiar_informacion_radicado();
+                                    limpiar_gridview();
+                                    hide_loading_panel();
+                                    funciones.desconectar(con);
+                                }
+
+                                string codusdp = usuarioScanOrfeo.DEPE_CODI.ToString().PadLeft(3, '0') + usuarioScanOrfeo.USUA_CODI.ToString().PadLeft(3, '0');
+                                string ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (";
+                                ISQL_HL += usuarioScanOrfeo.DEPE_CODI + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + numHojasDigitalizadas + ")";
+                                con = new OracleConnection(funciones.conni);
+                                try
+                                {
+                                    con.Open();
+                                    using (OracleCommand command = new OracleCommand(ISQL_HL, con))
+                                    {
+                                        int result = command.ExecuteNonQuery();
+                                    }
+                                    funciones.desconectar(con);
+                                    MessageBox.Show("Archivo enviado correctamente");
+                                    limpiar_anexos();
+                                    limpiar_imagen();
+                                    limpiar_informacion_radicado();
+                                    limpiar_gridview();
+                                    hide_loading_panel();
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Error en insertar registro historico");
+                                    limpiar_anexos();
+                                    limpiar_imagen();
+                                    limpiar_informacion_radicado();
+                                    limpiar_gridview();
+                                    hide_loading_panel();
+                                    funciones.desconectar(con);
+                                }
+                            }
                             else
                             {
+                                if (!conversion)
+                                {
+                                    path_recycle = ConfigurationManager.AppSettings["EPATH"] + imagenf2;
+                                }
                                 return;
                             }
                         }
@@ -2574,6 +2605,12 @@ namespace OrfeoScan_IDU_STRT
 
                             if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
+                                FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
+                                if (IsFileLocked(fi))
+                                {
+                                    MessageBox.Show("El pdf a convertir esta aun en uso, por favor vuelva a intentar");
+                                    return;
+                                }
                                 if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
                                 {
                                     long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
@@ -2600,6 +2637,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
                                         funciones.desconectar(con);
+                                        hide_loading_panel();
                                         return;
                                     }
 
@@ -2621,6 +2659,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_imagen();
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
+                                        hide_loading_panel();
                                     }
                                     catch (Exception)
                                     {
@@ -2631,6 +2670,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_imagen();
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
+                                        hide_loading_panel();
                                         return;
                                     }
                                 }
@@ -2730,6 +2770,12 @@ namespace OrfeoScan_IDU_STRT
 
                             if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
+                                FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
+                                if (IsFileLocked(fi))
+                                {
+                                    MessageBox.Show("El pdf a convertir esta aun en uso, por favor vuelva a intentar");
+                                    return;
+                                }
                                 if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
                                 {
                                     long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
@@ -2755,6 +2801,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
                                         funciones.desconectar(con);
+                                        hide_loading_panel();
                                     }
                                     string ISQL_aux1 = " Insert into SGD_HFLD_HISTFLUJODOC (SGD_HFLD_CODIGO,SGD_FEXP_CODIGO,SGD_EXP_FECHFLUJOANT,SGD_HFLD_FECH,SGD_EXP_NUMERO,RADI_NUME_RADI,USUA_DOC,USUA_CODI,DEPE_CODI,SGD_TTR_CODIGO,SGD_FEXP_OBSERVA,SGD_HFLD_OBSERVA,SGD_FARS_CODIGO,SGD_HFLD_AUTOMATICO) values ( ";
                                     ISQL_aux1 = ISQL_aux1 + " null,0,null,sysdate,'" + numero_documento + "'," + anexo_count + ",'" + usuarioScanOrfeo.USUA_DOC + "'," + usuarioScanOrfeo.USUA_CODI + "," + usuarioScanOrfeo.DEPE_CODI + ",29,null,'" + "(" + NumeroDeHojas.ToString() + " Paginas) " + observacion + "',null,null)";
@@ -2773,6 +2820,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_imagen();
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
+                                        hide_loading_panel();
                                     }
                                     catch (Exception)
                                     {
@@ -2782,6 +2830,7 @@ namespace OrfeoScan_IDU_STRT
                                         limpiar_informacion_radicado();
                                         limpiar_gridview();
                                         funciones.desconectar(con);
+                                        hide_loading_panel();
                                     }
 
                                 }
@@ -2845,7 +2894,108 @@ namespace OrfeoScan_IDU_STRT
             }
             return true;
         }
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
+        }
         private bool sendFile(string ruta_archivo, string servidor, string ruta_servidor)
+        {
+            try
+            {
+                show_loading_panel(454, 177, 359, 20, "Enviando Archivo al Servidor");
+
+
+                FtpWebRequest request;
+
+                request = WebRequest.Create(new Uri(servidor + ruta_servidor)) as FtpWebRequest;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UseBinary = true;
+                request.UsePassive = false;
+                request.KeepAlive = true;
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.ConnectionGroupName = "group";
+
+                using (FileStream fs = File.OpenRead(ruta_archivo))
+                {
+                    byte[] buffer = new byte[fs.Length];
+                    fs.Read(buffer, 0, buffer.Length);
+                    fs.Close();
+                    Stream requestStream = request.GetRequestStream();
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    requestStream.Flush();
+                    requestStream.Close();
+                }
+
+
+                FtpWebRequest requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
+                requests.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                requests.Method = WebRequestMethods.Ftp.GetFileSize;
+
+                //using (Stream fileStream = File.OpenRead(ruta_archivo))
+                //using (Stream ftpStream = requests.GetRequestStream())
+                //{
+                //    fileStream.CopyTo(ftpStream);
+                //}
+
+
+                //using (var client = new WebClient())
+                //{
+                //    client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                //    client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
+                //}
+
+
+
+
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)requests.GetResponse();
+                    return true;
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar");
+                        return false;
+                    }
+                }
+                hide_loading_panel();
+                return true;
+            }
+            catch (WebException e)
+            {
+                hide_loading_panel();
+                String status = ((FtpWebResponse)e.Response).StatusDescription;
+                MessageBox.Show(status);
+                return false;
+            }
+            return true;
+        }
+        private bool sendFile_(string ruta_archivo, string servidor, string ruta_servidor)
         {
             try
             {
