@@ -178,6 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fuentes\logs.txt" />
+    <None Include="Resources\icons8-documents-folder-16.png" />
+    <None Include="Resources\icons8-remove-property-30.png" />
+    <None Include="Resources\icons8-add-property-30.png" />
+    <None Include="Resources\icons8-folder-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

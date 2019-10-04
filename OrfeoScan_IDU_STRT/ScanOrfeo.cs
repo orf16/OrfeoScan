@@ -381,7 +381,7 @@ namespace OrfeoScan_IDU_STRT
                 FrameDimension dimension = new FrameDimension(objGuid);
                 int noOfPages = actualBitmap.GetFrameCount(dimension);
 
-                if (pageRange[1] < noOfPages)
+                if (pageRange[1] <= noOfPages)
                 {
                     pageRange[0]++;
                     pageRange[1]++;
@@ -1397,6 +1397,7 @@ namespace OrfeoScan_IDU_STRT
                             string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
                             if (documento.Length==14 || documento.Length == 19)
                             {
+                                limpiar_imagen();
                                 var merge = MergeTiff(streamer);
                                 string path = ConfigurationManager.AppSettings["DPATH"] + @"/temp/" + documento + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".tif";
                                 System.IO.File.WriteAllBytes(path, merge);
@@ -1424,12 +1425,10 @@ namespace OrfeoScan_IDU_STRT
                                     {
                                         actualBitmap3 = GetThumbnail(2, new Size(100, 100));
                                     }
-                                    
-                                    
-                                    
                                     PageScreen1.Image = actualBitmap1;
                                     PageScreen2.Image = actualBitmap2;
                                     PageScreen3.Image = actualBitmap3;
+                                    cargarImagen0();
                                 }
                             }
                         }
@@ -4006,6 +4005,54 @@ namespace OrfeoScan_IDU_STRT
         private void button8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+            dialog.InitialDirectory = @"C:\";
+            dialog.Title = "Abrir Imagen";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                limpiar_imagen();
+                rutaTiff = dialog.FileName;
+                TiffImage(rutaTiff);
+                if (actualBitmap != null)
+                {
+                    this.workingBitmap = GetWorkingImage(GetViewSize());
+                    this.PageEdit.Image = workingBitmap;
+                    for (int i = 1; i < numeroPaginas() + 1; i++)
+                    {
+                        comboBox1.Items.Add(i);
+                    }
+                    cambio_flecha = true;
+                    comboBox1.Text = "1";
+                    cambio_flecha = false;
+                    if (numeroPaginas() >= 1)
+                    {
+                        actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                    }
+                    if (numeroPaginas() >= 2)
+                    {
+                        actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                    }
+                    if (numeroPaginas() >= 3)
+                    {
+                        actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                    }
+
+
+
+                    PageScreen1.Image = actualBitmap1;
+                    PageScreen2.Image = actualBitmap2;
+                    PageScreen3.Image = actualBitmap3;
+                    cargarImagen0();
+                    Array.Resize<Bitmap>(ref editor, numeroPaginas());
+                }
+            }
+            garbage_collector();
         }
     }
 

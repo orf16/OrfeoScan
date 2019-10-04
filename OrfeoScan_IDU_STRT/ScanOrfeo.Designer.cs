@@ -120,7 +120,9 @@
             this.comboDepth = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.ckDuplex = new System.Windows.Forms.CheckBox();
+            this.btnStartCapture = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnStopScan = new System.Windows.Forms.Button();
             this.comboDPI = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -145,8 +147,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cBoxtRadicado = new System.Windows.Forms.ComboBox();
-            this.btnStopScan = new System.Windows.Forms.Button();
-            this.btnStartCapture = new System.Windows.Forms.Button();
             this.pan_loading = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.button29 = new System.Windows.Forms.Button();
@@ -154,6 +154,7 @@
             this.lblTipoEnvio = new System.Windows.Forms.Label();
             this.lbl_num_doc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button8 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnBorrarSeleccion = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
@@ -205,7 +206,7 @@
             this.expedientesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1907, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1353, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -232,7 +233,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -242,7 +243,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expediente";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -251,46 +252,46 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -299,13 +300,13 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Visible = false;
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
@@ -391,14 +392,14 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             // 
             // pQRPersonalToolStripMenuItem
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             // 
             // herramientasToolStripMenuItem
@@ -462,7 +463,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             // 
             // impresiónEtiquetaToolStripMenuItem
@@ -470,7 +471,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -478,7 +479,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // PageEdit
@@ -651,7 +652,7 @@
             this.tssl_valor_usuario});
             this.statusStrip1.Location = new System.Drawing.Point(0, 994);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1907, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1353, 22);
             this.statusStrip1.TabIndex = 86;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -688,7 +689,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 271);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1907, 723);
+            this.panel4.Size = new System.Drawing.Size(1353, 723);
             this.panel4.TabIndex = 88;
             // 
             // numericUpDown2
@@ -726,7 +727,7 @@
             // button11
             // 
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(795, 23);
+            this.button11.Location = new System.Drawing.Point(273, 25);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(29, 21);
             this.button11.TabIndex = 51;
@@ -1040,12 +1041,14 @@
             this.groupBox3.Controls.Add(this.comboDepth);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.ckDuplex);
+            this.groupBox3.Controls.Add(this.btnStartCapture);
             this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.btnStopScan);
             this.groupBox3.Controls.Add(this.comboDPI);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(854, 182);
+            this.groupBox3.Location = new System.Drawing.Point(636, 183);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(503, 62);
+            this.groupBox3.Size = new System.Drawing.Size(721, 62);
             this.groupBox3.TabIndex = 80;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Opciones de Escaneo";
@@ -1084,6 +1087,21 @@
             this.ckDuplex.UseVisualStyleBackColor = true;
             this.ckDuplex.CheckedChanged += new System.EventHandler(this.ckDuplex_CheckedChanged);
             // 
+            // btnStartCapture
+            // 
+            this.btnStartCapture.BackColor = System.Drawing.Color.White;
+            this.btnStartCapture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStartCapture.BackgroundImage")));
+            this.btnStartCapture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnStartCapture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnStartCapture.FlatAppearance.BorderSize = 0;
+            this.btnStartCapture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartCapture.Location = new System.Drawing.Point(533, 11);
+            this.btnStartCapture.Name = "btnStartCapture";
+            this.btnStartCapture.Size = new System.Drawing.Size(45, 45);
+            this.btnStartCapture.TabIndex = 30;
+            this.btnStartCapture.UseVisualStyleBackColor = false;
+            this.btnStartCapture.Click += new System.EventHandler(this.btnStartCapture_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -1095,6 +1113,23 @@
             this.label5.Size = new System.Drawing.Size(65, 15);
             this.label5.TabIndex = 64;
             this.label5.Text = "Resolución";
+            // 
+            // btnStopScan
+            // 
+            this.btnStopScan.BackColor = System.Drawing.Color.Gray;
+            this.btnStopScan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStopScan.BackgroundImage")));
+            this.btnStopScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnStopScan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnStopScan.Enabled = false;
+            this.btnStopScan.FlatAppearance.BorderSize = 0;
+            this.btnStopScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStopScan.Location = new System.Drawing.Point(533, 11);
+            this.btnStopScan.Name = "btnStopScan";
+            this.btnStopScan.Size = new System.Drawing.Size(45, 45);
+            this.btnStopScan.TabIndex = 39;
+            this.btnStopScan.UseVisualStyleBackColor = false;
+            this.btnStopScan.Visible = false;
+            this.btnStopScan.Click += new System.EventHandler(this.btnStopScan_Click);
             // 
             // comboDPI
             // 
@@ -1323,8 +1358,6 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.cBoxtRadicado);
-            this.groupBox2.Controls.Add(this.btnStopScan);
-            this.groupBox2.Controls.Add(this.btnStartCapture);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(3, 4);
             this.groupBox2.Name = "groupBox2";
@@ -1342,7 +1375,7 @@
             this.btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnEnviarPDF1.FlatAppearance.BorderSize = 0;
             this.btnEnviarPDF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnviarPDF1.Location = new System.Drawing.Point(156, 21);
+            this.btnEnviarPDF1.Location = new System.Drawing.Point(121, 21);
             this.btnEnviarPDF1.Name = "btnEnviarPDF1";
             this.btnEnviarPDF1.Size = new System.Drawing.Size(45, 45);
             this.btnEnviarPDF1.TabIndex = 80;
@@ -1356,7 +1389,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(84, 21);
+            this.button2.Location = new System.Drawing.Point(45, 21);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(45, 45);
             this.button2.TabIndex = 29;
@@ -1381,40 +1414,8 @@
             this.cBoxtRadicado.Location = new System.Drawing.Point(4, 94);
             this.cBoxtRadicado.Margin = new System.Windows.Forms.Padding(4);
             this.cBoxtRadicado.Name = "cBoxtRadicado";
-            this.cBoxtRadicado.Size = new System.Drawing.Size(206, 22);
+            this.cBoxtRadicado.Size = new System.Drawing.Size(197, 22);
             this.cBoxtRadicado.TabIndex = 6;
-            // 
-            // btnStopScan
-            // 
-            this.btnStopScan.BackColor = System.Drawing.Color.Gray;
-            this.btnStopScan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStopScan.BackgroundImage")));
-            this.btnStopScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnStopScan.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnStopScan.Enabled = false;
-            this.btnStopScan.FlatAppearance.BorderSize = 0;
-            this.btnStopScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStopScan.Location = new System.Drawing.Point(9, 21);
-            this.btnStopScan.Name = "btnStopScan";
-            this.btnStopScan.Size = new System.Drawing.Size(45, 45);
-            this.btnStopScan.TabIndex = 39;
-            this.btnStopScan.UseVisualStyleBackColor = false;
-            this.btnStopScan.Visible = false;
-            this.btnStopScan.Click += new System.EventHandler(this.btnStopScan_Click);
-            // 
-            // btnStartCapture
-            // 
-            this.btnStartCapture.BackColor = System.Drawing.Color.White;
-            this.btnStartCapture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStartCapture.BackgroundImage")));
-            this.btnStartCapture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnStartCapture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnStartCapture.FlatAppearance.BorderSize = 0;
-            this.btnStartCapture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartCapture.Location = new System.Drawing.Point(9, 21);
-            this.btnStartCapture.Name = "btnStartCapture";
-            this.btnStartCapture.Size = new System.Drawing.Size(45, 45);
-            this.btnStartCapture.TabIndex = 30;
-            this.btnStartCapture.UseVisualStyleBackColor = false;
-            this.btnStartCapture.Click += new System.EventHandler(this.btnStartCapture_Click);
             // 
             // pan_loading
             // 
@@ -1488,6 +1489,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button8);
             this.groupBox4.Controls.Add(this.comboBox1);
             this.groupBox4.Controls.Add(this.btnBorrarSeleccion);
             this.groupBox4.Controls.Add(this.button18);
@@ -1503,17 +1505,33 @@
             this.groupBox4.ForeColor = System.Drawing.Color.White;
             this.groupBox4.Location = new System.Drawing.Point(4, 183);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(844, 61);
+            this.groupBox4.Size = new System.Drawing.Size(626, 61);
             this.groupBox4.TabIndex = 87;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opciones de Imagen";
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.White;
+            this.button8.BackgroundImage = global::OrfeoScan_IDU_STRT.Properties.Resources.icons8_remove_property_30;
+            this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button8.Enabled = false;
+            this.button8.FlatAppearance.BorderSize = 0;
+            this.button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button8.Location = new System.Drawing.Point(234, 15);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(35, 35);
+            this.button8.TabIndex = 85;
+            this.button8.UseVisualStyleBackColor = false;
             // 
             // comboBox1
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(451, 19);
+            this.comboBox1.Location = new System.Drawing.Point(493, 19);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(70, 27);
             this.comboBox1.TabIndex = 84;
@@ -1525,6 +1543,7 @@
             this.btnBorrarSeleccion.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBorrarSeleccion.BackgroundImage")));
             this.btnBorrarSeleccion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBorrarSeleccion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBorrarSeleccion.Enabled = false;
             this.btnBorrarSeleccion.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnBorrarSeleccion.FlatAppearance.BorderSize = 0;
             this.btnBorrarSeleccion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -1542,10 +1561,11 @@
             this.button18.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button18.BackgroundImage")));
             this.button18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button18.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button18.Enabled = false;
             this.button18.FlatAppearance.BorderSize = 0;
             this.button18.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.Location = new System.Drawing.Point(246, 16);
+            this.button18.Location = new System.Drawing.Point(308, 16);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(35, 35);
             this.button18.TabIndex = 78;
@@ -1558,10 +1578,11 @@
             this.button28.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button28.BackgroundImage")));
             this.button28.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button28.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button28.Enabled = false;
             this.button28.FlatAppearance.BorderSize = 0;
             this.button28.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button28.Location = new System.Drawing.Point(292, 16);
+            this.button28.Location = new System.Drawing.Point(390, 15);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(35, 35);
             this.button28.TabIndex = 79;
@@ -1573,10 +1594,11 @@
             this.button17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button17.BackgroundImage")));
             this.button17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button17.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button17.Enabled = false;
             this.button17.FlatAppearance.BorderSize = 0;
             this.button17.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Location = new System.Drawing.Point(201, 16);
+            this.button17.Location = new System.Drawing.Point(192, 16);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(35, 35);
             this.button17.TabIndex = 77;
@@ -1588,10 +1610,11 @@
             this.btnAbrirImagen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAbrirImagen.BackgroundImage")));
             this.btnAbrirImagen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAbrirImagen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAbrirImagen.Enabled = false;
             this.btnAbrirImagen.FlatAppearance.BorderSize = 0;
             this.btnAbrirImagen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnAbrirImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAbrirImagen.Location = new System.Drawing.Point(155, 16);
+            this.btnAbrirImagen.Location = new System.Drawing.Point(150, 16);
             this.btnAbrirImagen.Name = "btnAbrirImagen";
             this.btnAbrirImagen.Size = new System.Drawing.Size(35, 35);
             this.btnAbrirImagen.TabIndex = 76;
@@ -1609,7 +1632,7 @@
             this.btnNextScreen.FlatAppearance.BorderSize = 0;
             this.btnNextScreen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnNextScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNextScreen.Location = new System.Drawing.Point(527, 19);
+            this.btnNextScreen.Location = new System.Drawing.Point(569, 19);
             this.btnNextScreen.Name = "btnNextScreen";
             this.btnNextScreen.Size = new System.Drawing.Size(41, 28);
             this.btnNextScreen.TabIndex = 70;
@@ -1626,7 +1649,7 @@
             this.btnPrevScreen.FlatAppearance.BorderSize = 0;
             this.btnPrevScreen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnPrevScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrevScreen.Location = new System.Drawing.Point(404, 19);
+            this.btnPrevScreen.Location = new System.Drawing.Point(446, 19);
             this.btnPrevScreen.Name = "btnPrevScreen";
             this.btnPrevScreen.Size = new System.Drawing.Size(41, 27);
             this.btnPrevScreen.TabIndex = 69;
@@ -1639,6 +1662,7 @@
             this.btnGirarIzquierda.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnGirarIzquierda.BackgroundImage")));
             this.btnGirarIzquierda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnGirarIzquierda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGirarIzquierda.Enabled = false;
             this.btnGirarIzquierda.FlatAppearance.BorderSize = 0;
             this.btnGirarIzquierda.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnGirarIzquierda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1652,18 +1676,18 @@
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.White;
-            this.button5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button5.BackgroundImage")));
+            this.button5.BackgroundImage = global::OrfeoScan_IDU_STRT.Properties.Resources.icons8_folder_48;
             this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(333, 15);
+            this.button5.Location = new System.Drawing.Point(349, 15);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(35, 35);
             this.button5.TabIndex = 83;
             this.button5.UseVisualStyleBackColor = false;
-            this.button5.Visible = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
             // btnGirarDerecha
             // 
@@ -1671,6 +1695,7 @@
             this.btnGirarDerecha.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnGirarDerecha.BackgroundImage")));
             this.btnGirarDerecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnGirarDerecha.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGirarDerecha.Enabled = false;
             this.btnGirarDerecha.FlatAppearance.BorderSize = 0;
             this.btnGirarDerecha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnGirarDerecha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1722,7 +1747,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 24);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1907, 247);
+            this.panel6.Size = new System.Drawing.Size(1353, 247);
             this.panel6.TabIndex = 87;
             // 
             // ScanOrfeo
@@ -1732,7 +1757,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1924, 749);
+            this.ClientSize = new System.Drawing.Size(1370, 705);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.statusStrip1);
@@ -1927,5 +1952,6 @@
         private System.Windows.Forms.Button btnGirarDerecha;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button8;
     }
 }
