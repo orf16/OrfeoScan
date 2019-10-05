@@ -21,7 +21,6 @@ using System.Net;
 using System.Drawing.Drawing2D;
 using funciones;
 
-
 namespace OrfeoScan_IDU_STRT
 {
     public partial class ScanOrfeo : Form
@@ -1374,17 +1373,20 @@ namespace OrfeoScan_IDU_STRT
                     if (stream != null)
                     {
                         img = System.Drawing.Image.FromStream(stream);
+                        garbage_collector();
                     }
                 }
                 else if (!string.IsNullOrEmpty(e.FileDataPath))
                 {
                     img = new Bitmap(e.FileDataPath);
+                    garbage_collector();
                 }
                 if (img != null)
                 {
                     this.BeginInvoke(new Action(() =>
                     {
                         streamer.Add(ImageToByteArray(img));
+                        garbage_collector();
                     }));
                 }
             };
@@ -1393,6 +1395,7 @@ namespace OrfeoScan_IDU_STRT
                 PlatformInfo.Current.Log.Info("Source disabled event on thread " + Thread.CurrentThread.ManagedThreadId);
                 this.BeginInvoke(new Action(() =>
                 {
+                    //Termina la accion
                     if (dataGridView1.Rows.Count>0)
                     {
                         if (dataGridView1.CurrentRow.Cells[2].Value != null)
@@ -1413,6 +1416,7 @@ namespace OrfeoScan_IDU_STRT
                                     for (int i = 1; i < numeroPaginas() + 1; i++)
                                     {
                                         comboBox1.Items.Add(i);
+                                        garbage_collector();
                                     }
                                     cambio_flecha = true;
                                     comboBox1.Text = "1";
@@ -2205,21 +2209,25 @@ namespace OrfeoScan_IDU_STRT
             {
                 limpiar_imagen();
                 rutaTiff = dialog.FileName;
-                int activePage;
-                int pages;
+                //int activePage;
+                //int pages;
 
-                System.Drawing.Image image = System.Drawing.Image.FromFile(rutaTiff);
-                pages = image.GetFrameCount(System.Drawing.Imaging.FrameDimension.Page);
+                //System.Drawing.Image image = System.Drawing.Image.FromFile(rutaTiff);
+                //pages = image.GetFrameCount(System.Drawing.Imaging.FrameDimension.Page);
 
-                for (int index = 0; index < pages; index++)
-                {
-                    activePage = index + 1;
-                    image.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, index);
-                    TiffCarga.Add((System.Drawing.Image)image.Clone());
-                    garbage_collector();
-                }
-                image.Dispose();
+                //for (int index = 0; index < pages; index++)
+                //{
+                //    activePage = index + 1;
+                //    image.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, index);
+                //    TiffCarga.Add((System.Drawing.Image)image.Clone());
+                //    garbage_collector();
+                //}
+                //image.Dispose();
                 garbage_collector();
+
+                byte[] photoBytes = File.ReadAllBytes(rutaTiff);
+                // Format is automatically detected though can be changed.
+
                 //TiffImage(rutaTiff);
                 //if (actualBitmap != null)
                 //{
