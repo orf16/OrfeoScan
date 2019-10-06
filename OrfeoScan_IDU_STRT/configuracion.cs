@@ -102,7 +102,12 @@ namespace OrfeoScan_IDU_STRT
             {
                 DirectoryInfo di = Directory.CreateDirectory(path + "temp" + @"\");
             }
+            if (!Directory.Exists(path + "work" + @"\"))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(path + "work" + @"\");
+            }
         }
+        
         private void crear_folder_docs(string path)
         {
             if (!Directory.Exists(path + @"\docs\"))

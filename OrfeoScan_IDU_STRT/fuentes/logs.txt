@@ -17,15 +17,12 @@
 10 Error al intentar configurar scanner. memoria.
 13. 2 botones pqrs.
 
-//Edicion de imagenes
-1. abrir la imagen
-2. dividirla en archivos individuales y guardar cada archivo
-3. guardar thumbnails de todos las imagenes
-4. al hacer click en cada thumb debe cargar la imagen y guardar el numero de pagina
-5. al editar la pagina debe guardarla
-6. ojo con no cerrar el stream antes de salir de la imagen
-7. cuando se vaya a enviar recurrir a la carpeta temporal
-8. eliminar temporales al terminar
+//falta
+1. añadir paginas
+2. boton eliminar??
+3. descargar del servidor ftp
+4. cargra imagenes scanner
+5. cargar ftp
 
 
 

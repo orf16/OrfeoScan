@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client;
 using model;
 using System.Configuration;
+using System.IO;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -27,6 +28,24 @@ namespace OrfeoScan_IDU_STRT
                 tSSL2.Text = "Sin Conexión";
             }
             string[] Dependencia = new string[4];
+
+            if (!Directory.Exists(@"D:\imgidu\work"))
+            {
+                DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    try
+                    {
+                        file.Delete();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            
+            
         }
         private void btn_ingresar_Click(object sender, EventArgs e)
         {
