@@ -197,6 +197,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fuentes\logs.txt" />
+    <None Include="Resources\icons8-transfer_2.png" />
+    <None Include="Resources\icons8-transfer_1.png" />
     <None Include="Resources\icons8-documents-folder-16.png" />
     <None Include="Resources\icons8-remove-property-30.png" />
     <None Include="Resources\icons8-add-property-30.png" />

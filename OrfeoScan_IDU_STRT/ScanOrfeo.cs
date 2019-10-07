@@ -82,7 +82,7 @@ namespace OrfeoScan_IDU_STRT
         string pref_pag = "PAG ";
         string path_ = null;
         int actual_page = -1;
-        int total_page = -1;
+        int total_page = 0;
         Bitmap[] editor = new Bitmap[1];
 
         private Point RectStartPoint;
@@ -93,13 +93,14 @@ namespace OrfeoScan_IDU_STRT
 
         private string path_recycle = "";
         private string work_folder = @"D:\imgidu\work\";
-
-
+        private bool agregar_behind = true;
+        private bool Es_inicial = true;
+        private int adicionar_scan = -1;
 
         private void btnAbrirImagen_Click(object sender, EventArgs e)
         {
-
-            
+            button8.BackColor = System.Drawing.Color.White;
+            btnAbrirImagen.BackColor = System.Drawing.Color.Black;
         }
         private void cargarPrincipal(int page)
         {
@@ -461,6 +462,7 @@ namespace OrfeoScan_IDU_STRT
             lblScreen1.BackColor = System.Drawing.Color.Goldenrod;
             lblScreen2.BackColor = System.Drawing.Color.Goldenrod;
             lblScreen3.BackColor = System.Drawing.Color.Goldenrod;
+            Es_inicial = true;
         }
         private void button17_Click(object sender, EventArgs e)
         {
@@ -911,13 +913,9 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
-
-
-            
-            if (Rect.X > 0 && Rect.Y > 0)
+            if (Rect.X >= -2 && Rect.Y >= -2)
             {
                 Bitmap actualBitmap_ = (Bitmap)PageEdit.Image;
-                //Bitmap bitmap = (Bitmap)actualBitmap_.Clone();
                 Bitmap bitmap = bitmap = new Bitmap(actualBitmap_, new Size((int)(actualBitmap_.Width), (int)(actualBitmap_.Height)));
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
@@ -1088,15 +1086,25 @@ namespace OrfeoScan_IDU_STRT
             toolTip1.SetToolTip(this.btnStartCapture, "Iniciar Captura");
             toolTip1.SetToolTip(this.cBoxtRadicado, "Elija el Tipo de Radicado");
             toolTip1.SetToolTip(this.button2, "Imprimir Etiquetas");
-            toolTip1.SetToolTip(this.btnNextScreen, "Siguiente Página");
 
+            toolTip1.SetToolTip(this.btnNextScreen, "Siguiente Página");
             toolTip1.SetToolTip(this.btnPrevScreen, "Anterior Página");
-            toolTip1.SetToolTip(this.btnBorrarSeleccion, "Borrar Selección");
-            toolTip1.SetToolTip(this.btnGirarDerecha, "Girar Página 90° a la Derecha");
-            toolTip1.SetToolTip(this.btnGirarIzquierda, "Girar Página 90° a la Izquierda");
             toolTip1.SetToolTip(this.btnEnviarPDF1, "Enviar Archivo");
 
+            toolTip1.SetToolTip(this.button6, "Insertar antes de la página seleccionada");
+            toolTip1.SetToolTip(this.button8, "Insertar después de la página seleccionada");
+            toolTip1.SetToolTip(this.btnGirarDerecha, "Girar Página 90° a la Derecha");
+            toolTip1.SetToolTip(this.btnGirarIzquierda, "Girar Página 90° a la Izquierda");
+            toolTip1.SetToolTip(this.btnBorrarSeleccion, "Borrar Selección");
+            toolTip1.SetToolTip(this.button17, "Eliminar Página Actual");
+            toolTip1.SetToolTip(this.button12, "Reiniciar Imagen (borrar todas las imagenes)");
+            toolTip1.SetToolTip(this.button18, "Guardar Imagen");
+            toolTip1.SetToolTip(this.button5, "Abrir Imagen desde archivo");
+            toolTip1.SetToolTip(this.button28, "Descargar Archivo Desde Servidor");
 
+            toolTip1.SetToolTip(this.PageScreen1, "Seleccionar Imagen");
+            toolTip1.SetToolTip(this.PageScreen2, "Seleccionar Imagen");
+            toolTip1.SetToolTip(this.PageScreen3, "Seleccionar Imagen");
 
             limpiar_anexos();
             cBoxtRadicado_load();
@@ -1966,8 +1974,25 @@ namespace OrfeoScan_IDU_STRT
                     var stream = e.GetNativeImageStream();
                     if (stream != null)
                     {
-                        img = System.Drawing.Image.FromStream(stream);
-                        garbage_collector();
+                        if (Es_inicial)
+                        {
+                            if (total_page == -1)
+                            {
+                                total_page = 0;
+                            }
+                            using (System.Drawing.Image image = System.Drawing.Image.FromStream(stream))
+                            {
+                                total_page++;
+                                image.Save(work_folder + (total_page - 1).ToString() + ".tif");
+                                comboBox1.Items.Add(total_page.ToString());
+                                garbage_collector();
+                            }
+                        }
+                        else
+                        {
+                            TiffCarga.Add(System.Drawing.Image.FromStream(stream));
+                            garbage_collector();
+                        }
                     }
                 }
                 else if (!string.IsNullOrEmpty(e.FileDataPath))
@@ -1979,7 +2004,6 @@ namespace OrfeoScan_IDU_STRT
                 {
                     this.BeginInvoke(new Action(() =>
                     {
-                        streamer.Add(ImageToByteArray(img));
                         garbage_collector();
                     }));
                 }
@@ -1990,58 +2014,251 @@ namespace OrfeoScan_IDU_STRT
                 this.BeginInvoke(new Action(() =>
                 {
                     //Termina la accion
-                    if (dataGridView1.Rows.Count>0)
+                    if (total_page>0)
                     {
-                        if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                        if (Es_inicial)
                         {
-                            string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
-                            string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-                            if (documento.Length==14 || documento.Length == 19)
+                            cambio_flecha = true;
+                            comboBox1.Text = "1";
+                            cambio_flecha = false;
+
+                            pageRange[0] = 0;
+                            pageRange[1] = 2;
+                            cargarImagen0000(pageRange, total_page);
+                            cargarPrincipal(pageRange[0]);
+                            garbage_collector();
+
+                            btnStopScan.Enabled = false;
+                            btnStopScan.Visible = false;
+                            btnStartCapture.Enabled = true;
+                            btnStartCapture.Visible = true;
+                            LoadSourceCaps();
+                            garbage_collector();
+                        }
+                        else
+                        {
+                            PageScreen1.Image = null;
+                            PageScreen2.Image = null;
+                            PageScreen3.Image = null;
+                            PageEdit.Image = null;
+                            lblScreen1.Text = "";
+                            lblScreen2.Text = "";
+                            lblScreen3.Text = "";
+                            comboBox1.Text = "";
+                            comboBox1.Items.Clear();
+                            garbage_collector();
+                            total_page = 0;
+
+                            int paginas_nuevas = 0;
+
+                            if (agregar_behind)
                             {
-                                limpiar_imagen();
-                                var merge = MergeTiff(streamer);
-                                string path = ConfigurationManager.AppSettings["DPATH"] + @"/temp/" + documento + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".tif";
-                                System.IO.File.WriteAllBytes(path, merge);
-                                TiffImage(path);
-                                if (actualBitmap != null)
+                                //Insertar atras
+                                if (Directory.Exists(@"D:\imgidu\work"))
                                 {
-                                    this.workingBitmap = GetWorkingImage(GetViewSize());
-                                    this.PageEdit.Image = workingBitmap;
-                                    for (int i = 1; i < numeroPaginas() + 1; i++)
+                                    DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                                    foreach (FileInfo file in di.GetFiles())
                                     {
-                                        comboBox1.Items.Add(i);
-                                        garbage_collector();
+                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                        int numero_pag = -1;
+                                        if (int.TryParse(woe, out numero_pag))
+                                        {
+                                            if (numero_pag >= actual_page)
+                                            {
+                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tif");
+                                                file.Delete();
+                                            }
+                                        }
                                     }
-                                    cambio_flecha = true;
-                                    comboBox1.Text = "1";
-                                    cambio_flecha = false;
-                                    if (numeroPaginas()>=1)
+
+                                    foreach (FileInfo file in di.GetFiles())
                                     {
-                                        actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                        woe = woe.Replace("_edit", "");
+                                        int numero_pag = -1;
+                                        if (int.TryParse(woe, out numero_pag))
+                                        {
+                                            if (numero_pag >= actual_page)
+                                            {
+                                                numero_pag += TiffCarga.Count();
+                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tif");
+                                            }
+                                            paginas_nuevas++;
+                                            total_page++;
+                                            comboBox1.Items.Add(paginas_nuevas);
+                                        }
                                     }
-                                    if (numeroPaginas() >= 2)
+                                }
+                                int actual_page_copy = actual_page;
+                                for (int i = 0; i < TiffCarga.Count(); i++)
+                                {
+                                    try
                                     {
-                                        actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                                        TiffCarga[i].Save(work_folder + actual_page_copy + ".tif");
+                                        actual_page_copy++;
+                                        total_page++;
+                                        paginas_nuevas++;
+                                        comboBox1.Items.Add(paginas_nuevas);
                                     }
-                                    if (numeroPaginas() >= 3)
+                                    catch (Exception)
                                     {
-                                        actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                                        comboBox1.Items.Clear();
+                                        return;
                                     }
-                                    PageScreen1.Image = actualBitmap1;
-                                    PageScreen2.Image = actualBitmap2;
-                                    PageScreen3.Image = actualBitmap3;
-                                    cargarImagen0();
                                 }
                             }
+                            else
+                            {
+                                //Insertar Adelante
+                                if (Directory.Exists(@"D:\imgidu\work"))
+                                {
+                                    DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                                    foreach (FileInfo file in di.GetFiles())
+                                    {
+                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                        int numero_pag = -1;
+                                        if (int.TryParse(woe, out numero_pag))
+                                        {
+                                            if (numero_pag > actual_page)
+                                            {
+                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tif");
+                                                file.Delete();
+                                            }
+                                        }
+                                    }
+
+                                    foreach (FileInfo file in di.GetFiles())
+                                    {
+                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                        woe = woe.Replace("_edit", "");
+                                        int numero_pag = -1;
+                                        if (int.TryParse(woe, out numero_pag))
+                                        {
+                                            if (numero_pag > actual_page)
+                                            {
+                                                numero_pag += TiffCarga.Count();
+                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tif");
+                                            }
+                                            paginas_nuevas++;
+                                            total_page++;
+                                            comboBox1.Items.Add(paginas_nuevas);
+                                        }
+                                    }
+                                }
+                                int actual_page_copy = actual_page + 1;
+                                for (int i = 0; i < TiffCarga.Count(); i++)
+                                {
+                                    try
+                                    {
+                                        TiffCarga[i].Save(work_folder + actual_page_copy + ".tif");
+                                        actual_page_copy++;
+                                        total_page++;
+                                        paginas_nuevas++;
+                                        comboBox1.Items.Add(paginas_nuevas);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        comboBox1.Items.Clear();
+                                        return;
+                                    }
+                                }
+                            }
+
+
+
+
+
+                            cambio_flecha = true;
+                            comboBox1.Text = (actual_page + 1).ToString();
+                            cambio_flecha = false;
+                            foreach (var item in TiffCarga)
+                            {
+                                item.Dispose();
+                            }
+                            TiffCarga.Clear();
+                            pageRange[0] = actual_page;
+                            pageRange[1] = actual_page + 2;
+                            cargarImagen0000(pageRange, total_page);
+                            cargarPrincipal(actual_page);
+                            garbage_collector();
+
+                            btnStopScan.Enabled = false;
+                            btnStopScan.Visible = false;
+                            btnStartCapture.Enabled = true;
+                            btnStartCapture.Visible = true;
+                            LoadSourceCaps();
+                            garbage_collector();
                         }
+
+
                     }
-                    btnStopScan.Enabled = false;
-                    btnStopScan.Visible = false;
-                    btnStartCapture.Enabled = true;
-                    btnStartCapture.Visible = true;
-                    LoadSourceCaps();
-                    streamer.Clear();
-                    garbage_collector();
+                    else
+                    {
+                        cambio_flecha = true;
+                        comboBox1.Text = "1";
+                        cambio_flecha = false;
+
+                        pageRange[0] = 0;
+                        pageRange[1] = 2;
+                        cargarImagen0000(pageRange, total_page);
+                        cargarPrincipal(pageRange[0]);
+                        garbage_collector();
+
+                        btnStopScan.Enabled = false;
+                        btnStopScan.Visible = false;
+                        btnStartCapture.Enabled = true;
+                        btnStartCapture.Visible = true;
+                        LoadSourceCaps();
+                        garbage_collector();
+                    }
+
+                    //if (dataGridView1.Rows.Count>0)
+                    //{
+                    //    if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                    //    {
+                    //        string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                    //        string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                    //        if (documento.Length==14 || documento.Length == 19)
+                    //        {
+                    //            limpiar_imagen();
+                    //            var merge = MergeTiff(streamer);
+                    //            string path = ConfigurationManager.AppSettings["DPATH"] + @"/temp/" + documento + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".tif";
+                    //            System.IO.File.WriteAllBytes(path, merge);
+                    //            TiffImage(path);
+                    //            if (actualBitmap != null)
+                    //            {
+                    //                this.workingBitmap = GetWorkingImage(GetViewSize());
+                    //                this.PageEdit.Image = workingBitmap;
+                    //                for (int i = 1; i < numeroPaginas() + 1; i++)
+                    //                {
+                    //                    comboBox1.Items.Add(i);
+                    //                    garbage_collector();
+                    //                }
+                    //                cambio_flecha = true;
+                    //                comboBox1.Text = "1";
+                    //                cambio_flecha = false;
+                    //                if (numeroPaginas()>=1)
+                    //                {
+                    //                    actualBitmap1 = GetThumbnail(0, new Size(100, 100));
+                    //                }
+                    //                if (numeroPaginas() >= 2)
+                    //                {
+                    //                    actualBitmap2 = GetThumbnail(1, new Size(100, 100));
+                    //                }
+                    //                if (numeroPaginas() >= 3)
+                    //                {
+                    //                    actualBitmap3 = GetThumbnail(2, new Size(100, 100));
+                    //                }
+                    //                PageScreen1.Image = actualBitmap1;
+                    //                PageScreen2.Image = actualBitmap2;
+                    //                PageScreen3.Image = actualBitmap3;
+                    //                cargarImagen0();
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+                    
                 }));
             };
             _twain.TransferReady += (s, e) =>
@@ -2137,65 +2354,82 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+
+            adicionar_scan = -1;
+
+            if (total_page > 0)
             {
-                if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                Es_inicial = false;
+            }
+            else
+            {
+                if (!eliminar_work())
                 {
-                    string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
-                    string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-                    if (documento.Length == 14 || documento.Length == 19)
-                    {
-                        if (tipo == "RADICADO" || tipo == "EXPEDIENTE")
-                        {
-                            imagenes.Clear();
-                            PageEdit.Image = null;
-                            if (_twain.State == 4)
-                            {
-                                //_twain.CurrentSource.CapXferCount.Set(4);
+                    return;
+                }
+            }
+            if (_twain.State == 4)
+            {
+                //_twain.CurrentSource.CapXferCount.Set(4);
 
-                                _stopScan = false;
+                _stopScan = false;
 
-                                if (_twain.CurrentSource.Capabilities.CapUIControllable.IsSupported)//.SupportedCaps.Contains(CapabilityId.CapUIControllable))
-                                {
-                                    // hide scanner ui if possible
-                                    if (_twain.CurrentSource.Enable(SourceEnableMode.NoUI, false, this.Handle) == ReturnCode.Success)
-                                    {
-                                        btnStopScan.Enabled = true;
-                                        btnStopScan.Visible = true;
-                                        btnStartCapture.Enabled = false;
-                                        btnStartCapture.Visible = false;
-                                    }
-                                }
-                                else
-                                {
-                                    if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
-                                    {
-                                        btnStopScan.Enabled = true;
-                                        btnStopScan.Visible = true;
-                                        btnStartCapture.Enabled = false;
-                                        btnStartCapture.Visible = false;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
-                        }
-                    }
-                    else
+                //if (total_page>0)
+                //{
+                //    PageScreen1.Image = null;
+                //    PageScreen2.Image = null;
+                //    PageScreen3.Image = null;
+                //    PageEdit.Image = null;
+                //    lblScreen1.Text = "";
+                //    lblScreen2.Text = "";
+                //    lblScreen3.Text = "";
+                //    comboBox1.Text = "";
+                //    comboBox1.Items.Clear();
+                //    garbage_collector();
+                //    total_page = 0;
+
+
+                //}
+                //else
+                //{
+                //    PageScreen1.Image = null;
+                //    PageScreen2.Image = null;
+                //    PageScreen3.Image = null;
+                //    PageEdit.Image = null;
+                //    lblScreen1.Text = "";
+                //    lblScreen2.Text = "";
+                //    lblScreen3.Text = "";
+                //    comboBox1.Text = "";
+                //    comboBox1.Items.Clear();
+                //    garbage_collector();
+                //    total_page = 0;
+
+
+
+                //}
+
+
+                if (_twain.CurrentSource.Capabilities.CapUIControllable.IsSupported)//.SupportedCaps.Contains(CapabilityId.CapUIControllable))
+                {
+                    // hide scanner ui if possible
+                    if (_twain.CurrentSource.Enable(SourceEnableMode.NoUI, false, this.Handle) == ReturnCode.Success)
                     {
-                        MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                        btnStopScan.Enabled = true;
+                        btnStopScan.Visible = true;
+                        btnStartCapture.Enabled = false;
+                        btnStartCapture.Visible = false;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                    if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
+                    {
+                        btnStopScan.Enabled = true;
+                        btnStopScan.Visible = true;
+                        btnStartCapture.Enabled = false;
+                        btnStartCapture.Visible = false;
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
             }
         }
         private void btnStopScan_Click(object sender, EventArgs e)
@@ -2364,8 +2598,8 @@ namespace OrfeoScan_IDU_STRT
                 if (tempEndPoint.X <= PageEdit.Image.Width && tempEndPoint.Y <= PageEdit.Image.Height)
                 {
                     Rect.Location = new Point(
-     Math.Min(RectStartPoint.X, tempEndPoint.X),
-     Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+                     Math.Min(RectStartPoint.X, tempEndPoint.X),
+                     Math.Min(RectStartPoint.Y, tempEndPoint.Y));
                     Rect.Size = new Size(
                         Math.Abs(RectStartPoint.X - tempEndPoint.X),
                         Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
@@ -2374,52 +2608,26 @@ namespace OrfeoScan_IDU_STRT
                                   e.Location.Y - RectStartPoint.Y);
                     bool cambio = false;
 
-                    //if (_StartPoint.Y >= 1320 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 810);
-                    //    cambio = true;
-                    //}
                     if (_StartPoint.Y >= 1400 && !cambio)
                     {
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 720);
                         cambio = true;
                     }
-                    //if (_StartPoint.Y >= 1320 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 810);
-                    //    cambio = true;
-                    //}
                     if (_StartPoint.Y >= 1200 && !cambio)
                     {
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 600);
                         cambio = true;
                     }
-                    //if (_StartPoint.Y >= 1080 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 690);
-                    //    cambio = true;
-                    //}
                     if (_StartPoint.Y >= 960 && !cambio)
                     {
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 480);
                         cambio = true;
                     }
-
-                    //if (_StartPoint.Y >= 840 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 330);
-                    //    cambio = true;
-                    //}
                     if (_StartPoint.Y >= 720 && !cambio)
                     {
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 240);
                         cambio = true;
                     }
-                    //if (_StartPoint.Y >= 600 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 210);
-                    //    cambio = true;
-                    //}
                     if (_StartPoint.Y > 480 && !cambio)
                     {
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 120);
@@ -2430,30 +2638,6 @@ namespace OrfeoScan_IDU_STRT
                         panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 0);
                         cambio = true;
                     }
-                    //if (_StartPoint.Y >= 360 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 360);
-                    //    cambio = true;
-                    //}
-
-
-
-
-                    //if (_StartPoint.Y <= 1200 && _StartPoint.Y > 960 && !cambio)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 1440);
-                    //    cambio = true;
-                    //}
-
-                    //if (_StartPoint.Y > 600)
-                    //{
-                    //    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, -600);
-                    //}
-
-
-
-
-                    //New Drawing.Point((DeltaX - Panel1.AutoScrollPosition.X), (DeltaY - Panel1.AutoScrollPosition.Y));
                     garbage_collector();
                 }
             }
@@ -2471,20 +2655,24 @@ namespace OrfeoScan_IDU_STRT
             // Draw the rectangle...
             if (PageEdit.Image != null)
             {
-                if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
+                if (Rect.X>=0 && Rect.Y >= 0)
                 {
-                    if (Rect.Width <= PageEdit.Image.Width)
+                    if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                     {
-                        Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
-                        e.Graphics.DrawRectangle(blackPen, Rect);
-                        e.Graphics.FillRectangle(selectionBrush, Rect);
-                        garbage_collector();
-                    }
-                    else
-                    {
+                        if (Rect.Width <= PageEdit.Image.Width && Rect.Height <= PageEdit.Image.Height)
+                        {
+                            Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
+                            e.Graphics.DrawRectangle(blackPen, Rect);
+                            e.Graphics.FillRectangle(selectionBrush, Rect);
+                            garbage_collector();
+                        }
+                        else
+                        {
 
+                        }
                     }
                 }
+                
             }
         }
         private void PageEdit_MouseUp(object sender, MouseEventArgs e)
@@ -4464,50 +4652,208 @@ namespace OrfeoScan_IDU_STRT
 
         private void button5_Click_1(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
-            dialog.InitialDirectory = @"C:\";
-            dialog.Title = "Abrir Imagen";
-
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (total_page > 0)
             {
-                limpiar_imagen();
-                rutaTiff = dialog.FileName;
-                TiffImage(rutaTiff);
-                //if (actualBitmap != null)
-                //{
-                //    this.workingBitmap = GetWorkingImage(GetViewSize());
-                //    this.PageEdit.Image = workingBitmap;
-                //    for (int i = 1; i < numeroPaginas() + 1; i++)
-                //    {
-                //        comboBox1.Items.Add(i);
-                //    }
-                //    cambio_flecha = true;
-                //    comboBox1.Text = "1";
-                //    cambio_flecha = false;
-                //    if (numeroPaginas() >= 1)
-                //    {
-                //        actualBitmap1 = GetThumbnail(0, new Size(100, 100));
-                //    }
-                //    if (numeroPaginas() >= 2)
-                //    {
-                //        actualBitmap2 = GetThumbnail(1, new Size(100, 100));
-                //    }
-                //    if (numeroPaginas() >= 3)
-                //    {
-                //        actualBitmap3 = GetThumbnail(2, new Size(100, 100));
-                //    }
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+                dialog.InitialDirectory = @"C:\";
+                dialog.Title = "Abrir Imagen";
 
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    PageScreen1.Image = null;
+                    PageScreen2.Image = null;
+                    PageScreen3.Image = null;
+                    PageEdit.Image = null;
+                    lblScreen1.Text = "";
+                    lblScreen2.Text = "";
+                    lblScreen3.Text = "";
+                    comboBox1.Text = "";
+                    comboBox1.Items.Clear();
+                    garbage_collector();
+                    total_page = 0;
 
+                    System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
+                    Guid objGuid = actualBitmap_.FrameDimensionsList[0];
+                    System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
+                    int total_page_offset = actualBitmap_.GetFrameCount(objDimension);
 
-                //    PageScreen1.Image = actualBitmap1;
-                //    PageScreen2.Image = actualBitmap2;
-                //    PageScreen3.Image = actualBitmap3;
-                //    cargarImagen0();
-                //    Array.Resize<Bitmap>(ref editor, numeroPaginas());
+                    int paginas_nuevas = 0;
+
+                    if (agregar_behind)
+                    {
+                        //Insertar atras
+                        if (Directory.Exists(@"D:\imgidu\work"))
+                        {
+                            DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                int numero_pag = -1;
+                                if (int.TryParse(woe, out numero_pag))
+                                {
+                                    if (numero_pag >= actual_page)
+                                    {
+                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tif");
+                                        file.Delete();
+                                    }
+                                }
+                            }
+
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                woe = woe.Replace("_edit", "");
+                                int numero_pag = -1;
+                                if (int.TryParse(woe, out numero_pag))
+                                {
+                                    if (numero_pag >= actual_page)
+                                    {
+                                        numero_pag += total_page_offset;
+                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tif");
+                                    }
+                                    paginas_nuevas++;
+                                    total_page++;
+                                    comboBox1.Items.Add(paginas_nuevas);
+                                }
+                            }
+                        }
+                        int actual_page_copy = actual_page;
+                        for (int i = 0; i < total_page_offset; i++)
+                        {
+                            try
+                            {
+                                actualBitmap_.SelectActiveFrame(objDimension, i);
+                                actualBitmap_.Save(work_folder + actual_page_copy + ".tif");
+                                actual_page_copy++;
+                                total_page++;
+                                paginas_nuevas++;
+                                comboBox1.Items.Add(paginas_nuevas);
+                            }
+                            catch (Exception)
+                            {
+                                comboBox1.Items.Clear();
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Insertar Adelante
+                        if (Directory.Exists(@"D:\imgidu\work"))
+                        {
+                            DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                int numero_pag = -1;
+                                if (int.TryParse(woe, out numero_pag))
+                                {
+                                    if (numero_pag > actual_page)
+                                    {
+                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tif");
+                                        file.Delete();
+                                    }
+                                }
+                            }
+
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                woe = woe.Replace("_edit", "");
+                                int numero_pag = -1;
+                                if (int.TryParse(woe, out numero_pag))
+                                {
+                                    if (numero_pag > actual_page)
+                                    {
+                                        numero_pag += total_page_offset;
+                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tif");
+                                    }
+                                    paginas_nuevas++;
+                                    total_page++;
+                                    comboBox1.Items.Add(paginas_nuevas);
+                                }
+                            }
+                        }
+                        int actual_page_copy = actual_page+1;
+                        for (int i = 0; i < total_page_offset; i++)
+                        {
+                            try
+                            {
+                                actualBitmap_.SelectActiveFrame(objDimension, i);
+                                actualBitmap_.Save(work_folder + actual_page_copy + ".tif");
+                                actual_page_copy++;
+                                total_page++;
+                                paginas_nuevas++;
+                                comboBox1.Items.Add(paginas_nuevas);
+                            }
+                            catch (Exception)
+                            {
+                                comboBox1.Items.Clear();
+                                return;
+                            }
+                        }
+                    }
+
+                    cambio_flecha = true;
+                    comboBox1.Text = (actual_page+1).ToString();
+                    cambio_flecha = false;
+                    actualBitmap_.Dispose();
+                    pageRange[0] = actual_page;
+                    pageRange[1] = actual_page+2;
+                    cargarImagen0000(pageRange, total_page);
+                    cargarPrincipal(actual_page);
+                    garbage_collector();
+                }
+                garbage_collector();
                 //}
             }
-            garbage_collector();
+            else
+            {
+                if (eliminar_work())
+                {
+                    bool ifSaved = false;
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+                    dialog.InitialDirectory = @"C:\";
+                    dialog.Title = "Abrir Imagen";
+
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        limpiar_imagen();
+                        System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
+                        Guid objGuid = actualBitmap_.FrameDimensionsList[0];
+                        System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
+                        total_page = actualBitmap_.GetFrameCount(objDimension);
+
+                        for (int i = 0; i < total_page; i++)
+                        {
+                            try
+                            {
+                                actualBitmap_.SelectActiveFrame(objDimension, i);
+                                actualBitmap_.Save(work_folder + i + ".tif", System.Drawing.Imaging.ImageFormat.Tiff);
+                                comboBox1.Items.Add(i + 1);
+                            }
+                            catch (Exception)
+                            {
+                                ifSaved = false;
+                                comboBox1.Items.Clear();
+                                return;
+                            }
+                        }
+                        cambio_flecha = true;
+                        comboBox1.Text = "1";
+                        cambio_flecha = false;
+                        actualBitmap_.Dispose();
+                        pageRange[0] = 0;
+                        pageRange[1] = 2;
+                        cargarImagen0000(pageRange, total_page);
+                        cargarPrincipal(pageRange[0]);
+                        garbage_collector();
+                    }
+                    garbage_collector();
+                }
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -4557,6 +4903,25 @@ namespace OrfeoScan_IDU_STRT
             {
                 MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            button8.BackColor = System.Drawing.Color.Black;
+            button6.BackColor = System.Drawing.Color.White;
+            agregar_behind = false;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            button6.BackColor = System.Drawing.Color.Black;
+            button8.BackColor = System.Drawing.Color.White;
+            agregar_behind = true;
+        }
+
+        private void button12_Click_1(object sender, EventArgs e)
+        {
+            limpiar_imagen();
         }
     }
 

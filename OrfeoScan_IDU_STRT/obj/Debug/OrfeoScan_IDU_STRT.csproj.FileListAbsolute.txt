@@ -37,3 +37,6 @@ C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoSc
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.csproj.GenerateResource.Cache
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.exe
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.pdb
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\TiffViewerLib.dll
+C:\Users\orf16\Source\Repos\orf16\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\TiffViewerLib.pdb

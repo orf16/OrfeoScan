@@ -18,11 +18,13 @@
 13. 2 botones pqrs.
 
 //falta
+4. cargra imagenes scanner. listo
+
 1. añadir paginas
 2. boton eliminar??
 3. descargar del servidor ftp
-4. cargra imagenes scanner
 5. cargar ftp
+6. margenes de edicion
 
 
 
