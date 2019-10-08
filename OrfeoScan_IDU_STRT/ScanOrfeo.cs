@@ -365,6 +365,7 @@ namespace OrfeoScan_IDU_STRT
                 iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
 
                 float subtrahend0 = doc.PageSize.Height - 10;
+
                 iTextSharp.text.Image pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Tiff);
                 pool0.Alignment = 3;
                 pool0.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend0);
@@ -398,7 +399,9 @@ namespace OrfeoScan_IDU_STRT
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
                     MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+                   
                 }
+                MessageBox.Show(ex.ToString());
                 garbage_collector();
                 return false;
             }
@@ -923,7 +926,7 @@ namespace OrfeoScan_IDU_STRT
                     graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
                     Invalidate();
                 }
-                
+                System.IO.File.WriteAllBytes("TiffFile.tif", tiffArray);
                 PageEdit.Image = null;
 
                 if (pageRange[0] == actual_page)
@@ -943,7 +946,8 @@ namespace OrfeoScan_IDU_STRT
                 garbage_collector();
                 FileInfo info = new FileInfo(work_folder + actual_page + ".tif");
                 info.Delete();
-                bitmap.Save(work_folder + actual_page + ".tif");
+                System.Drawing.Image img = (System.Drawing.Image)bitmap;
+                img.Save(work_folder + actual_page + ".tif");
                 cargarPrincipal(actual_page);
                 if (pageRange[0] == actual_page)
                 {
@@ -961,6 +965,7 @@ namespace OrfeoScan_IDU_STRT
                     lblScreen3.Text = (actual_page + 1).ToString();
                 }
                 bitmap.Dispose();
+                img.Dispose();
                 actualBitmap_.Dispose();
                 garbage_collector();
 
@@ -3036,7 +3041,9 @@ namespace OrfeoScan_IDU_STRT
                         int codTTR = 0;
                         int anex_codigo = 0;
                         string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-
+                        string extension = ".pdf";
+                        string epath = ConfigurationManager.AppSettings["EPATH"];
+                        string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
                         if (dataGridView1.CurrentRow.Cells[0].Value != null)
                         {
                             tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
@@ -3161,26 +3168,30 @@ namespace OrfeoScan_IDU_STRT
                             //Envio de archivo al servidor
                             string imagenf = "";
                             string dirserver = "";
-                            string nombrearchivo = numero_documento + ".pdf";
+                            if (enviarTiffToolStripMenuItem.Checked)
+                            {
+                                extension = ".tif";
+                                epath = ConfigurationManager.AppSettings["DPATH"];
+                                resend = "Una operación anterior fallo, desea enviar el ultimo archivo nuevamente";
+                            }
+                            string nombrearchivo = numero_documento + extension;
                             int numHojasDigitalizadas = (NumeroDeHojas - numInicialHojas);
 
                             //lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
-                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + ".pdf";
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + extension;
                             string imagenf1 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".tif";
-                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".pdf";
+                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + extension;
                             string imagenf3 = servidor + imagenf;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
 
-                            //if (guardarTiffActual(@"D:\imgidu"+ imagenf1))
-
-                            string archivo_enviar = ConfigurationManager.AppSettings["EPATH"] + imagenf2;
+                            string archivo_enviar = epath + imagenf2;
                             bool conversion = false;
                             if (path_recycle.Contains(numero_documento))
                             {
                                 if (File.Exists(path_recycle))
                                 {
-                                    var confirmResult = MessageBox.Show("Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido",
-                                                     "Confirmación de conversión a PDF/A",
+                                    var confirmResult = MessageBox.Show(resend,
+                                                     "Confirmación de reenvio",
                                                      MessageBoxButtons.YesNo);
                                     if (confirmResult == DialogResult.Yes)
                                     {
@@ -3192,9 +3203,20 @@ namespace OrfeoScan_IDU_STRT
 
                             if (!conversion)
                             {
-                                if (!crearPdf_1(archivo_enviar))
+                                if (!enviarTiffToolStripMenuItem.Checked)
                                 {
-                                    return;
+                                    if (!crearPdf_1(archivo_enviar))
+                                    {
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    ;
+                                    if (!guardarTiffActual(archivo_enviar))
+                                    {
+                                        return;
+                                    }
                                 }
                             }
                             
@@ -3202,7 +3224,7 @@ namespace OrfeoScan_IDU_STRT
                             FileInfo fi = new FileInfo(archivo_enviar);
                             if (IsFileLocked(fi))
                             {
-                                MessageBox.Show("El pdf a convertir está aun en uso, por favor vuelva a intentar");
+                                MessageBox.Show("El archivo "+extension+" a convertir está aun en uso, por favor vuelva a intentar");
                                 return;
                             }
 
@@ -3265,7 +3287,7 @@ namespace OrfeoScan_IDU_STRT
                             {
                                 if (!conversion)
                                 {
-                                    path_recycle = ConfigurationManager.AppSettings["EPATH"] + imagenf2;
+                                    path_recycle = epath + imagenf2;
                                 }
                                 return;
                             }
