@@ -375,9 +375,18 @@ namespace OrfeoScan_IDU_STRT
                         editada = true;
                 }
                 if (editada)
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, iTextSharp.text.Color.WHITE, false);
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
                 else
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Tiff);
+                {
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+
+                    //System.Drawing.Rectangle imageRect = new System.Drawing.Rectangle(0, 0, bmp.Size.Width, bmp.Size.Height);
+                    //System.Drawing.Image image = (Bitmap)bmp.Clone(imageRect, PixelFormat.Format1bppIndexed);
+
+                    //pool0 = iTextSharp.text.Image.GetInstance(bmp, null, false);
+                    
+                }
+                    
 
                 pool0.Alignment = 3;
                 pool0.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend0);
@@ -403,9 +412,11 @@ namespace OrfeoScan_IDU_STRT
                     iTextSharp.text.Image pool;
 
                     if (editada1)
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, iTextSharp.text.Color.WHITE, false);
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
                     else
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Tiff);
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
+
+                    //pool = iTextSharp.text.Image.GetInstance(bmp1, iTextSharp.text.Color.WHITE, false);
 
                     pool.Alignment = 3;
                     pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
@@ -937,7 +948,7 @@ namespace OrfeoScan_IDU_STRT
             }
         }
         List<int> editadas = new List<int>();
-        private void btnBorrarSeleccion_Click(object sender, EventArgs e)
+        private void borrar_seleccion()
         {
             if (total_page <= 0)
             {
@@ -1007,6 +1018,10 @@ namespace OrfeoScan_IDU_STRT
                 actualBitmap_.Dispose();
                 garbage_collector();
             }
+        }
+        private void btnBorrarSeleccion_Click(object sender, EventArgs e)
+        {
+            borrar_seleccion();
         }
         //fin lista imagenes
 
@@ -1350,7 +1365,7 @@ namespace OrfeoScan_IDU_STRT
                 con.Dispose();
                 MessageBox.Show(ex.ToString());
             }
-            System.Windows.Forms.Clipboard.SetText(IISQL);
+            //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
         private void BuscarRadicado(string numradicado)
         {
@@ -1397,7 +1412,7 @@ namespace OrfeoScan_IDU_STRT
                 con.Dispose();
                 MessageBox.Show(ex.ToString());
             }
-            System.Windows.Forms.Clipboard.SetText(IISQL);
+            //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
         private void anexarImagenAUnRadicadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1475,7 +1490,7 @@ namespace OrfeoScan_IDU_STRT
                 con.Dispose();
                 MessageBox.Show(ex.ToString());
             }
-            System.Windows.Forms.Clipboard.SetText(IISQL);
+            //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
         private void buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1534,7 +1549,7 @@ namespace OrfeoScan_IDU_STRT
                     con.Dispose();
                     MessageBox.Show(ex.ToString());
                 }
-                System.Windows.Forms.Clipboard.SetText(IISQL);
+                //System.Windows.Forms.Clipboard.SetText(IISQL);
             }
         }
         private void guardarImagenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1543,7 +1558,16 @@ namespace OrfeoScan_IDU_STRT
         }
         private void GuardarImagen()
         {
-
+            saveFileDialog1.InitialDirectory = @"C:\";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Title = "Browse Text Files";
+            saveFileDialog1.DefaultExt = "tiff";
+            saveFileDialog1.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string nombreArchivo = saveFileDialog1.FileName;
+                guardarTiffActual(nombreArchivo);
+            }
         }
         private void configuraciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2637,32 +2661,32 @@ namespace OrfeoScan_IDU_STRT
 
                     if (_StartPoint.Y >= 1400 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 720);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 720);
                         cambio = true;
                     }
                     if (_StartPoint.Y >= 1200 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 600);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 600);
                         cambio = true;
                     }
                     if (_StartPoint.Y >= 960 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 480);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 480);
                         cambio = true;
                     }
                     if (_StartPoint.Y >= 720 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 240);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 240);
                         cambio = true;
                     }
                     if (_StartPoint.Y > 480 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 120);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 120);
                         cambio = true;
                     }
                     if (_StartPoint.Y > 360 && !cambio)
                     {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 0);
+                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 0);
                         cambio = true;
                     }
                     garbage_collector();
@@ -3062,7 +3086,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -3234,7 +3259,7 @@ namespace OrfeoScan_IDU_STRT
                                 }
                                 else
                                 {
-                                    ;
+                                    
                                     if (!guardarTiffActual(archivo_enviar))
                                     {
                                         return;
@@ -3389,7 +3414,7 @@ namespace OrfeoScan_IDU_STRT
                             string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
                             string imagenf3 = servidor + imagenf;
 
-                            if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
+                            if (crearPdf_1(ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
                                 FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
                                 if (IsFileLocked(fi))
@@ -3554,7 +3579,7 @@ namespace OrfeoScan_IDU_STRT
                             string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + numero_documento + "_" + anexo_count_file;
                             string imagenf3 = servidor + imagenf;
 
-                            if (crearPdf_(actualBitmap, ConfigurationManager.AppSettings["EPATH"] + imagenf2))
+                            if (crearPdf_1(ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
                                 FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
                                 if (IsFileLocked(fi))
@@ -4662,6 +4687,7 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page>0)
             {
+                show_loading_panel(454, 177, 359, 20, "Guardando Imagen, por favor espere");
                 System.Drawing.Image actualBitmap_;
                 List<byte[]> li = new List<byte[]>();
                 for (int i = 0; i < total_page; i++)
@@ -4672,6 +4698,8 @@ namespace OrfeoScan_IDU_STRT
                 }
                 var bite = MergeTiff(li);
                 System.IO.File.WriteAllBytes(path, bite);
+                MessageBox.Show("Imagen Guardada");
+                hide_loading_panel();
             }
             else
             {
@@ -4717,6 +4745,7 @@ namespace OrfeoScan_IDU_STRT
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
+                    show_loading_panel(454, 177, 359, 20, "Abriendo Imagen, por favor espere");
                     PageScreen1.Image = null;
                     PageScreen2.Image = null;
                     PageScreen3.Image = null;
@@ -4860,6 +4889,7 @@ namespace OrfeoScan_IDU_STRT
                     cargarImagen0000(pageRange, total_page);
                     cargarPrincipal(actual_page);
                     garbage_collector();
+                    hide_loading_panel();
                 }
                 garbage_collector();
                 //}
@@ -4876,6 +4906,7 @@ namespace OrfeoScan_IDU_STRT
 
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
+                        show_loading_panel(454, 177, 359, 20, "Abriendo Imagen, por favor espere");
                         limpiar_imagen();
                         System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
                         Guid objGuid = actualBitmap_.FrameDimensionsList[0];
@@ -4906,6 +4937,7 @@ namespace OrfeoScan_IDU_STRT
                         cargarImagen0000(pageRange, total_page);
                         cargarPrincipal(pageRange[0]);
                         garbage_collector();
+                        hide_loading_panel();
                     }
                     garbage_collector();
                 }
@@ -4914,8 +4946,7 @@ namespace OrfeoScan_IDU_STRT
 
         private void button4_Click(object sender, EventArgs e)
         {
-            panel6.Size= new Size(0,0);
-            panel3.Location = new Point(1, 1);
+
         }
 
         private void button28_Click(object sender, EventArgs e)
@@ -4978,6 +5009,36 @@ namespace OrfeoScan_IDU_STRT
         private void button12_Click_1(object sender, EventArgs e)
         {
             limpiar_imagen();
+        }
+
+        private void borrarSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            borrar_seleccion();
+        }
+
+        private void button13_Click_1(object sender, EventArgs e)
+        {
+            if (panel6.Height==0)
+            {
+                panel6.Dock = DockStyle.None;
+                panel4.Dock = DockStyle.None;
+                panel6.Location = new Point(1659, 247);
+                panel4.Location = new Point(0, 271);
+                panel6.Size = new Size(0, 0);
+                panel4.Size = new Size(0, 0);
+                panel6.Size = new Size(1710, 247);
+                panel4.Size = new Size(1642, 723);
+                panel6.Dock = DockStyle.Top;
+                panel4.Dock = DockStyle.Bottom;
+            }
+            else
+            {
+                panel6.Size = new Size(0, 0);
+                panel6.Location = new Point(1, 1);
+                panel4.Size = new Size(1523, 1000);
+                panel4.Location = new Point(0, 0);
+            }
+            
         }
     }
 

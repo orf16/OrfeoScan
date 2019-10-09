@@ -12,8 +12,10 @@ using System.Security.Cryptography;
 namespace OrfeoScan_IDU_STRT.funciones
 {
     public class funciones
-    {
-        public string conni = "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = gesdoc.idu.gov.co))); User Id = ow_orfeo; Password = TESTING;";
+    {//iducluster02-scan/orfeo.idu.gov.co
+        //gesdoc.idu.gov.co
+        //public string conni = "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = gesdoc.idu.gov.co))); User Id = ow_orfeo; Password = TESTING;";
+        public string conni = @"Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = iducluster02-scan/orfeo.idu.gov.co))); User Id = ow_orfeo; Password = Orf3011g2014;";
         public bool conexion_test(string cadena)
         {
             try

@@ -50,9 +50,6 @@
             this.verPáginaCompletaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verRutaImagenSeleccionadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verRutaÚltimaImagenCargadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.incluirDocumentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pQRTelefónicasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pQRPersonalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.anexarImagenAUnRadicadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impresiónDeSobresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,18 +58,22 @@
             this.mantenerImagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imprimirSoloStickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enviarTiffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.incluirDocumentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pQRTelefónicasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pQRPersonalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impresiónEtiquetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarExpedientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PageEdit = new System.Windows.Forms.PictureBox();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
             this.lblScreen3 = new System.Windows.Forms.Label();
             this.lblScreen2 = new System.Windows.Forms.Label();
             this.lblScreen1 = new System.Windows.Forms.Label();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.PageScreen3 = new System.Windows.Forms.PictureBox();
             this.PageScreen2 = new System.Windows.Forms.PictureBox();
             this.PageScreen1 = new System.Windows.Forms.PictureBox();
@@ -156,8 +157,6 @@
             this.lbl_num_doc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button12 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnGirarIzquierda = new System.Windows.Forms.Button();
             this.btnBorrarSeleccion = new System.Windows.Forms.Button();
@@ -169,11 +168,11 @@
             this.btnPrevScreen = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PageEdit)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen1)).BeginInit();
@@ -195,6 +194,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -203,12 +203,12 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.opcionesToolStripMenuItem,
             this.verToolStripMenuItem,
-            this.incluirDocumentosToolStripMenuItem,
             this.herramientasToolStripMenuItem,
+            this.incluirDocumentosToolStripMenuItem,
             this.expedientesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1727, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -235,7 +235,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -245,7 +245,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expediente";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -254,46 +254,46 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(272, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -302,13 +302,14 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
+            this.borrarSelecciónToolStripMenuItem.Click += new System.EventHandler(this.borrarSelecciónToolStripMenuItem_Click);
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Visible = false;
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
@@ -328,6 +329,7 @@
             this.verToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
             this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.verToolStripMenuItem.Text = "Ver";
+            this.verToolStripMenuItem.Visible = false;
             // 
             // zoomAcercarToolStripMenuItem
             // 
@@ -381,29 +383,6 @@
             this.verRutaÚltimaImagenCargadaToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
             this.verRutaÚltimaImagenCargadaToolStripMenuItem.Text = "Ver Ruta Última Imagen Cargada";
             // 
-            // incluirDocumentosToolStripMenuItem
-            // 
-            this.incluirDocumentosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pQRTelefónicasToolStripMenuItem,
-            this.pQRPersonalToolStripMenuItem});
-            this.incluirDocumentosToolStripMenuItem.Name = "incluirDocumentosToolStripMenuItem";
-            this.incluirDocumentosToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
-            this.incluirDocumentosToolStripMenuItem.Text = "Incluir Documentos";
-            // 
-            // pQRTelefónicasToolStripMenuItem
-            // 
-            this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
-            this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
-            // 
-            // pQRPersonalToolStripMenuItem
-            // 
-            this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
-            this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
-            // 
             // herramientasToolStripMenuItem
             // 
             this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -444,12 +423,14 @@
             this.insertarPáginasToolStripMenuItem.Name = "insertarPáginasToolStripMenuItem";
             this.insertarPáginasToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
             this.insertarPáginasToolStripMenuItem.Text = "Insertar Páginas";
+            this.insertarPáginasToolStripMenuItem.Visible = false;
             // 
             // mantenerImagenToolStripMenuItem
             // 
             this.mantenerImagenToolStripMenuItem.Name = "mantenerImagenToolStripMenuItem";
             this.mantenerImagenToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
             this.mantenerImagenToolStripMenuItem.Text = "Mantener Imagen";
+            this.mantenerImagenToolStripMenuItem.Visible = false;
             // 
             // imprimirSoloStickerToolStripMenuItem
             // 
@@ -466,6 +447,31 @@
             this.enviarTiffToolStripMenuItem.Name = "enviarTiffToolStripMenuItem";
             this.enviarTiffToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
             this.enviarTiffToolStripMenuItem.Text = "Enviar Tiff";
+            this.enviarTiffToolStripMenuItem.Visible = false;
+            // 
+            // incluirDocumentosToolStripMenuItem
+            // 
+            this.incluirDocumentosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pQRTelefónicasToolStripMenuItem,
+            this.pQRPersonalToolStripMenuItem});
+            this.incluirDocumentosToolStripMenuItem.Name = "incluirDocumentosToolStripMenuItem";
+            this.incluirDocumentosToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+            this.incluirDocumentosToolStripMenuItem.Text = "Incluir Documentos";
+            this.incluirDocumentosToolStripMenuItem.Visible = false;
+            // 
+            // pQRTelefónicasToolStripMenuItem
+            // 
+            this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
+            this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
+            // 
+            // pQRPersonalToolStripMenuItem
+            // 
+            this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
+            this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             // 
             // expedientesToolStripMenuItem
             // 
@@ -473,15 +479,16 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
+            this.expedientesToolStripMenuItem.Visible = false;
             // 
             // impresiónEtiquetaToolStripMenuItem
             // 
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -489,7 +496,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // PageEdit
@@ -499,7 +506,7 @@
             this.PageEdit.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PageEdit.Location = new System.Drawing.Point(6, 6);
             this.PageEdit.Name = "PageEdit";
-            this.PageEdit.Size = new System.Drawing.Size(3997, 3999);
+            this.PageEdit.Size = new System.Drawing.Size(3997, 3027);
             this.PageEdit.TabIndex = 42;
             this.PageEdit.TabStop = false;
             this.PageEdit.Paint += new System.Windows.Forms.PaintEventHandler(this.PageEdit_Paint);
@@ -523,15 +530,46 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
             // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.White;
+            this.button8.BackgroundImage = global::OrfeoScan_IDU_STRT.Properties.Resources.icons8_transfer_1;
+            this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button8.FlatAppearance.BorderSize = 0;
+            this.button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button8.Location = new System.Drawing.Point(45, 16);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(35, 35);
+            this.button8.TabIndex = 85;
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.Color.Black;
+            this.button6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button6.BackgroundImage")));
+            this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button6.FlatAppearance.BorderSize = 0;
+            this.button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Location = new System.Drawing.Point(6, 16);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(35, 35);
+            this.button6.TabIndex = 86;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Transparent;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.button4);
+            this.panel3.Controls.Add(this.button13);
             this.panel3.Controls.Add(this.lblScreen3);
             this.panel3.Controls.Add(this.lblScreen2);
             this.panel3.Controls.Add(this.lblScreen1);
-            this.panel3.Controls.Add(this.pictureBox5);
             this.panel3.Controls.Add(this.PageScreen3);
             this.panel3.Controls.Add(this.PageScreen2);
             this.panel3.Controls.Add(this.PageScreen1);
@@ -541,16 +579,21 @@
             this.panel3.Size = new System.Drawing.Size(124, 723);
             this.panel3.TabIndex = 44;
             // 
-            // button4
+            // button13
             // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(2, 5);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(29, 21);
-            this.button4.TabIndex = 67;
-            this.button4.Text = "A";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button13.BackColor = System.Drawing.Color.White;
+            this.button13.BackgroundImage = global::OrfeoScan_IDU_STRT.Properties.Resources.icons8_maximize_window_40;
+            this.button13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button13.FlatAppearance.BorderSize = 0;
+            this.button13.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Location = new System.Drawing.Point(4, 3);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(27, 24);
+            this.button13.TabIndex = 88;
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click_1);
             // 
             // lblScreen3
             // 
@@ -585,16 +628,6 @@
             this.lblScreen1.Size = new System.Drawing.Size(115, 29);
             this.lblScreen1.TabIndex = 76;
             this.lblScreen1.Click += new System.EventHandler(this.lblScreen1_Click);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(354, 3);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(89, 124);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 48;
-            this.pictureBox5.TabStop = false;
             // 
             // PageScreen3
             // 
@@ -650,7 +683,7 @@
             this.tssl_valor_usuario});
             this.statusStrip1.Location = new System.Drawing.Point(0, 994);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1727, 22);
             this.statusStrip1.TabIndex = 86;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -687,12 +720,12 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 271);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1370, 723);
+            this.panel4.Size = new System.Drawing.Size(1727, 723);
             this.panel4.TabIndex = 88;
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(1609, 27);
+            this.numericUpDown2.Location = new System.Drawing.Point(1615, 173);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(68, 22);
             this.numericUpDown2.TabIndex = 23;
@@ -704,7 +737,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(1497, 31);
+            this.label16.Location = new System.Drawing.Point(1503, 177);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(40, 15);
@@ -715,7 +748,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(1544, 27);
+            this.numericUpDown1.Location = new System.Drawing.Point(1550, 173);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(59, 22);
             this.numericUpDown1.TabIndex = 22;
@@ -737,7 +770,7 @@
             // groupDPI
             // 
             this.groupDPI.Controls.Add(this.groupDepth);
-            this.groupDPI.Location = new System.Drawing.Point(1379, 10);
+            this.groupDPI.Location = new System.Drawing.Point(1667, 118);
             this.groupDPI.Name = "groupDPI";
             this.groupDPI.Size = new System.Drawing.Size(22, 22);
             this.groupDPI.TabIndex = 62;
@@ -769,7 +802,7 @@
             this.groupDuplex.Controls.Add(this.label6);
             this.groupDuplex.Controls.Add(this.comboSize);
             this.groupDuplex.ForeColor = System.Drawing.Color.White;
-            this.groupDuplex.Location = new System.Drawing.Point(1452, 31);
+            this.groupDuplex.Location = new System.Drawing.Point(1458, 177);
             this.groupDuplex.Name = "groupDuplex";
             this.groupDuplex.Size = new System.Drawing.Size(38, 14);
             this.groupDuplex.TabIndex = 60;
@@ -809,7 +842,7 @@
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(1466, 52);
+            this.button9.Location = new System.Drawing.Point(1472, 198);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(29, 21);
             this.button9.TabIndex = 49;
@@ -853,7 +886,7 @@
             // button10
             // 
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(1431, 55);
+            this.button10.Location = new System.Drawing.Point(1437, 201);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(29, 21);
             this.button10.TabIndex = 50;
@@ -905,7 +938,7 @@
             // button7
             // 
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(1578, 53);
+            this.button7.Location = new System.Drawing.Point(1584, 199);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(29, 23);
             this.button7.TabIndex = 47;
@@ -937,7 +970,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(1613, 52);
+            this.button1.Location = new System.Drawing.Point(1619, 198);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(29, 23);
             this.button1.TabIndex = 81;
@@ -997,7 +1030,7 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(1506, 54);
+            this.button3.Location = new System.Drawing.Point(1512, 200);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(29, 21);
             this.button3.TabIndex = 82;
@@ -1463,7 +1496,7 @@
             // button29
             // 
             this.button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button29.Location = new System.Drawing.Point(1648, 52);
+            this.button29.Location = new System.Drawing.Point(1654, 198);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(29, 21);
             this.button29.TabIndex = 85;
@@ -1509,9 +1542,9 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.button12);
-            this.groupBox4.Controls.Add(this.button6);
             this.groupBox4.Controls.Add(this.button8);
             this.groupBox4.Controls.Add(this.comboBox1);
+            this.groupBox4.Controls.Add(this.button6);
             this.groupBox4.Controls.Add(this.btnGirarIzquierda);
             this.groupBox4.Controls.Add(this.btnBorrarSeleccion);
             this.groupBox4.Controls.Add(this.btnGirarDerecha);
@@ -1544,38 +1577,6 @@
             this.button12.TabIndex = 87;
             this.button12.UseVisualStyleBackColor = false;
             this.button12.Click += new System.EventHandler(this.button12_Click_1);
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.Black;
-            this.button6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button6.BackgroundImage")));
-            this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Location = new System.Drawing.Point(6, 15);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(35, 35);
-            this.button6.TabIndex = 86;
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.White;
-            this.button8.BackgroundImage = global::OrfeoScan_IDU_STRT.Properties.Resources.icons8_transfer_1;
-            this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button8.FlatAppearance.BorderSize = 0;
-            this.button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Location = new System.Drawing.Point(44, 16);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(35, 35);
-            this.button8.TabIndex = 85;
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // comboBox1
             // 
@@ -1668,6 +1669,7 @@
             this.button28.Size = new System.Drawing.Size(35, 35);
             this.button28.TabIndex = 79;
             this.button28.UseVisualStyleBackColor = false;
+            this.button28.Visible = false;
             this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
             // button17
@@ -1738,6 +1740,7 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.pictureBox1);
             this.panel6.Controls.Add(this.pan_loading);
             this.panel6.Controls.Add(this.groupBox4);
             this.panel6.Controls.Add(this.button29);
@@ -1777,8 +1780,18 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 24);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1370, 247);
+            this.panel6.Size = new System.Drawing.Size(1727, 247);
             this.panel6.TabIndex = 87;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1406, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(229, 86);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 88;
+            this.pictureBox1.TabStop = false;
             // 
             // ScanOrfeo
             // 
@@ -1787,7 +1800,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1387, 705);
+            this.ClientSize = new System.Drawing.Size(1744, 705);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.statusStrip1);
@@ -1808,7 +1821,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PageEdit)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PageScreen1)).EndInit();
@@ -1839,6 +1851,7 @@
             this.groupBox4.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1878,7 +1891,6 @@
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox PageScreen3;
         private System.Windows.Forms.PictureBox PageScreen2;
         private System.Windows.Forms.PictureBox PageScreen1;
@@ -1981,9 +1993,10 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.ToolStripMenuItem enviarTiffToolStripMenuItem;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

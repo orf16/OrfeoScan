@@ -103,6 +103,16 @@ namespace OrfeoScan_IDU_STRT.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_maximize_window_40 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_maximize_window_40", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_remove_property_30 {
             get {
                 object obj = ResourceManager.GetObject("icons8_remove_property_30", resourceCulture);
@@ -126,6 +136,16 @@ namespace OrfeoScan_IDU_STRT.Properties {
         internal static System.Drawing.Bitmap icons8_transfer_2 {
             get {
                 object obj = ResourceManager.GetObject("icons8_transfer_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logo1 {
+            get {
+                object obj = ResourceManager.GetObject("logo1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

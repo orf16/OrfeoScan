@@ -29,7 +29,7 @@ namespace OrfeoScan_IDU_STRT
             }
             string[] Dependencia = new string[4];
 
-            if (!Directory.Exists(@"D:\imgidu\work"))
+            if (Directory.Exists(@"D:\imgidu\work"))
             {
                 DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
                 foreach (FileInfo file in di.GetFiles())
