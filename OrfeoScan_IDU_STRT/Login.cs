@@ -49,6 +49,8 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btn_ingresar_Click(object sender, EventArgs e)
         {
+
+
             string username = txtUsuario.Text.ToUpper();
             string password = txtContraseña.Text;
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
@@ -80,7 +82,7 @@ namespace OrfeoScan_IDU_STRT
         {
             var md5_text = funciones.MD5Hash(password);
             password = md5_text.Substring(1, 26);
-            string sql = "SELECT USUA_CODI, USUA_DIGITALIZADOR, DEPE_CODI,PERM_RADI,USUA_NOMB,USUA_LOGIN,USUA_DOC FROM OW_ORFEO.USUARIO WHERE USUA_LOGIN='" + username + "' and USUA_PASW='" + password + "'";
+            string sql = "SELECT USUA_CODI, DEPE_CODI,PERM_RADI,USUA_NOMB,USUA_LOGIN,USUA_DOC FROM OW_ORFEO.USUARIO WHERE USUA_LOGIN='" + username + "' and USUA_PASW='" + password + "'";
             OracleConnection con = new OracleConnection(funciones.conni);
             try
             {
@@ -92,18 +94,19 @@ namespace OrfeoScan_IDU_STRT
                     {
                         usuario = new USUARIO();
                         int USUA_CODI = 0;
-                        int USUA_DIGITALIZADOR = 0;
+                        int USUA_DIGITALIZADOR = 1;
                         int DEPE_CODI = 0;
                         if (int.TryParse(reader[0].ToString(), out USUA_CODI))
                             usuario.USUA_CODI = USUA_CODI;
-                        if (int.TryParse(reader[1].ToString(), out USUA_DIGITALIZADOR))
-                            usuario.USUA_DIGITALIZADOR = USUA_DIGITALIZADOR;
-                        if (int.TryParse(reader[2].ToString(), out DEPE_CODI))
+                        //if (int.TryParse(reader[1].ToString(), out USUA_DIGITALIZADOR))
+                        //    usuario.USUA_DIGITALIZADOR = USUA_DIGITALIZADOR;
+                        if (int.TryParse(reader[1].ToString(), out DEPE_CODI))
                             usuario.DEPE_CODI = DEPE_CODI;
-                        usuario.PERM_RADI = (string)reader[3];
-                        usuario.USUA_NOMB = (string)reader[4];
-                        usuario.USUA_LOGIN = (string)reader[5];
-                        usuario.USUA_DOC = (string)reader[6];
+                        usuario.PERM_RADI = (string)reader[2];
+                        usuario.USUA_NOMB = (string)reader[3];
+                        usuario.USUA_LOGIN = (string)reader[4];
+                        usuario.USUA_DOC = (string)reader[5];
+                        usuario.USUA_DIGITALIZADOR = 1;
                         funciones.desconectar(con);
                         return usuario;
                     }

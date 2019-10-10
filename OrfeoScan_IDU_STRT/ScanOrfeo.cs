@@ -204,6 +204,7 @@ namespace OrfeoScan_IDU_STRT
                 this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                pintar_imagen(1, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
                 seleccionPage(0);
@@ -217,6 +218,7 @@ namespace OrfeoScan_IDU_STRT
                 this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                pintar_imagen(2, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
                 seleccionPage(1);
@@ -231,6 +233,7 @@ namespace OrfeoScan_IDU_STRT
                 this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                pintar_imagen(3, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
                 seleccionPage(2);
@@ -244,6 +247,7 @@ namespace OrfeoScan_IDU_STRT
                 {
                     actual_page--;
                     comboBox1.Text = (actual_page + 1).ToString();
+                    pintar_imagen(1, actual_page);
                     cargarPrincipal(actual_page);
                 }
             }
@@ -277,6 +281,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 actual_page++;
                 comboBox1.Text = (actual_page + 1).ToString();
+                pintar_imagen(1, actual_page);
                 cargarPrincipal(actual_page);
             }
             if (actual_page > pageRange[1])
@@ -317,7 +322,9 @@ namespace OrfeoScan_IDU_STRT
                         actual_page = page_int - 1;
                         cargarImagen0000(pageRange, total_page);
                         comboBox1.Text = (pageRange[0] + 1).ToString();
+                        pintar_imagen(1, pageRange[0]);
                         cargarPrincipal(actual_page);
+
                     }
                 }
             }
@@ -325,7 +332,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private bool crearPdf_1(string rutaFinal)
         {
-            show_loading_panel(454, 177, 359, 20, "Convirtiendo imagen a PDF");
+            show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
             try
             {
                 //Captar la ruta de imagenes del radicado, si existe: usar sus imagenes
@@ -565,6 +572,7 @@ namespace OrfeoScan_IDU_STRT
                     cambio_flecha = false;
                     pageRange[0] = 0;
                     pageRange[1] = 2;
+                    pintar_imagen(1, 0);
                     cargarImagen0000(pageRange, total_page);
                     cargarPrincipal(pageRange[0]);
                     garbage_collector();
@@ -618,6 +626,7 @@ namespace OrfeoScan_IDU_STRT
                         cambio_flecha = false;
                         pageRange[0] = actual_page;
                         pageRange[1] = actual_page+2;
+                        pintar_imagen(1, actual_page);
                         cargarImagen0000(pageRange, total_page);
                         cargarPrincipal(actual_page);
                         garbage_collector();
@@ -888,6 +897,7 @@ namespace OrfeoScan_IDU_STRT
                             }
                             cambio_flecha = true;
                             comboBox1.Text = "1";
+                            pintar_imagen(1, 0);
                             cambio_flecha = false;
                             actualBitmap_.Dispose();
                             pageRange[0] = 0;
@@ -935,6 +945,7 @@ namespace OrfeoScan_IDU_STRT
                         }
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        pintar_imagen(1,0);
                         cambio_flecha = false;
                         actualBitmap_.Dispose();
                         pageRange[0] = 0;
@@ -1347,7 +1358,7 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 con.Open();
-                show_loading_panel(454, 177, 359, 20, "Cargando Registros");
+                show_loading_panel(600, 177, 359, 20, "Cargando Registros");
                 OracleCommand command = new OracleCommand(IISQL, con);
                 OracleDataAdapter sda = new OracleDataAdapter(command);
                 DataTable dt = new DataTable();
@@ -1386,7 +1397,7 @@ namespace OrfeoScan_IDU_STRT
             //IISQL += " and (a.radi_char_radi = '20190000850961' or a.radi_char_radi = '20195260194683')";
             try
             {
-                show_loading_panel(454, 177, 359, 20, "Cargando Registros");
+                show_loading_panel(600, 177, 359, 20, "Cargando Registros");
                 lblTipoEnvio.Text = "";
                 btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                 btnEnviarPDF1.FlatAppearance.BorderSize = 0;
@@ -1465,7 +1476,7 @@ namespace OrfeoScan_IDU_STRT
             IISQL = IISQL + " and a.radi_char_radi like '%" + tipoRad + "'";
             try
             {
-                show_loading_panel(454, 177, 359, 20, "Cargando Registros");
+                show_loading_panel(600, 177, 359, 20, "Cargando Registros");
                 lblTipoEnvio.Text = "";
                 btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                 btnEnviarPDF1.FlatAppearance.BorderSize = 0;
@@ -1524,7 +1535,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 try
                 {
-                    show_loading_panel(454, 177, 359, 20, "Cargando Registros");
+                    show_loading_panel(600, 177, 359, 20, "Cargando Registros");
                     lblTipoEnvio.Text = "";
                     btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
                     btnEnviarPDF1.FlatAppearance.BorderSize = 0;
@@ -1880,7 +1891,20 @@ namespace OrfeoScan_IDU_STRT
             }
         }
 
+        private void pintar_imagen(int page, int pageNumber)
+        {
+            lblScreen1.BackColor = System.Drawing.Color.DarkOrange;
+            lblScreen2.BackColor = System.Drawing.Color.DarkOrange;
+            lblScreen3.BackColor = System.Drawing.Color.DarkOrange;
 
+            if (page == 1)
+                lblScreen1.BackColor = System.Drawing.Color.Black;
+            if (page == 2)
+                lblScreen2.BackColor = System.Drawing.Color.Black;
+            if (page == 3)
+                lblScreen3.BackColor = System.Drawing.Color.Black;
+
+        }
 
 
         private void label4_Click(object sender, EventArgs e)
@@ -2071,6 +2095,7 @@ namespace OrfeoScan_IDU_STRT
                         {
                             cambio_flecha = true;
                             comboBox1.Text = "1";
+                            pintar_imagen(1, 0);
                             cambio_flecha = false;
 
                             pageRange[0] = 0;
@@ -2221,6 +2246,7 @@ namespace OrfeoScan_IDU_STRT
 
                             cambio_flecha = true;
                             comboBox1.Text = (actual_page + 1).ToString();
+                            pintar_imagen(1, actual_page);
                             cambio_flecha = false;
                             foreach (var item in TiffCarga)
                             {
@@ -2247,6 +2273,7 @@ namespace OrfeoScan_IDU_STRT
                     {
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        pintar_imagen(1, 0);
                         cambio_flecha = false;
 
                         pageRange[0] = 0;
@@ -3734,7 +3761,7 @@ namespace OrfeoScan_IDU_STRT
         {
             try
             {
-                show_loading_panel(454, 177, 359, 20, "Enviando Archivo al Servidor");
+                show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
 
 
                 FtpWebRequest request;
@@ -3822,7 +3849,7 @@ namespace OrfeoScan_IDU_STRT
         {
             try
             {
-                show_loading_panel(454, 177, 359, 20, "Enviando Archivo al Servidor");
+                show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
 
                 using (var client = new WebClient())
                 {
@@ -3864,7 +3891,7 @@ namespace OrfeoScan_IDU_STRT
             //Enviar archivo si existe
             try
             {
-                show_loading_panel(361, 174, 414, 36,"Verificando Imagen");
+                show_loading_panel(600, 174, 414, 36,"Verificando Imagen");
                 var request = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
                 request.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
                 request.Method = WebRequestMethods.Ftp.GetFileSize;
@@ -3910,7 +3937,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private bool crearPdf(string rutaInicial, string rutaFinal)
         {
-            show_loading_panel(454, 177, 359, 20, "Convirtiendo imagen a PDF");
+            show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
             try
             {
                 //Captar la ruta de imagenes del radicado, si existe: usar sus imagenes
@@ -3992,7 +4019,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private bool crearPdf_(Bitmap bm, string rutaFinal)
         {
-            show_loading_panel(454, 177, 359, 20, "Convirtiendo imagen a PDF");
+            show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
             try
             {
                 //Captar la ruta de imagenes del radicado, si existe: usar sus imagenes
@@ -4499,10 +4526,10 @@ namespace OrfeoScan_IDU_STRT
                 pdoc.PrintPage += new PrintPageEventHandler(pdoc_PrintPage);
 
                 string defaultPrinterName = ps.PrinterName;
-                if (config.AppSettings.Settings["SCAN_NAME"].Value!=null)
+                if (config.AppSettings.Settings["PRINTER_NAME"].Value!=null)
                 {
-                    ps.PrinterName = config.AppSettings.Settings["SCAN_NAME"].Value;
-                    pd.PrinterSettings.PrinterName = config.AppSettings.Settings["SCAN_NAME"].Value;
+                    ps.PrinterName = config.AppSettings.Settings["PRINTER_NAME"].Value;
+                    pd.PrinterSettings.PrinterName = config.AppSettings.Settings["PRINTER_NAME"].Value;
                 }
                 else
                 {
@@ -4512,6 +4539,7 @@ namespace OrfeoScan_IDU_STRT
                 DialogResult result = pd.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    pdoc.PrinterSettings.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("Custom", 303, 98);
                     pdoc.Print();
                 }
             }
@@ -4535,9 +4563,9 @@ namespace OrfeoScan_IDU_STRT
                 img = System.Drawing.Image.FromStream(ms, true);
             }
                 e.Graphics.DrawImage(img, new System.Drawing.Rectangle(startX + 5, startY + Offset, 69, 28));
-                e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(80, startY + Offset, 300, 28));
+                e.Graphics.DrawImage(codbarras_private, new System.Drawing.Rectangle(80, startY + Offset, 400, 28));
 
-                Offset += 31;
+                Offset += 29;
                 e.Graphics.DrawString(ListaEtiquetas[PrintPage].LINEA1, fuente1, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
                 Offset += 11;
                 e.Graphics.DrawString(ListaEtiquetas[PrintPage].LINEA2, fuente1, new SolidBrush(System.Drawing.Color.Black), startX, startY + Offset);
@@ -4687,7 +4715,7 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page>0)
             {
-                show_loading_panel(454, 177, 359, 20, "Guardando Imagen, por favor espere");
+                show_loading_panel(600, 177, 359, 20, "Guardando Imagen, por favor espere");
                 System.Drawing.Image actualBitmap_;
                 List<byte[]> li = new List<byte[]>();
                 for (int i = 0; i < total_page; i++)
@@ -4745,7 +4773,7 @@ namespace OrfeoScan_IDU_STRT
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    show_loading_panel(454, 177, 359, 20, "Abriendo Imagen, por favor espere");
+                    show_loading_panel(600, 177, 359, 20, "Abriendo Imagen, por favor espere");
                     PageScreen1.Image = null;
                     PageScreen2.Image = null;
                     PageScreen3.Image = null;
@@ -4882,6 +4910,7 @@ namespace OrfeoScan_IDU_STRT
 
                     cambio_flecha = true;
                     comboBox1.Text = (actual_page+1).ToString();
+                    pintar_imagen(1, actual_page);
                     cambio_flecha = false;
                     actualBitmap_.Dispose();
                     pageRange[0] = actual_page;
@@ -4906,7 +4935,7 @@ namespace OrfeoScan_IDU_STRT
 
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        show_loading_panel(454, 177, 359, 20, "Abriendo Imagen, por favor espere");
+                        show_loading_panel(600, 177, 359, 20, "Abriendo Imagen, por favor espere");
                         limpiar_imagen();
                         System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
                         Guid objGuid = actualBitmap_.FrameDimensionsList[0];
@@ -4930,6 +4959,7 @@ namespace OrfeoScan_IDU_STRT
                         }
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        pintar_imagen(1, 0);
                         cambio_flecha = false;
                         actualBitmap_.Dispose();
                         pageRange[0] = 0;
