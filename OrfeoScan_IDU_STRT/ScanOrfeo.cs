@@ -97,6 +97,8 @@ namespace OrfeoScan_IDU_STRT
         private bool Es_inicial = true;
         private int adicionar_scan = -1;
 
+        private float zoom_=1F;
+
         private void btnAbrirImagen_Click(object sender, EventArgs e)
         {
             button8.BackColor = System.Drawing.Color.White;
@@ -965,6 +967,9 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
+            float zoom = 0.5F;
+
+
             if (Rect.X >= -2 && Rect.Y >= -2)
             {
                 File.Copy(work_folder + actual_page + ".tiff", work_folder + actual_page + "_editor.tiff", true);
@@ -1047,9 +1052,14 @@ namespace OrfeoScan_IDU_STRT
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
+        int pos_x = 0;
+        int pos_y = 0;
+
         private void button29_Click(object sender, EventArgs e)
         {
-            
+            pos_x += 0;
+            pos_y += 50;
+            panel2.AutoScrollPosition = new Point(pos_x, pos_y);
         }
         
         public static byte[] ImageToByte(System.Drawing.Image img)
@@ -2735,13 +2745,21 @@ namespace OrfeoScan_IDU_STRT
             {
                 if (Rect.X>=0 && Rect.Y >= 0)
                 {
+                    
                     if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                     {
+                        if (Rect.Y % 2 == 0)
+                        {
+                            panel2.AutoScrollPosition = new Point(0, Rect.Y+ Rect.Height);
+                        }
+                        
+                       
                         if (Rect.Width <= PageEdit.Image.Width && Rect.Height <= PageEdit.Image.Height)
                         {
                             Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
                             e.Graphics.DrawRectangle(blackPen, Rect);
                             e.Graphics.FillRectangle(selectionBrush, Rect);
+                            
                             garbage_collector();
                         }
                         else
@@ -5069,6 +5087,50 @@ namespace OrfeoScan_IDU_STRT
                 panel4.Location = new Point(0, 0);
             }
             
+        }
+
+        private void zoomAcercarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            zoom_ = zoom_ + 0.1F;
+            SetScale(zoom_);
+        }
+        private void SetScale(float picture_scale)
+        {
+            //picture_scale = zoom_ * 1.1F;
+            // Set the scale.
+            float PictureScale = picture_scale;
+
+            // Make a Bitmap of the right size.
+            //System.Drawing.Image Bm = PageEdit.Image;
+
+            File.Copy(work_folder + actual_page + ".tiff", work_folder + actual_page + "_zoom.tiff", true);
+            Bitmap actualBitmap_ = (Bitmap)System.Drawing.Image.FromFile(work_folder + actual_page + "_zoom.tiff");
+
+            Bitmap bitmap = new Bitmap(actualBitmap_, new Size((int)(actualBitmap_.Width), (int)(actualBitmap_.Height)));
+
+            // Make a Graphics object for the Bitmap.
+            // (If you need to use this later, you can give it
+            // class scope so you don't need to make a new one.)
+            using (Graphics gr = Graphics.FromImage(bitmap))
+            {
+                // Use a white background
+                // (so you can see where the picture is).
+                //gr.Clear(System.Drawing.Color.White);
+
+                // Draw smoothly.
+                //gr.SmoothingMode = SmoothingMode.AntiAlias;
+
+                // Scale.
+                gr.ScaleTransform(PictureScale, PictureScale);
+
+                // Draw the image.
+                //DrawImage(gr);
+            }
+
+            // Display the result.
+            PageEdit.Image = bitmap;
+            actualBitmap_.Dispose();
+            //actualBitmap_.Dispose();
         }
     }
 
