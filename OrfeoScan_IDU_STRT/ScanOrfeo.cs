@@ -98,6 +98,410 @@ namespace OrfeoScan_IDU_STRT
         private int adicionar_scan = -1;
 
         private float zoom_=1F;
+        private void zoomALaSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int w_p = panel2.Width- System.Windows.Forms.SystemInformation.VerticalScrollBarWidth;
+            if (actual_page!=-1)
+            {
+                using (System.Drawing.Image image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff"))
+                {
+                    zoom_ = ((float)w_p / (float)image.Width);
+                    this.workingBitmap = new Bitmap(image,
+                    new Size((int)((float)image.Width * zoom_), (int)((float)image.Height * zoom_)));
+                    this.PageEdit.Image = workingBitmap;
+                    garbage_collector();
+                }
+            }
+
+            //actual_page = page;
+            //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+
+            
+
+        }
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+           
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 0.1F;
+            toolStripMenuItem2.Checked = true;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 0.25F;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = true;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 0.5F;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = true;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 0.75F;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = true;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 1F;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = true;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 1.25F;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = true;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = false;
+            cargarPrincipal(actual_page);
+            return;
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 1.5F;
+            cargarPrincipal(actual_page);
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = true;
+            toolStripMenuItem9.Checked = false;
+            return;
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            if (actual_page == -1)
+            {
+                return;
+            }
+            zoom_ = 2F;
+            cargarPrincipal(actual_page);
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            toolStripMenuItem7.Checked = false;
+            toolStripMenuItem8.Checked = false;
+            toolStripMenuItem9.Checked = true;
+            return;
+        }
+        private void zoomAlejarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (actual_page == -1)
+            {
+                return;
+            }
+            if (zoom_ == 0.25F)
+            {
+                zoom_ = 0.1F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 0.5F)
+            {
+                zoom_ = 0.25F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 0.75)
+            {
+                zoom_ = 0.5F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1F)
+            {
+                zoom_ = 0.75F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1.25F)
+            {
+                zoom_ = 1F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1.5F)
+            {
+                zoom_ = 1.25F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 2F)
+            {
+                zoom_ = 1.5F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+        }
+        private void zoomAcercarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (actual_page == -1)
+            {
+                return;
+            }
+            if (zoom_==0.1F)
+            {
+                zoom_ = 0.25F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 0.25F)
+            {
+                zoom_ = 0.5F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 0.5F)
+            {
+                zoom_ = 0.75F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 0.75)
+            {
+                zoom_ = 1F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1F)
+            {
+                zoom_ = 1.25F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1.25F)
+            {
+                zoom_ = 1.50F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+            if (zoom_ == 1.5F)
+            {
+                zoom_ = 2F;
+                cargarPrincipal(actual_page);
+                return;
+            }
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (PageEdit.Image != null && Rect.X > 0 && Rect.Y > 0)
+            {
+                using (Bitmap bitmap = new Bitmap(Width, Height))
+                using (Graphics graphics = Graphics.FromImage(TiffCarga[0]))
+                {
+                    System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
+                    graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
+                    Invalidate();
+                    PageEdit.Refresh();
+                }
+            }
+        }
+        private void PageEdit_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            Point tempEndPoint = e.Location;
+            //textBox1.Text = tempEndPoint.X.ToString();
+            //textBox2.Text = tempEndPoint.Y.ToString();
+
+            _StartPoint = e.Location;
+            //textBox5.Text = _StartPoint.X.ToString();
+            //textBox4.Text = _StartPoint.Y.ToString();
+            //textBox5.Text = panel2.AutoScrollPosition.X.ToString();
+            //textBox4.Text = panel2.AutoScrollPosition.Y.ToString();
+
+
+            if (PageEdit.Image != null)
+            {
+                if (true)
+                {
+                    Rect.Location = new Point(
+                     Math.Min(RectStartPoint.X, tempEndPoint.X),
+                     Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+                    Rect.Size = new Size(
+                        Math.Abs(RectStartPoint.X - tempEndPoint.X),
+                        Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+
+                    if (e.Y % 60 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 500 && e.Y <= PageEdit.Image.Height)
+                    {
+                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, e.Y - 0);
+                        //var hhh = panel2.AutoScrollPosition.X;
+                    }
+                    Point changePoint = new Point(e.Location.X - RectStartPoint.X,
+                                  e.Location.Y - RectStartPoint.Y);
+                    if (e.Y % 80 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 400 && e.Y <= PageEdit.Image.Height)
+                    {
+                        Thread.Sleep(50);
+                    }
+                    garbage_collector();
+                }
+            }
+            PageEdit.Invalidate();
+        }
+        private void PageEdit_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Determine the initial rectangle coordinates...
+            RectStartPoint = e.Location;
+
+            Invalidate();
+        }
+        private void PageEdit_Paint(object sender, PaintEventArgs e)
+        {
+            // Draw the rectangle...
+            if (PageEdit.Image != null)
+            {
+                if (Rect.X >= 0 && Rect.Y >= 0)
+                {
+
+                    if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
+                    {
+                        //if (Rect.Y % 2 == 0)
+                        //{
+                        //    panel2.AutoScrollPosition = new Point(0, Rect.Y+ Rect.Height);
+                        //}
+
+
+                        if (true)
+                        {
+                            Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
+                            e.Graphics.DrawRectangle(blackPen, Rect);
+                            e.Graphics.FillRectangle(selectionBrush, Rect);
+
+                            garbage_collector();
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+
+            }
+        }
+        private void PageEdit_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (Rect.Contains(e.Location))
+                {
+                }
+            }
+        }
+        private void panel2_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    Point changePoint = new Point(e.Location.X - _StartPoint.X,
+            //                                  e.Location.Y - _StartPoint.Y);
+            //    panel1.AutoScrollPosition = new Point(-panel1.AutoScrollPosition.X - changePoint.X,
+            //                                          -panel1.AutoScrollPosition.Y - changePoint.Y);
+            //}
+        }
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            //if (e.Button == MouseButtons.Left)
+            //    _StartPoint = e.Location;
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var rectangulo = Rect;
+            var imagen = PageEdit.Image;
+        }
+
 
         private void btnAbrirImagen_Click(object sender, EventArgs e)
         {
@@ -107,7 +511,15 @@ namespace OrfeoScan_IDU_STRT
         private void cargarPrincipal(int page)
         {
             actual_page = page;
-            this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+            //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+
+            using (System.Drawing.Image image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff"))
+            {
+                this.workingBitmap = new Bitmap(image,
+                new Size((int)((float)image.Width * zoom_), (int)((float)image.Height * zoom_)));
+                this.PageEdit.Image = workingBitmap;
+                garbage_collector();
+            } 
         }
         private void cargarImagen0000(int[] range, int pagecount)
         {
@@ -979,6 +1391,10 @@ namespace OrfeoScan_IDU_STRT
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
                     System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
+                    if (zoom_!=1F)
+                    {
+                        Rect.Width=
+                    }
                     graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
                     Invalidate();
                 }
@@ -1135,9 +1551,14 @@ namespace OrfeoScan_IDU_STRT
         }
         private void ScanOrfeo_Load(object sender, EventArgs e)
         {
+
+
             this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
             tssl_valor_dependencia.Text = usuarioScanOrfeo.DEPE_CODI.ToString();
             tssl_valor_usuario.Text = usuarioScanOrfeo.USUA_NOMB.ToString();
+
+           
+
             limpiar_imagen();
             ToolTip toolTip1 = new ToolTip();
             toolTip1.AutoPopDelay = 5000;
@@ -2652,155 +3073,7 @@ namespace OrfeoScan_IDU_STRT
 
 
         //imagen
-        private void button9_Click(object sender, EventArgs e)
-        {
-            if (PageEdit.Image != null && Rect.X > 0 && Rect.Y > 0)
-            {
-                using (Bitmap bitmap = new Bitmap(Width, Height))
-                using (Graphics graphics = Graphics.FromImage(TiffCarga[0]))
-                {
-                    System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
-                    graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
-                    Invalidate();
-                    PageEdit.Refresh();
-                }
-            }
-        }
-        private void PageEdit_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
-            Point tempEndPoint = e.Location;
-            //textBox1.Text = tempEndPoint.X.ToString();
-            //textBox2.Text = tempEndPoint.Y.ToString();
 
-            _StartPoint = e.Location;
-            //textBox5.Text = _StartPoint.X.ToString();
-            //textBox4.Text = _StartPoint.Y.ToString();
-            //textBox5.Text = panel2.AutoScrollPosition.X.ToString();
-            //textBox4.Text = panel2.AutoScrollPosition.Y.ToString();
-
-
-            if (PageEdit.Image != null)
-            {
-                if (tempEndPoint.X <= PageEdit.Image.Width && tempEndPoint.Y <= PageEdit.Image.Height)
-                {
-                    Rect.Location = new Point(
-                     Math.Min(RectStartPoint.X, tempEndPoint.X),
-                     Math.Min(RectStartPoint.Y, tempEndPoint.Y));
-                    Rect.Size = new Size(
-                        Math.Abs(RectStartPoint.X - tempEndPoint.X),
-                        Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
-
-                    Point changePoint = new Point(e.Location.X - RectStartPoint.X,
-                                  e.Location.Y - RectStartPoint.Y);
-                    bool cambio = false;
-
-                    if (_StartPoint.Y >= 1400 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 720);
-                        cambio = true;
-                    }
-                    if (_StartPoint.Y >= 1200 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 600);
-                        cambio = true;
-                    }
-                    if (_StartPoint.Y >= 960 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 480);
-                        cambio = true;
-                    }
-                    if (_StartPoint.Y >= 720 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 240);
-                        cambio = true;
-                    }
-                    if (_StartPoint.Y > 480 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 120);
-                        cambio = true;
-                    }
-                    if (_StartPoint.Y > 360 && !cambio)
-                    {
-                        //panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, 0);
-                        cambio = true;
-                    }
-                    garbage_collector();
-                }
-            }
-            PageEdit.Invalidate();
-        }
-        private void PageEdit_MouseDown(object sender, MouseEventArgs e)
-        {
-            // Determine the initial rectangle coordinates...
-            RectStartPoint = e.Location;
-
-            Invalidate();
-        }
-        private void PageEdit_Paint(object sender, PaintEventArgs e)
-        {
-            // Draw the rectangle...
-            if (PageEdit.Image != null)
-            {
-                if (Rect.X>=0 && Rect.Y >= 0)
-                {
-                    
-                    if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
-                    {
-                        if (Rect.Y % 2 == 0)
-                        {
-                            panel2.AutoScrollPosition = new Point(0, Rect.Y+ Rect.Height);
-                        }
-                        
-                       
-                        if (Rect.Width <= PageEdit.Image.Width && Rect.Height <= PageEdit.Image.Height)
-                        {
-                            Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
-                            e.Graphics.DrawRectangle(blackPen, Rect);
-                            e.Graphics.FillRectangle(selectionBrush, Rect);
-                            
-                            garbage_collector();
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                }
-                
-            }
-        }
-        private void PageEdit_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (Rect.Contains(e.Location))
-                {
-                }
-            }
-        }
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
-        {
-
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    Point changePoint = new Point(e.Location.X - _StartPoint.X,
-            //                                  e.Location.Y - _StartPoint.Y);
-            //    panel1.AutoScrollPosition = new Point(-panel1.AutoScrollPosition.X - changePoint.X,
-            //                                          -panel1.AutoScrollPosition.Y - changePoint.Y);
-            //}
-        }
-        private void panel2_MouseDown(object sender, MouseEventArgs e)
-        {
-            //if (e.Button == MouseButtons.Left)
-            //    _StartPoint = e.Location;
-        }
-        private void button10_Click(object sender, EventArgs e)
-        {
-            var rectangulo = Rect;
-            var imagen = PageEdit.Image;
-        }
         private System.Drawing.Image generarCodigoBarras(string numero_documento)
         {
             Barcode39 b = new Barcode39();
@@ -5089,11 +5362,7 @@ namespace OrfeoScan_IDU_STRT
             
         }
 
-        private void zoomAcercarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            zoom_ = zoom_ + 0.1F;
-            SetScale(zoom_);
-        }
+        
         private void SetScale(float picture_scale)
         {
             //picture_scale = zoom_ * 1.1F;
@@ -5132,6 +5401,8 @@ namespace OrfeoScan_IDU_STRT
             actualBitmap_.Dispose();
             //actualBitmap_.Dispose();
         }
+
+
     }
 
     public class InputBoxResult
