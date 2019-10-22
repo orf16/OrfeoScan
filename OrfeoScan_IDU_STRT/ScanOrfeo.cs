@@ -98,6 +98,9 @@ namespace OrfeoScan_IDU_STRT
         private int adicionar_scan = -1;
 
         private float zoom_=1F;
+        private string temp_radicado = "";
+        private string temp_expediente = "";
+
         private void zoomALaSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int w_p = panel2.Width- System.Windows.Forms.SystemInformation.VerticalScrollBarWidth;
@@ -111,12 +114,21 @@ namespace OrfeoScan_IDU_STRT
                     this.PageEdit.Image = workingBitmap;
                     garbage_collector();
                 }
+                toolStripMenuItem2.Checked = false;
+                toolStripMenuItem3.Checked = false;
+                toolStripMenuItem4.Checked = false;
+                toolStripMenuItem5.Checked = false;
+                toolStripMenuItem6.Checked = false;
+                toolStripMenuItem7.Checked = false;
+                toolStripMenuItem8.Checked = false;
+                toolStripMenuItem9.Checked = false;
             }
+            
 
             //actual_page = page;
             //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
 
-            
+
 
         }
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -283,43 +295,43 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
-            if (zoom_ == 0.25F)
+            if (zoom_ >=0 && zoom_ <= 0.25F)
             {
                 zoom_ = 0.1F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 0.5F)
+            if (zoom_ > 0.25F && zoom_ <= 0.5F)
             {
                 zoom_ = 0.25F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 0.75)
+            if (zoom_ > 0.5F && zoom_ <= 0.75F)
             {
                 zoom_ = 0.5F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1F)
+            if (zoom_ > 0.75F && zoom_ <= 1F)
             {
                 zoom_ = 0.75F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1.25F)
+            if (zoom_ > 1F && zoom_ <= 1.25F)
             {
                 zoom_ = 1F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1.5F)
+            if (zoom_ > 1.25F && zoom_ <= 1.5F)
             {
                 zoom_ = 1.25F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 2F)
+            if (zoom_ > 1.5F && zoom_ <= 2F)
             {
                 zoom_ = 1.5F;
                 cargarPrincipal(actual_page);
@@ -332,43 +344,43 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
-            if (zoom_==0.1F)
+            if (zoom_ >= 0 && zoom_ <= 0.1F)
             {
                 zoom_ = 0.25F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 0.25F)
+            if (zoom_ > 0.1F && zoom_ <= 0.25F)
             {
                 zoom_ = 0.5F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 0.5F)
+            if (zoom_ > 0.25F && zoom_ <= 0.5F)
             {
                 zoom_ = 0.75F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 0.75)
+            if (zoom_ > 0.5F && zoom_ <= 0.75F)
             {
                 zoom_ = 1F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1F)
+            if (zoom_ > 0.75F && zoom_ <= 1F)
             {
                 zoom_ = 1.25F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1.25F)
+            if (zoom_ > 1F && zoom_ <= 1.25F)
             {
                 zoom_ = 1.50F;
                 cargarPrincipal(actual_page);
                 return;
             }
-            if (zoom_ == 1.5F)
+            if (zoom_ > 1.25F && zoom_ <= 1.5F)
             {
                 zoom_ = 2F;
                 cargarPrincipal(actual_page);
@@ -392,7 +404,9 @@ namespace OrfeoScan_IDU_STRT
         private void PageEdit_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
-                return;
+            {
+            return;
+            }
             Point tempEndPoint = e.Location;
             //textBox1.Text = tempEndPoint.X.ToString();
             //textBox2.Text = tempEndPoint.Y.ToString();
@@ -431,6 +445,17 @@ namespace OrfeoScan_IDU_STRT
             }
             PageEdit.Invalidate();
         }
+        private void PageEdit_Click(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button != MouseButtons.Left)
+            {
+                Rect.Location = new Point(0, 0);
+                Rect.Size = new Size(0, 0);
+                PageEdit.Invalidate();
+            }
+            
+        }
         private void PageEdit_MouseDown(object sender, MouseEventArgs e)
         {
             // Determine the initial rectangle coordinates...
@@ -443,17 +468,11 @@ namespace OrfeoScan_IDU_STRT
             // Draw the rectangle...
             if (PageEdit.Image != null)
             {
-                if (Rect.X >= 0 && Rect.Y >= 0)
+                if (Rect.X > 0 && Rect.Y > 0)
                 {
 
                     if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                     {
-                        //if (Rect.Y % 2 == 0)
-                        //{
-                        //    panel2.AutoScrollPosition = new Point(0, Rect.Y+ Rect.Height);
-                        //}
-
-
                         if (true)
                         {
                             Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
@@ -462,13 +481,8 @@ namespace OrfeoScan_IDU_STRT
 
                             garbage_collector();
                         }
-                        else
-                        {
-
-                        }
                     }
                 }
-
             }
         }
         private void PageEdit_MouseUp(object sender, MouseEventArgs e)
@@ -615,9 +629,11 @@ namespace OrfeoScan_IDU_STRT
             if (total_page > 0)
             {
                 actual_page = pageRange[0];
-                this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                cargarPrincipal(actual_page);
+                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                comboBox2.Text = (actual_page + 1).ToString();
                 pintar_imagen(1, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
@@ -629,9 +645,11 @@ namespace OrfeoScan_IDU_STRT
             if (total_page > 0)
             {
                 actual_page = pageRange[0] + 1;
-                this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                cargarPrincipal(actual_page);
+                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                comboBox2.Text = (actual_page + 1).ToString();
                 pintar_imagen(2, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
@@ -644,9 +662,11 @@ namespace OrfeoScan_IDU_STRT
             if (total_page > 0)
             {
                 actual_page = pageRange[1];
-                this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                cargarPrincipal(actual_page);
+                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
                 cambio_flecha = true;
                 comboBox1.Text = (actual_page + 1).ToString();
+                comboBox2.Text = (actual_page + 1).ToString();
                 pintar_imagen(3, actual_page);
                 cambio_flecha = false;
                 garbage_collector();
@@ -661,6 +681,7 @@ namespace OrfeoScan_IDU_STRT
                 {
                     actual_page--;
                     comboBox1.Text = (actual_page + 1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
                     pintar_imagen(1, actual_page);
                     cargarPrincipal(actual_page);
                 }
@@ -695,6 +716,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 actual_page++;
                 comboBox1.Text = (actual_page + 1).ToString();
+                comboBox2.Text = (actual_page + 1).ToString();
                 pintar_imagen(1, actual_page);
                 cargarPrincipal(actual_page);
             }
@@ -736,6 +758,7 @@ namespace OrfeoScan_IDU_STRT
                         actual_page = page_int - 1;
                         cargarImagen0000(pageRange, total_page);
                         comboBox1.Text = (pageRange[0] + 1).ToString();
+                        comboBox2.Text = (pageRange[0] + 1).ToString();
                         pintar_imagen(1, pageRange[0]);
                         cargarPrincipal(actual_page);
 
@@ -916,6 +939,8 @@ namespace OrfeoScan_IDU_STRT
             PageEdit.Image = null;
             comboBox1.Text = "";
             comboBox1.Items.Clear();
+            comboBox2.Text = "";
+            comboBox2.Items.Clear();
             garbage_collector();
             path_recycle = "";
             actual_page = -1;
@@ -939,6 +964,8 @@ namespace OrfeoScan_IDU_STRT
                 lblScreen3.Text = "";
                 comboBox1.Text = "";
                 comboBox1.Items.Clear();
+                comboBox2.Text = "";
+                comboBox2.Items.Clear();
                 garbage_collector();
                 int borrar = actual_page;
                 if (borrar == 0)
@@ -977,12 +1004,14 @@ namespace OrfeoScan_IDU_STRT
                                 System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
                                 paginas_nuevas++;
                                 comboBox1.Items.Add(paginas_nuevas);
+                                comboBox2.Items.Add(paginas_nuevas);
                             }
                         }
                     }
                     total_page = paginas_nuevas;
                     cambio_flecha = true;
                     comboBox1.Text = "1";
+                    comboBox2.Text = "1";
                     cambio_flecha = false;
                     pageRange[0] = 0;
                     pageRange[1] = 2;
@@ -1037,6 +1066,7 @@ namespace OrfeoScan_IDU_STRT
                         total_page = paginas_nuevas;
                         cambio_flecha = true;
                         comboBox1.Text = (actual_page+1).ToString();
+                        comboBox2.Text = (actual_page + 1).ToString();
                         cambio_flecha = false;
                         pageRange[0] = actual_page;
                         pageRange[1] = actual_page+2;
@@ -1301,16 +1331,19 @@ namespace OrfeoScan_IDU_STRT
                                     // image.Save(DestTiffile + "\\TIFSplit\\TifFile_" + activePage.ToString() + ".tif");
                                     actualBitmap_.Save(work_folder + i + ".tiff");
                                     comboBox1.Items.Add(i + 1);
+                                    comboBox2.Items.Add(i + 1);
                                 }
                                 catch (Exception)
                                 {
                                     ifSaved = false;
                                     comboBox1.Items.Clear();
+                                    comboBox2.Items.Clear();
                                     return;
                                 }
                             }
                             cambio_flecha = true;
                             comboBox1.Text = "1";
+                            comboBox2.Text = "1";
                             pintar_imagen(1, 0);
                             cambio_flecha = false;
                             actualBitmap_.Dispose();
@@ -1349,16 +1382,19 @@ namespace OrfeoScan_IDU_STRT
                                 actualBitmap_.SelectActiveFrame(objDimension, i);
                                 actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
                                 comboBox1.Items.Add(i + 1);
+                                comboBox2.Items.Add(i + 1);
                             }
                             catch (Exception)
                             {
                                 ifSaved = false;
                                 comboBox1.Items.Clear();
+                                comboBox2.Items.Clear();
                                 return;
                             }
                         }
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        comboBox2.Text = "1";
                         pintar_imagen(1,0);
                         cambio_flecha = false;
                         actualBitmap_.Dispose();
@@ -1379,9 +1415,6 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
-            float zoom = 0.5F;
-
-
             if (Rect.X >= -2 && Rect.Y >= -2)
             {
                 File.Copy(work_folder + actual_page + ".tiff", work_folder + actual_page + "_editor.tiff", true);
@@ -1390,12 +1423,22 @@ namespace OrfeoScan_IDU_STRT
                 Bitmap bitmap = new Bitmap(actualBitmap_, new Size((int)(actualBitmap_.Width), (int)(actualBitmap_.Height)));
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
+                    int x_temp = Rect.X;
+                    int y_temp = Rect.Y;
                     System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, Width, Height);
                     if (zoom_!=1F)
                     {
-                        Rect.Width=
+                        Rect.Width = (int)((float)Rect.Width/ zoom_);
+                        Rect.Height = (int)((float)Rect.Height / zoom_);
+                        
+                        Rect.X= (int)((float)Rect.X / zoom_);
+                        Rect.Y = (int)((float)Rect.Y / zoom_);
                     }
                     graphics.FillRectangle(new SolidBrush(System.Drawing.Color.White), Rect);
+                    Rect.X = x_temp;
+                    Rect.Y = y_temp;
+                    Rect.Width = 0;
+                    Rect.Height = 0;
                     Invalidate();
                 }
 
@@ -1744,11 +1787,12 @@ namespace OrfeoScan_IDU_STRT
         }
         private void buscarRadicadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputBoxResult result = InputBox.Show("Digite el registro de radicado a consultar", "Consultar Radicado", string.Empty, 100, 0);
+            InputBoxResult result = InputBox.Show("Digite el registro de radicado a consultar", "Consultar Radicado", temp_radicado, 100, 0);
             if (result.ReturnCode == DialogResult.OK)
             {
                 if (result.Text.Length > 4)
                 {
+                    temp_radicado = result.Text;
                     if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                         BuscarRadicado(result.Text);
                     else
@@ -1760,11 +1804,12 @@ namespace OrfeoScan_IDU_STRT
         }
         private void buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputBoxResult result = InputBox.Show("Registro a Buscar", "Buscar Expediente", string.Empty, 100, 0);
+            InputBoxResult result = InputBox.Show("Registro a Buscar", "Buscar Expediente", temp_expediente, 100, 0);
             if (result.ReturnCode == DialogResult.OK)
             {
                 if (result.Text.Length > 4)
                 {
+                    temp_expediente = result.Text;
                     if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                         BuscarRadicadoExpediente(result.Text);
                     else
@@ -1872,11 +1917,12 @@ namespace OrfeoScan_IDU_STRT
         {
             if (!string.IsNullOrEmpty(cBoxtRadicado.Text.Trim()))
             {
-                InputBoxResult result = InputBox.Show("Registro a Buscar Tipo de Radicacion " + cBoxtRadicado.Text, "Consultar Radicado por Tipo", string.Empty, 100, 0);
+                InputBoxResult result = InputBox.Show("Registro a Buscar Tipo de Radicacion " + cBoxtRadicado.Text, "Consultar Radicado por Tipo", temp_radicado, 100, 0);
                 if (result.ReturnCode == DialogResult.OK)
                 {
                     if (result.Text.Length > 4)
                     {
+                        temp_radicado = result.Text;
                         if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                             BuscarRadicadoTP(result.Text);
                         else
@@ -2491,6 +2537,7 @@ namespace OrfeoScan_IDU_STRT
                                 total_page++;
                                 image.Save(work_folder + (total_page - 1).ToString() + ".tiff");
                                 comboBox1.Items.Add(total_page.ToString());
+                                comboBox2.Items.Add(total_page.ToString());
                                 garbage_collector();
                             }
                         }
@@ -2526,6 +2573,7 @@ namespace OrfeoScan_IDU_STRT
                         {
                             cambio_flecha = true;
                             comboBox1.Text = "1";
+                            comboBox2.Text = "1";
                             pintar_imagen(1, 0);
                             cambio_flecha = false;
 
@@ -2553,6 +2601,8 @@ namespace OrfeoScan_IDU_STRT
                             lblScreen3.Text = "";
                             comboBox1.Text = "";
                             comboBox1.Items.Clear();
+                            comboBox2.Text = "";
+                            comboBox2.Items.Clear();
                             garbage_collector();
                             total_page = 0;
 
@@ -2593,6 +2643,7 @@ namespace OrfeoScan_IDU_STRT
                                             paginas_nuevas++;
                                             total_page++;
                                             comboBox1.Items.Add(paginas_nuevas);
+                                            comboBox2.Items.Add(paginas_nuevas);
                                         }
                                     }
                                 }
@@ -2606,10 +2657,12 @@ namespace OrfeoScan_IDU_STRT
                                         total_page++;
                                         paginas_nuevas++;
                                         comboBox1.Items.Add(paginas_nuevas);
+                                        comboBox2.Items.Add(paginas_nuevas);
                                     }
                                     catch (Exception)
                                     {
                                         comboBox1.Items.Clear();
+                                        comboBox2.Items.Clear();
                                         return;
                                     }
                                 }
@@ -2649,6 +2702,7 @@ namespace OrfeoScan_IDU_STRT
                                             paginas_nuevas++;
                                             total_page++;
                                             comboBox1.Items.Add(paginas_nuevas);
+                                            comboBox2.Items.Add(paginas_nuevas);
                                         }
                                     }
                                 }
@@ -2662,10 +2716,12 @@ namespace OrfeoScan_IDU_STRT
                                         total_page++;
                                         paginas_nuevas++;
                                         comboBox1.Items.Add(paginas_nuevas);
+                                        comboBox2.Items.Add(paginas_nuevas);
                                     }
                                     catch (Exception)
                                     {
                                         comboBox1.Items.Clear();
+                                        comboBox2.Items.Clear();
                                         return;
                                     }
                                 }
@@ -2677,6 +2733,7 @@ namespace OrfeoScan_IDU_STRT
 
                             cambio_flecha = true;
                             comboBox1.Text = (actual_page + 1).ToString();
+                            comboBox2.Text = (actual_page + 1).ToString();
                             pintar_imagen(1, actual_page);
                             cambio_flecha = false;
                             foreach (var item in TiffCarga)
@@ -2704,6 +2761,7 @@ namespace OrfeoScan_IDU_STRT
                     {
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        comboBox2.Text = "1";
                         pintar_imagen(1, 0);
                         cambio_flecha = false;
 
@@ -5074,6 +5132,8 @@ namespace OrfeoScan_IDU_STRT
                     lblScreen3.Text = "";
                     comboBox1.Text = "";
                     comboBox1.Items.Clear();
+                    comboBox2.Text = "";
+                    comboBox2.Items.Clear();
                     garbage_collector();
                     total_page = 0;
 
@@ -5119,6 +5179,7 @@ namespace OrfeoScan_IDU_STRT
                                     paginas_nuevas++;
                                     total_page++;
                                     comboBox1.Items.Add(paginas_nuevas);
+                                    comboBox2.Items.Add(paginas_nuevas);
                                 }
                             }
                         }
@@ -5133,10 +5194,12 @@ namespace OrfeoScan_IDU_STRT
                                 total_page++;
                                 paginas_nuevas++;
                                 comboBox1.Items.Add(paginas_nuevas);
+                                comboBox2.Items.Add(paginas_nuevas);
                             }
                             catch (Exception)
                             {
                                 comboBox1.Items.Clear();
+                                comboBox2.Items.Clear();
                                 return;
                             }
                         }
@@ -5176,6 +5239,7 @@ namespace OrfeoScan_IDU_STRT
                                     paginas_nuevas++;
                                     total_page++;
                                     comboBox1.Items.Add(paginas_nuevas);
+                                    comboBox2.Items.Add(paginas_nuevas);
                                 }
                             }
                         }
@@ -5190,10 +5254,12 @@ namespace OrfeoScan_IDU_STRT
                                 total_page++;
                                 paginas_nuevas++;
                                 comboBox1.Items.Add(paginas_nuevas);
+                                comboBox2.Items.Add(paginas_nuevas);
                             }
                             catch (Exception)
                             {
                                 comboBox1.Items.Clear();
+                                comboBox2.Items.Clear();
                                 return;
                             }
                         }
@@ -5201,6 +5267,7 @@ namespace OrfeoScan_IDU_STRT
 
                     cambio_flecha = true;
                     comboBox1.Text = (actual_page+1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
                     pintar_imagen(1, actual_page);
                     cambio_flecha = false;
                     actualBitmap_.Dispose();
@@ -5240,16 +5307,19 @@ namespace OrfeoScan_IDU_STRT
                                 actualBitmap_.SelectActiveFrame(objDimension, i);
                                 actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
                                 comboBox1.Items.Add(i + 1);
+                                comboBox2.Items.Add(i + 1);
                             }
                             catch (Exception)
                             {
                                 ifSaved = false;
                                 comboBox1.Items.Clear();
+                                comboBox2.Items.Clear();
                                 return;
                             }
                         }
                         cambio_flecha = true;
                         comboBox1.Text = "1";
+                        comboBox2.Text = "1";
                         pintar_imagen(1, 0);
                         cambio_flecha = false;
                         actualBitmap_.Dispose();
@@ -5351,6 +5421,10 @@ namespace OrfeoScan_IDU_STRT
                 panel4.Size = new Size(1642, 723);
                 panel6.Dock = DockStyle.Top;
                 panel4.Dock = DockStyle.Bottom;
+                comboBox2.Visible = false;
+                button4.Visible = false;
+                button14.Visible = false;
+
             }
             else
             {
@@ -5358,6 +5432,9 @@ namespace OrfeoScan_IDU_STRT
                 panel6.Location = new Point(1, 1);
                 panel4.Size = new Size(1523, 1000);
                 panel4.Location = new Point(0, 0);
+                comboBox2.Visible = true;
+                button4.Visible = true;
+                button14.Visible = true;
             }
             
         }
@@ -5402,9 +5479,266 @@ namespace OrfeoScan_IDU_STRT
             //actualBitmap_.Dispose();
         }
 
+        private void verPáginaCompletaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int h_p = panel2.Height - System.Windows.Forms.SystemInformation.HorizontalScrollBarHeight;
+            if (actual_page != -1)
+            {
+                using (System.Drawing.Image image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff"))
+                {
+                    zoom_ = ((float)h_p / (float)image.Height);
+                    this.workingBitmap = new Bitmap(image,
+                    new Size((int)((float)image.Width * zoom_), (int)((float)image.Height * zoom_)));
+                    this.PageEdit.Image = workingBitmap;
+                    garbage_collector();
+                }
+                toolStripMenuItem2.Checked = false;
+                toolStripMenuItem3.Checked = false;
+                toolStripMenuItem4.Checked = false;
+                toolStripMenuItem5.Checked = false;
+                toolStripMenuItem6.Checked = false;
+                toolStripMenuItem7.Checked = false;
+                toolStripMenuItem8.Checked = false;
+                toolStripMenuItem9.Checked = false;
+            }
+        }
 
+        private void expedientes60DiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
+                BuscarExpediente60();
+            else
+                MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+        }
+        private void BuscarExpediente60()
+        {
+            codbarras_private = null;
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
+            string IISQL;
+            OracleConnection con = new OracleConnection(funciones.conni);
+            IISQL = " SELECT DISTINCT 'EXPEDIENTE' as TIPO, S.DEPE_CODI AS DEPENDENCIA, S.SGD_EXP_NUMERO AS NÚMERO_EXPEDIENTE,(SELECT COUNT(*) FROM SGD_AEX_ANEXOEXPEDIENTE A WHERE A.SGD_AEX_EXPEDIENTE = S.SGD_EXP_NUMERO) AS NÚM_ANEXOS";
+            IISQL = IISQL + ",S.SGD_SEXP_PAREXP1 AS ASUNTO, S.SGD_SEXP_PAREXP3 NOMBRE_Y_DOCUMENTO,S.SGD_SEXP_FECH AS FECHA, S.SGD_SEXP_PAREXP2";
+            IISQL = IISQL + " FROM SGD_SEXP_SECEXPEDIENTES S RIGHT JOIN SGD_EXP_EXPEDIENTE E ON E.SGD_EXP_ESTADO < 2 AND S.SGD_EXP_NUMERO = E.SGD_EXP_NUMERO ";
+            IISQL = IISQL + " WHERE S.SGD_SEXP_FECH BETWEEN (SYSDATE-60) AND SYSDATE  ";
+            IISQL = IISQL + " ORDER BY SGD_SEXP_FECH DESC ";
+
+            try
+            {
+                con.Open();
+                show_loading_panel(600, 177, 359, 20, "Cargando Registros");
+                OracleCommand command = new OracleCommand(IISQL, con);
+                OracleDataAdapter sda = new OracleDataAdapter(command);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                con.Close();
+                con.Dispose();
+                dataGridView1.DataSource = dt;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                hide_loading_panel();
+            }
+            catch (Exception ex)
+            {
+                hide_loading_panel();
+                con.Close();
+                con.Dispose();
+                MessageBox.Show(ex.ToString());
+            }
+            //System.Windows.Forms.Clipboard.SetText(IISQL);
+        }
+
+        private void radicados60DíasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
+                BuscarRadicados60();
+            else
+                MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+        }
+        private void BuscarRadicados60()
+        {
+            codbarras_private = null;
+            limpiar_informacion_radicado();
+            dataGridView1.DataSource = null;
+            string IISQL;
+            OracleConnection con = new OracleConnection(funciones.conni);
+            if (impresiónDeSobresToolStripMenuItem.Checked)
+            {
+                IISQL = "Select 'RADICADO' as TIPO,   a.RADI_NUME_RADI AS NUMERO_RADICADO,   a.RADI_FECH_RADI AS FECHA,   renv.SGD_RENV_NOMBRE AS DESTINO,   renv.SGD_RENV_DIR AS DIRECCIÓN,   renv.SGD_RENV_DEPTO AS DEPARTAMENTO,   renv.SGD_RENV_MPIO AS MUNICIPIO,   a.RA_ASUN AS ASUNTO,    a.RADI_USUA_ACTU,   a.RADI_NUME_HOJA,   a.RADI_NOMB || a.RADI_PRIM_APEL || a.RADI_SEGU_APEL AS RADI_NOMB,   a.RADI_DEPE_ACTU as DEP_ACTUAL,   b.DEPE_NOMB,   TO_CHAR(a.RADI_FECH_RADI,'YYYYMM') as ANOMES_RAD";
+                IISQL += " from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND (SGD_RENV_PLANILLA IS NULL OR SGD_RENV_PLANILLA='00') AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+                //IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+            }
+            else
+            {
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA, a.RA_ASUN AS ASUNTO, a.RADI_USUA_ACTU,a.RADI_PATH, a.RADI_NOMB || a.RADI_PRIM_APEL || a.RADI_SEGU_APEL AS RADI_NOMB, a.RADI_DEPE_ACTU as DEP_ACTUAL, b.DEPE_NOMB,TO_CHAR(a.RADI_FECH_RADI,'YYYYMM') as ANOMES_RAD";
+                IISQL += " from Radicado a,dependencia b ";
+                IISQL += " where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.radi_path is null AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";              
+            }
+
+            //if (impresiónDeSobresToolStripMenuItem.Checked)
+            //    IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+            //else
+            //    IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA,       a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH  from Radicado a where a.radi_nume_radi is not null  ";
+
+
+            if (cBoxtRadicado.Text!="")
+            {
+                string tipoRad = cBoxtRadicado.Text.Trim().Substring(0, 1);
+                IISQL += " and a.radi_char_radi like '%" + tipoRad + "'";
+            }
+            
+            
+
+            if (pQRTelefónicasToolStripMenuItem.Checked)
+            {
+                IISQL += " and (TDOC_CODI != 26 AND MREC_CODI !=6) ";
+            }
+            if (pQRPersonalToolStripMenuItem.Checked)
+            {
+                IISQL += " and (TDOC_CODI != 26 AND MREC_CODI !=5) ";
+            }
+
+            try
+            {
+                show_loading_panel(600, 177, 359, 20, "Cargando Registros");
+                lblTipoEnvio.Text = "";
+                btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
+                btnEnviarPDF1.FlatAppearance.BorderSize = 0;
+                label13.Visible = false;
+                dtFechaAnexo.Visible = false;
+                dtHoraAnexo.Visible = false;
+
+                con.Open();
+                OracleCommand command = new OracleCommand(IISQL, con);
+                OracleDataAdapter sda = new OracleDataAdapter(command);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                con.Close();
+                con.Dispose();
+                dataGridView1.DataSource = dt;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                hide_loading_panel();
+            }
+            catch (Exception ex)
+            {
+                hide_loading_panel();
+                con.Close();
+                con.Dispose();
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void pQRTelefónicasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pQRPersonalToolStripMenuItem.Checked)
+            {
+                pQRPersonalToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void pQRPersonalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pQRTelefónicasToolStripMenuItem.Checked)
+            {
+                pQRTelefónicasToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox2.SelectedIndex >= 0 && !cambio_flecha)
+            {
+                string page = comboBox2.Text;
+                int page_int = -1;
+                if (int.TryParse(page, out page_int))
+                {
+                    if (page_int <= total_page)
+                    {
+                        pageRange[0] = page_int - 1;
+                        pageRange[1] = pageRange[0] + 2;
+                        actual_page = page_int - 1;
+                        cargarImagen0000(pageRange, total_page);
+                        comboBox1.Text = (pageRange[0] + 1).ToString();
+                        comboBox2.Text = (pageRange[0] + 1).ToString();
+                        pintar_imagen(1, pageRange[0]);
+                        cargarPrincipal(actual_page);
+
+                    }
+                }
+            }
+            PageEdit.Focus();
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            if (actual_page != 0)
+            {
+                if (actual_page <= total_page - 1)
+                {
+                    actual_page--;
+                    comboBox1.Text = (actual_page + 1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
+                    pintar_imagen(1, actual_page);
+                    cargarPrincipal(actual_page);
+                }
+            }
+            if (actual_page < pageRange[0])
+            {
+                seleccionPage(2);
+                pageRange[0] = actual_page;
+                pageRange[1] = pageRange[0] + 2;
+                cargarImagen0000(pageRange, total_page);
+            }
+            else
+            {
+                if (actual_page == pageRange[0])
+                {
+                    seleccionPage(0);
+                }
+                if (actual_page == pageRange[0] + 1)
+                {
+                    seleccionPage(1);
+                }
+                if (actual_page == pageRange[0] + 2)
+                {
+                    seleccionPage(2);
+                }
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (actual_page + 2 <= total_page)
+            {
+                actual_page++;
+                comboBox1.Text = (actual_page + 1).ToString();
+                comboBox2.Text = (actual_page + 1).ToString();
+                pintar_imagen(1, actual_page);
+                cargarPrincipal(actual_page);
+            }
+            if (actual_page > pageRange[1])
+            {
+                seleccionPage(0);
+                pageRange[0] = actual_page;
+                pageRange[1] = pageRange[0] + 2;
+                cargarImagen0000(pageRange, total_page);
+            }
+            else
+            {
+                if (actual_page == pageRange[0])
+                {
+                    seleccionPage(0);
+                }
+                if (actual_page == pageRange[0] + 1)
+                {
+                    seleccionPage(1);
+                }
+                if (actual_page == pageRange[0] + 2)
+                {
+                    seleccionPage(2);
+                }
+            }
+        }
     }
-
     public class InputBoxResult
     {
         public DialogResult ReturnCode;
