@@ -971,9 +971,9 @@ namespace OrfeoScan_IDU_STRT
                 if (borrar == 0)
                 {
                     int paginas_nuevas = 0;
-                    if (Directory.Exists(@"D:\imgidu\work"))
+                    if (Directory.Exists(work_folder))
                     {
-                        DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                        DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                         foreach (FileInfo file in di.GetFiles())
                         {
                             if (file.Name == "0.tiff")
@@ -1025,9 +1025,9 @@ namespace OrfeoScan_IDU_STRT
                 {
                     actual_page--;
                     int paginas_nuevas = 0;
-                    if (Directory.Exists(@"D:\imgidu\work"))
+                    if (Directory.Exists(work_folder))
                     {
-                        DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                        DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                         foreach (FileInfo file in di.GetFiles())
                         {
                             if (file.Name == borrar + ".tiff")
@@ -1594,8 +1594,13 @@ namespace OrfeoScan_IDU_STRT
         }
         private void ScanOrfeo_Load(object sender, EventArgs e)
         {
-
-
+            try
+            {
+                work_folder = config.AppSettings.Settings["WORKPATH"].Value;
+            }
+            catch (Exception)
+            {
+            }
             this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
             tssl_valor_dependencia.Text = usuarioScanOrfeo.DEPE_CODI.ToString();
             tssl_valor_usuario.Text = usuarioScanOrfeo.USUA_NOMB.ToString();
@@ -2611,9 +2616,9 @@ namespace OrfeoScan_IDU_STRT
                             if (agregar_behind)
                             {
                                 //Insertar atras
-                                if (Directory.Exists(@"D:\imgidu\work"))
+                                if (Directory.Exists(work_folder))
                                 {
-                                    DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                                     foreach (FileInfo file in di.GetFiles())
                                     {
                                         string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
@@ -2670,9 +2675,9 @@ namespace OrfeoScan_IDU_STRT
                             else
                             {
                                 //Insertar Adelante
-                                if (Directory.Exists(@"D:\imgidu\work"))
+                                if (Directory.Exists(work_folder))
                                 {
-                                    DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                                     foreach (FileInfo file in di.GetFiles())
                                     {
                                         string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
@@ -2979,7 +2984,7 @@ namespace OrfeoScan_IDU_STRT
                 if (_twain.CurrentSource.Capabilities.CapUIControllable.IsSupported)//.SupportedCaps.Contains(CapabilityId.CapUIControllable))
                 {
                     // hide scanner ui if possible
-                    if (_twain.CurrentSource.Enable(SourceEnableMode.NoUI, false, this.Handle) == ReturnCode.Success)
+                    if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, false, this.Handle) == ReturnCode.Success)
                     {
                         btnStopScan.Enabled = true;
                         btnStopScan.Visible = true;
@@ -3010,27 +3015,27 @@ namespace OrfeoScan_IDU_STRT
 
             //var test = src.SupportedCaps;
 
-            if (groupDepth.Enabled = src.Capabilities.ICapPixelType.IsSupported)
-            {
-                LoadDepth(src.Capabilities.ICapPixelType);
-            }
-            if (groupDuplex.Enabled = src.Capabilities.ICapAutomaticRotate.IsSupported)
-            {
-                LoadAutoRotation(src.Capabilities.ICapAutomaticRotate);
-            }
-            if (groupDPI.Enabled = src.Capabilities.ICapXResolution.IsSupported && src.Capabilities.ICapYResolution.IsSupported)
-            {
-                LoadDPI(src.Capabilities.ICapXResolution);
-            }
+            //if (groupDepth.Enabled = src.Capabilities.ICapPixelType.IsSupported)
+            //{
+            //    LoadDepth(src.Capabilities.ICapPixelType);
+            //}
+            //if (groupDuplex.Enabled = src.Capabilities.ICapAutomaticRotate.IsSupported)
+            //{
+            //    LoadAutoRotation(src.Capabilities.ICapAutomaticRotate);
+            //}
+            //if (groupDPI.Enabled = src.Capabilities.ICapXResolution.IsSupported && src.Capabilities.ICapYResolution.IsSupported)
+            //{
+            //    LoadDPI(src.Capabilities.ICapXResolution);
+            //}
             // TODO: find out if this is how duplex works or also needs the other option
-            if (groupDuplex.Enabled = src.Capabilities.CapDuplexEnabled.IsSupported)
-            {
-                LoadDuplex(src.Capabilities.CapDuplexEnabled);
-            }
-            if (groupSize.Enabled = src.Capabilities.ICapSupportedSizes.IsSupported)
-            {
-                LoadPaperSize(src.Capabilities.ICapSupportedSizes);
-            }
+            //if (groupDuplex.Enabled = src.Capabilities.CapDuplexEnabled.IsSupported)
+            //{
+            //    LoadDuplex(src.Capabilities.CapDuplexEnabled);
+            //}
+            //if (groupSize.Enabled = src.Capabilities.ICapSupportedSizes.IsSupported)
+            //{
+            //    LoadPaperSize(src.Capabilities.ICapSupportedSizes);
+            //}
             configurarEscanerToolStripMenuItem.Enabled = src.Capabilities.CapEnableDSUIOnly.IsSupported;
             _loadingCaps = false;
         }
@@ -3408,9 +3413,9 @@ namespace OrfeoScan_IDU_STRT
         }
         private bool eliminar_work()
         {
-            if (Directory.Exists(@"D:\imgidu\work"))
+            if (Directory.Exists(work_folder))
             {
-                DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                 foreach (FileInfo file in di.GetFiles())
                 {
                     try
@@ -5147,9 +5152,9 @@ namespace OrfeoScan_IDU_STRT
                     if (agregar_behind)
                     {
                         //Insertar atras
-                        if (Directory.Exists(@"D:\imgidu\work"))
+                        if (Directory.Exists(work_folder))
                         {
-                            DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                            DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                             foreach (FileInfo file in di.GetFiles())
                             {
                                 string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
@@ -5207,9 +5212,9 @@ namespace OrfeoScan_IDU_STRT
                     else
                     {
                         //Insertar Adelante
-                        if (Directory.Exists(@"D:\imgidu\work"))
+                        if (Directory.Exists(work_folder))
                         {
-                            DirectoryInfo di = new System.IO.DirectoryInfo(@"D:\imgidu\work");
+                            DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
                             foreach (FileInfo file in di.GetFiles())
                             {
                                 string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
