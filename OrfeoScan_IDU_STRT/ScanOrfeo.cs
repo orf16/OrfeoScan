@@ -20,6 +20,7 @@ using iTextSharp.text;
 using System.Net;
 using System.Drawing.Drawing2D;
 using funciones;
+using System.Threading.Tasks;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -3467,8 +3468,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -5118,8 +5119,11 @@ namespace OrfeoScan_IDU_STRT
 
         private void button5_Click_1(object sender, EventArgs e)
         {
+            //cuando existen imagenes
             if (total_page > 0)
             {
+                #region existen
+                
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
                 dialog.InitialDirectory = @"C:\";
@@ -5285,6 +5289,7 @@ namespace OrfeoScan_IDU_STRT
                 }
                 garbage_collector();
                 //}
+                #endregion
             }
             else
             {
@@ -5305,6 +5310,16 @@ namespace OrfeoScan_IDU_STRT
                         System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
                         total_page = actualBitmap_.GetFrameCount(objDimension);
 
+                        
+                        cambio_flecha = true;
+                        comboBox1.Text = "1";
+                        comboBox2.Text = "1";
+                        pageRange[0] = 0;
+                        pageRange[1] = 2;
+                        pintar_imagen(1, 0);
+                        cambio_flecha = false;
+                        //SearchContentAsync().Wait();
+                        //cargarsync(objDimension, total_page, actualBitmap_, pageRange);
                         for (int i = 0; i < total_page; i++)
                         {
                             try
@@ -5321,23 +5336,71 @@ namespace OrfeoScan_IDU_STRT
                                 comboBox2.Items.Clear();
                                 return;
                             }
+                            if (i == 0)
+                            {
+                                cargarPrincipal(pageRange[0]);
+                                if (total_page == 1)
+                                {
+                                    cargarImagen0000(pageRange, total_page);
+                                }
+                            }
+                            if (i == 1 && total_page == 2)
+                            {
+                                cargarImagen0000(pageRange, total_page);
+                            }
+                            if (i == 2 && total_page > 2)
+                            {
+                                cargarImagen0000(pageRange, total_page);
+                            }
                         }
-                        cambio_flecha = true;
-                        comboBox1.Text = "1";
-                        comboBox2.Text = "1";
-                        pintar_imagen(1, 0);
-                        cambio_flecha = false;
                         actualBitmap_.Dispose();
-                        pageRange[0] = 0;
-                        pageRange[1] = 2;
-                        cargarImagen0000(pageRange, total_page);
-                        cargarPrincipal(pageRange[0]);
+
                         garbage_collector();
                         hide_loading_panel();
                     }
                     garbage_collector();
                 }
             }
+        }
+        private void cargarsync (FrameDimension fd, int tp, System.Drawing.Image im, int[] rng)
+        {
+            var tasks = new List<Task>();
+            for (int i = 0; i < total_page; i++)
+            {
+                try
+                {
+                    im.SelectActiveFrame(fd, i);
+                    im.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+                    //await Task.Run(() => {  });
+                    comboBox1.Items.Add(i + 1);
+                    comboBox2.Items.Add(i + 1);
+                }
+                catch (Exception)
+                {
+                    comboBox1.Items.Clear();
+                    comboBox2.Items.Clear();
+                    return;
+                }
+                if (i == 0)
+                {
+                    cargarPrincipal(rng[0]);
+                    if (total_page == 1)
+                    {
+                        cargarImagen0000(rng, total_page);
+                    }
+                }
+                if (i == 1 && total_page == 2)
+                {
+                    cargarImagen0000(rng, total_page);
+                }
+                if (i == 2 && total_page > 2)
+                {
+                    cargarImagen0000(rng, total_page);
+                }
+
+            }
+
+            im.Dispose();
         }
 
         private void button4_Click(object sender, EventArgs e)
