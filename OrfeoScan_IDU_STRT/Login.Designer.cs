@@ -121,7 +121,6 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(300, 26);
             this.txtUsuario.TabIndex = 42;
-            this.txtUsuario.Text = "caeslava2";
             // 
             // txtContraseña
             // 
@@ -133,7 +132,6 @@
             this.txtContraseña.PasswordChar = '•';
             this.txtContraseña.Size = new System.Drawing.Size(300, 26);
             this.txtContraseña.TabIndex = 43;
-            this.txtContraseña.Text = "123";
             // 
             // btn_ingresar
             // 

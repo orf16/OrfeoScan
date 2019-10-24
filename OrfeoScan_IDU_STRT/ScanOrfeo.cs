@@ -469,7 +469,7 @@ namespace OrfeoScan_IDU_STRT
             // Draw the rectangle...
             if (PageEdit.Image != null)
             {
-                if (Rect.X > 0 && Rect.Y > 0)
+                if (true)
                 {
 
                     if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
@@ -527,14 +527,17 @@ namespace OrfeoScan_IDU_STRT
         {
             actual_page = page;
             //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
-
-            using (System.Drawing.Image image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff"))
+            if (page+1 <= total_page)
             {
-                this.workingBitmap = new Bitmap(image,
-                new Size((int)((float)image.Width * zoom_), (int)((float)image.Height * zoom_)));
-                this.PageEdit.Image = workingBitmap;
-                garbage_collector();
-            } 
+                using (System.Drawing.Image image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff"))
+                {
+                    this.workingBitmap = new Bitmap(image,
+                    new Size((int)((float)image.Width * zoom_), (int)((float)image.Height * zoom_)));
+                    this.PageEdit.Image = workingBitmap;
+                    garbage_collector();
+                }
+            }
+            
         }
         private void cargarImagen0000(int[] range, int pagecount)
         {
@@ -629,32 +632,42 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page > 0)
             {
-                actual_page = pageRange[0];
-                cargarPrincipal(actual_page);
-                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
-                cambio_flecha = true;
-                comboBox1.Text = (actual_page + 1).ToString();
-                comboBox2.Text = (actual_page + 1).ToString();
-                pintar_imagen(1, actual_page);
-                cambio_flecha = false;
-                garbage_collector();
-                seleccionPage(0);
+                
+                
+                if (pageRange[0] + 1 <= total_page)
+                {
+                    actual_page = pageRange[0];
+                    cargarPrincipal(actual_page);
+                    //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                    cambio_flecha = true;
+                    comboBox1.Text = (actual_page + 1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
+                    pintar_imagen(1, actual_page);
+                    cambio_flecha = false;
+                    garbage_collector();
+                    seleccionPage(0);
+                }
             }
         }
         private void PageScreen2_Click(object sender, EventArgs e)
         {
             if (total_page > 0)
             {
-                actual_page = pageRange[0] + 1;
-                cargarPrincipal(actual_page);
-                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
-                cambio_flecha = true;
-                comboBox1.Text = (actual_page + 1).ToString();
-                comboBox2.Text = (actual_page + 1).ToString();
-                pintar_imagen(2, actual_page);
-                cambio_flecha = false;
-                garbage_collector();
-                seleccionPage(1);
+                
+                if (pageRange[0] + 2 <= total_page)
+                {
+                    actual_page = pageRange[0] + 1;
+                    cargarPrincipal(actual_page);
+                    //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                    cambio_flecha = true;
+                    comboBox1.Text = (actual_page + 1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
+                    pintar_imagen(2, actual_page);
+                    cambio_flecha = false;
+                    garbage_collector();
+                    seleccionPage(1);
+                }
+                
             }
             
         }
@@ -662,16 +675,20 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page > 0)
             {
-                actual_page = pageRange[1];
-                cargarPrincipal(actual_page);
-                //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
-                cambio_flecha = true;
-                comboBox1.Text = (actual_page + 1).ToString();
-                comboBox2.Text = (actual_page + 1).ToString();
-                pintar_imagen(3, actual_page);
-                cambio_flecha = false;
-                garbage_collector();
-                seleccionPage(2);
+                
+                if (pageRange[1] + 1 <= total_page)
+                {
+                    actual_page = pageRange[1];
+                    cargarPrincipal(actual_page);
+                    //this.PageEdit.Image = System.Drawing.Image.FromFile(work_folder + actual_page + ".tiff");
+                    cambio_flecha = true;
+                    comboBox1.Text = (actual_page + 1).ToString();
+                    comboBox2.Text = (actual_page + 1).ToString();
+                    pintar_imagen(3, actual_page);
+                    cambio_flecha = false;
+                    garbage_collector();
+                    seleccionPage(2);
+                }
             }
         }
         private void btnPrevScreen_Click(object sender, EventArgs e)
@@ -1416,7 +1433,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 return;
             }
-            if (Rect.X >= -2 && Rect.Y >= -2)
+            if (Rect.X >= -100 && Rect.Y >= -100)
             {
                 File.Copy(work_folder + actual_page + ".tiff", work_folder + actual_page + "_editor.tiff", true);
                 Bitmap actualBitmap_ = (Bitmap)System.Drawing.Image.FromFile(work_folder + actual_page + "_editor.tiff");
@@ -2413,7 +2430,7 @@ namespace OrfeoScan_IDU_STRT
             label1.Text = "";
             pan_loading.Refresh();
         }
-        public byte[] MergeTiff(List<byte[]> tiffFiles)
+        public byte[] MergeTiff()
         {
             byte[] tiffMerge = null;
             using (var msMerge = new MemoryStream())
@@ -2430,47 +2447,86 @@ namespace OrfeoScan_IDU_STRT
                 Bitmap pages = null;
                 int frame = 0;
 
-                foreach (var tiffFile in tiffFiles)
+                for (int i = 0; i < total_page; i++)
                 {
-                    using (var imageStream = new MemoryStream(tiffFile))
+                    using (System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff"))
                     {
-                        using (System.Drawing.Image tiffImage = System.Drawing.Image.FromStream(imageStream))
+                        foreach (Guid guid in tiffImage.FrameDimensionsList)
                         {
-                            foreach (Guid guid in tiffImage.FrameDimensionsList)
-                            {
-                                FrameDimension dimension = new FrameDimension(guid);
-                                int noOfPages = tiffImage.GetFrameCount(dimension);
+                            FrameDimension dimension = new FrameDimension(guid);
+                            int noOfPages = tiffImage.GetFrameCount(dimension);
 
-                                for (int index = 0; index < noOfPages; index++)
+                            for (int index = 0; index < noOfPages; index++)
+                            {
+                                FrameDimension currentFrame = new FrameDimension(guid);
+                                tiffImage.SelectActiveFrame(currentFrame, index);
+                                using (MemoryStream tempImg = new MemoryStream())
                                 {
-                                    FrameDimension currentFrame = new FrameDimension(guid);
-                                    tiffImage.SelectActiveFrame(currentFrame, index);
-                                    using (MemoryStream tempImg = new MemoryStream())
+                                    tiffImage.Save(tempImg, ImageFormat.Tiff);
                                     {
-                                        tiffImage.Save(tempImg, ImageFormat.Tiff);
+                                        if (frame == 0)
                                         {
-                                            if (frame == 0)
-                                            {
-                                                pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
-                                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
-                                                pages.Save(msMerge, ici, ep);
-                                            }
-                                            else
-                                            {
-                                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
-                                                pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
-                                            }
+                                            pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
+                                            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+                                            pages.Save(msMerge, ici, ep);
                                         }
-                                        frame++;
+                                        else
+                                        {
+                                            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                                            pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
+                                        }
                                     }
-                                    garbage_collector();
+                                    frame++;
                                 }
                                 garbage_collector();
                             }
+                            garbage_collector();
                         }
                     }
                     garbage_collector();
                 }
+
+                //foreach (var tiffFile in tiffFiles)
+                //{
+                //    using (var imageStream = new MemoryStream(tiffFile))
+                //    {
+                //        using (System.Drawing.Image tiffImage = System.Drawing.Image.FromStream(imageStream))
+                //        {
+                //            foreach (Guid guid in tiffImage.FrameDimensionsList)
+                //            {
+                //                FrameDimension dimension = new FrameDimension(guid);
+                //                int noOfPages = tiffImage.GetFrameCount(dimension);
+
+                //                for (int index = 0; index < noOfPages; index++)
+                //                {
+                //                    FrameDimension currentFrame = new FrameDimension(guid);
+                //                    tiffImage.SelectActiveFrame(currentFrame, index);
+                //                    using (MemoryStream tempImg = new MemoryStream())
+                //                    {
+                //                        tiffImage.Save(tempImg, ImageFormat.Tiff);
+                //                        {
+                //                            if (frame == 0)
+                //                            {
+                //                                pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
+                //                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+                //                                pages.Save(msMerge, ici, ep);
+                //                            }
+                //                            else
+                //                            {
+                //                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                //                                pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
+                //                            }
+                //                        }
+                //                        frame++;
+                //                    }
+                //                    garbage_collector();
+                //                }
+                //                garbage_collector();
+                //            }
+                //        }
+                //    }
+                //    garbage_collector();
+                //}
                 if (frame > 0)
                 {
                     ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.Flush);
@@ -2501,6 +2557,7 @@ namespace OrfeoScan_IDU_STRT
             base.OnHandleCreated(e);
             SetupTwain();
         }
+        private bool twain_scan = false;
         private void SetupTwain()
         {
             var appId = TWIdentity.CreateFromAssembly(DataGroups.Image, Assembly.GetEntryAssembly());
@@ -2516,7 +2573,7 @@ namespace OrfeoScan_IDU_STRT
             _twain.DataTransferred += (s, e) =>
             {
                 PlatformInfo.Current.Log.Info("Transferred data event on thread " + Thread.CurrentThread.ManagedThreadId);
-
+                twain_scan = true;
                 // example on getting ext image info
                 var infos = e.GetExtImageInfo(ExtendedImageInfo.Camera).Where(it => it.ReturnCode == ReturnCode.Success);
                 foreach (var it in infos)
@@ -2573,9 +2630,199 @@ namespace OrfeoScan_IDU_STRT
                 this.BeginInvoke(new Action(() =>
                 {
                     //Termina la accion
-                    if (total_page>0)
+                    if (twain_scan)
                     {
-                        if (Es_inicial)
+                        if (total_page > 0)
+                        {
+                            if (Es_inicial)
+                            {
+                                cambio_flecha = true;
+                                comboBox1.Text = "1";
+                                comboBox2.Text = "1";
+                                pintar_imagen(1, 0);
+                                cambio_flecha = false;
+
+                                pageRange[0] = 0;
+                                pageRange[1] = 2;
+                                cargarImagen0000(pageRange, total_page);
+                                cargarPrincipal(pageRange[0]);
+                                garbage_collector();
+
+                                btnStopScan.Enabled = false;
+                                btnStopScan.Visible = false;
+                                btnStartCapture.Enabled = true;
+                                btnStartCapture.Visible = true;
+                                LoadSourceCaps();
+                                garbage_collector();
+                            }
+                            else
+                            {
+                                PageScreen1.Image = null;
+                                PageScreen2.Image = null;
+                                PageScreen3.Image = null;
+                                PageEdit.Image = null;
+                                lblScreen1.Text = "";
+                                lblScreen2.Text = "";
+                                lblScreen3.Text = "";
+                                comboBox1.Text = "";
+                                comboBox1.Items.Clear();
+                                comboBox2.Text = "";
+                                comboBox2.Items.Clear();
+                                garbage_collector();
+                                total_page = 0;
+
+                                int paginas_nuevas = 0;
+
+                                if (agregar_behind)
+                                {
+                                    //Insertar atras
+                                    if (Directory.Exists(work_folder))
+                                    {
+                                        DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
+                                        foreach (FileInfo file in di.GetFiles())
+                                        {
+                                            string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                            int numero_pag = -1;
+                                            if (int.TryParse(woe, out numero_pag))
+                                            {
+                                                if (numero_pag >= actual_page)
+                                                {
+                                                    System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+                                                    file.Delete();
+                                                }
+                                            }
+                                        }
+
+                                        foreach (FileInfo file in di.GetFiles())
+                                        {
+                                            string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                            woe = woe.Replace("_edit", "");
+                                            int numero_pag = -1;
+                                            if (int.TryParse(woe, out numero_pag))
+                                            {
+                                                if (numero_pag >= actual_page)
+                                                {
+                                                    numero_pag += TiffCarga.Count();
+                                                    System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+                                                }
+                                                paginas_nuevas++;
+                                                total_page++;
+                                                comboBox1.Items.Add(paginas_nuevas);
+                                                comboBox2.Items.Add(paginas_nuevas);
+                                            }
+                                        }
+                                    }
+                                    int actual_page_copy = actual_page;
+                                    for (int i = 0; i < TiffCarga.Count(); i++)
+                                    {
+                                        try
+                                        {
+                                            TiffCarga[i].Save(work_folder + actual_page_copy + ".tiff");
+                                            actual_page_copy++;
+                                            total_page++;
+                                            paginas_nuevas++;
+                                            comboBox1.Items.Add(paginas_nuevas);
+                                            comboBox2.Items.Add(paginas_nuevas);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            comboBox1.Items.Clear();
+                                            comboBox2.Items.Clear();
+                                            return;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    //Insertar Adelante
+                                    if (Directory.Exists(work_folder))
+                                    {
+                                        DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
+                                        foreach (FileInfo file in di.GetFiles())
+                                        {
+                                            string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                            int numero_pag = -1;
+                                            if (int.TryParse(woe, out numero_pag))
+                                            {
+                                                if (numero_pag > actual_page)
+                                                {
+                                                    System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+                                                    file.Delete();
+                                                }
+                                            }
+                                        }
+
+                                        foreach (FileInfo file in di.GetFiles())
+                                        {
+                                            string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                                            woe = woe.Replace("_edit", "");
+                                            int numero_pag = -1;
+                                            if (int.TryParse(woe, out numero_pag))
+                                            {
+                                                if (numero_pag > actual_page)
+                                                {
+                                                    numero_pag += TiffCarga.Count();
+                                                    System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+                                                }
+                                                paginas_nuevas++;
+                                                total_page++;
+                                                comboBox1.Items.Add(paginas_nuevas);
+                                                comboBox2.Items.Add(paginas_nuevas);
+                                            }
+                                        }
+                                    }
+                                    int actual_page_copy = actual_page + 1;
+                                    for (int i = 0; i < TiffCarga.Count(); i++)
+                                    {
+                                        try
+                                        {
+                                            TiffCarga[i].Save(work_folder + actual_page_copy + ".tiff");
+                                            actual_page_copy++;
+                                            total_page++;
+                                            paginas_nuevas++;
+                                            comboBox1.Items.Add(paginas_nuevas);
+                                            comboBox2.Items.Add(paginas_nuevas);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            comboBox1.Items.Clear();
+                                            comboBox2.Items.Clear();
+                                            return;
+                                        }
+                                    }
+                                }
+
+
+
+
+
+                                cambio_flecha = true;
+                                comboBox1.Text = (actual_page + 1).ToString();
+                                comboBox2.Text = (actual_page + 1).ToString();
+                                pintar_imagen(1, actual_page);
+                                cambio_flecha = false;
+                                foreach (var item in TiffCarga)
+                                {
+                                    item.Dispose();
+                                }
+                                TiffCarga.Clear();
+                                pageRange[0] = actual_page;
+                                pageRange[1] = actual_page + 2;
+                                cargarImagen0000(pageRange, total_page);
+                                cargarPrincipal(actual_page);
+                                garbage_collector();
+
+                                btnStopScan.Enabled = false;
+                                btnStopScan.Visible = false;
+                                btnStartCapture.Enabled = true;
+                                btnStartCapture.Visible = true;
+                                LoadSourceCaps();
+                                garbage_collector();
+                            }
+
+
+                        }
+                        else
                         {
                             cambio_flecha = true;
                             comboBox1.Text = "1";
@@ -2596,195 +2843,7 @@ namespace OrfeoScan_IDU_STRT
                             LoadSourceCaps();
                             garbage_collector();
                         }
-                        else
-                        {
-                            PageScreen1.Image = null;
-                            PageScreen2.Image = null;
-                            PageScreen3.Image = null;
-                            PageEdit.Image = null;
-                            lblScreen1.Text = "";
-                            lblScreen2.Text = "";
-                            lblScreen3.Text = "";
-                            comboBox1.Text = "";
-                            comboBox1.Items.Clear();
-                            comboBox2.Text = "";
-                            comboBox2.Items.Clear();
-                            garbage_collector();
-                            total_page = 0;
-
-                            int paginas_nuevas = 0;
-
-                            if (agregar_behind)
-                            {
-                                //Insertar atras
-                                if (Directory.Exists(work_folder))
-                                {
-                                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
-                                    foreach (FileInfo file in di.GetFiles())
-                                    {
-                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                        int numero_pag = -1;
-                                        if (int.TryParse(woe, out numero_pag))
-                                        {
-                                            if (numero_pag >= actual_page)
-                                            {
-                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
-                                                file.Delete();
-                                            }
-                                        }
-                                    }
-
-                                    foreach (FileInfo file in di.GetFiles())
-                                    {
-                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                        woe = woe.Replace("_edit", "");
-                                        int numero_pag = -1;
-                                        if (int.TryParse(woe, out numero_pag))
-                                        {
-                                            if (numero_pag >= actual_page)
-                                            {
-                                                numero_pag += TiffCarga.Count();
-                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
-                                            }
-                                            paginas_nuevas++;
-                                            total_page++;
-                                            comboBox1.Items.Add(paginas_nuevas);
-                                            comboBox2.Items.Add(paginas_nuevas);
-                                        }
-                                    }
-                                }
-                                int actual_page_copy = actual_page;
-                                for (int i = 0; i < TiffCarga.Count(); i++)
-                                {
-                                    try
-                                    {
-                                        TiffCarga[i].Save(work_folder + actual_page_copy + ".tiff");
-                                        actual_page_copy++;
-                                        total_page++;
-                                        paginas_nuevas++;
-                                        comboBox1.Items.Add(paginas_nuevas);
-                                        comboBox2.Items.Add(paginas_nuevas);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        comboBox1.Items.Clear();
-                                        comboBox2.Items.Clear();
-                                        return;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //Insertar Adelante
-                                if (Directory.Exists(work_folder))
-                                {
-                                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
-                                    foreach (FileInfo file in di.GetFiles())
-                                    {
-                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                        int numero_pag = -1;
-                                        if (int.TryParse(woe, out numero_pag))
-                                        {
-                                            if (numero_pag > actual_page)
-                                            {
-                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
-                                                file.Delete();
-                                            }
-                                        }
-                                    }
-
-                                    foreach (FileInfo file in di.GetFiles())
-                                    {
-                                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                        woe = woe.Replace("_edit", "");
-                                        int numero_pag = -1;
-                                        if (int.TryParse(woe, out numero_pag))
-                                        {
-                                            if (numero_pag > actual_page)
-                                            {
-                                                numero_pag += TiffCarga.Count();
-                                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
-                                            }
-                                            paginas_nuevas++;
-                                            total_page++;
-                                            comboBox1.Items.Add(paginas_nuevas);
-                                            comboBox2.Items.Add(paginas_nuevas);
-                                        }
-                                    }
-                                }
-                                int actual_page_copy = actual_page + 1;
-                                for (int i = 0; i < TiffCarga.Count(); i++)
-                                {
-                                    try
-                                    {
-                                        TiffCarga[i].Save(work_folder + actual_page_copy + ".tiff");
-                                        actual_page_copy++;
-                                        total_page++;
-                                        paginas_nuevas++;
-                                        comboBox1.Items.Add(paginas_nuevas);
-                                        comboBox2.Items.Add(paginas_nuevas);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        comboBox1.Items.Clear();
-                                        comboBox2.Items.Clear();
-                                        return;
-                                    }
-                                }
-                            }
-
-
-
-
-
-                            cambio_flecha = true;
-                            comboBox1.Text = (actual_page + 1).ToString();
-                            comboBox2.Text = (actual_page + 1).ToString();
-                            pintar_imagen(1, actual_page);
-                            cambio_flecha = false;
-                            foreach (var item in TiffCarga)
-                            {
-                                item.Dispose();
-                            }
-                            TiffCarga.Clear();
-                            pageRange[0] = actual_page;
-                            pageRange[1] = actual_page + 2;
-                            cargarImagen0000(pageRange, total_page);
-                            cargarPrincipal(actual_page);
-                            garbage_collector();
-
-                            btnStopScan.Enabled = false;
-                            btnStopScan.Visible = false;
-                            btnStartCapture.Enabled = true;
-                            btnStartCapture.Visible = true;
-                            LoadSourceCaps();
-                            garbage_collector();
-                        }
-
-
                     }
-                    else
-                    {
-                        cambio_flecha = true;
-                        comboBox1.Text = "1";
-                        comboBox2.Text = "1";
-                        pintar_imagen(1, 0);
-                        cambio_flecha = false;
-
-                        pageRange[0] = 0;
-                        pageRange[1] = 2;
-                        cargarImagen0000(pageRange, total_page);
-                        cargarPrincipal(pageRange[0]);
-                        garbage_collector();
-
-                        btnStopScan.Enabled = false;
-                        btnStopScan.Visible = false;
-                        btnStartCapture.Enabled = true;
-                        btnStartCapture.Visible = true;
-                        LoadSourceCaps();
-                        garbage_collector();
-                    }
-
                     //if (dataGridView1.Rows.Count>0)
                     //{
                     //    if (dataGridView1.CurrentRow.Cells[2].Value != null)
@@ -2830,8 +2889,6 @@ namespace OrfeoScan_IDU_STRT
                     //        }
                     //    }
                     //}
-
-                    
                 }));
             };
             _twain.TransferReady += (s, e) =>
@@ -2927,7 +2984,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
-
+            twain_scan = true;
             adicionar_scan = -1;
 
             if (total_page > 0)
@@ -3520,8 +3577,6 @@ namespace OrfeoScan_IDU_STRT
                         #region ImagenPrincipal
                         if (EsAnexo == -1 && rad_exp == 1)
                         {
-                            
-                            
                             codTTR = 22;
                             ObservacioneS = " (" + NumeroDeHojas.ToString() + " Paginas)";
 
@@ -3642,7 +3697,7 @@ namespace OrfeoScan_IDU_STRT
                                 else
                                 {
                                     
-                                    if (!guardarTiffActual(archivo_enviar))
+                                    if (!guardarTiffActual_enviar(archivo_enviar))
                                     {
                                         return;
                                     }
@@ -3788,13 +3843,49 @@ namespace OrfeoScan_IDU_STRT
 
                             string imagenf = "";
                             string dirserver = "";
-                            string nombrearchivo = numero_documento + "_" + anex_codigo.ToString().PadLeft(5, '0') + ".pdf";
 
-                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
+                            if (enviarTiffToolStripMenuItem.Checked)
+                            {
+                                extension = ".tiff";
+                                epath = ConfigurationManager.AppSettings["DPATH"];
+                                resend = "Una operación anterior fallo, desea enviar el ultimo archivo nuevamente";
+                            }
+
+
+                            //string nombrearchivo = numero_documento + extension;
+                            ////int numHojasDigitalizadas = (NumeroDeHojas - numInicialHojas);
+
+                            ////lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
+                            //imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + extension;
+                            //string imagenf1 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".tiff";
+                            //string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + extension;
+                            //string imagenf3 = servidor + imagenf;
+                            //dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
+
+                            //string archivo_enviar = epath + imagenf2;
+
+
+
+
+                            string nombrearchivo = numero_documento + extension;
+
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
 
-                            string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
+                            string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
                             string imagenf3 = servidor + imagenf;
+                            string archivo_enviar = epath + imagenf2;
+
+
+                            //if (enviarTiffToolStripMenuItem.Checked)
+                            //{
+
+                            //}
+                            //else
+                            //{
+
+                            //}
+
 
                             if (crearPdf_1(ConfigurationManager.AppSettings["EPATH"] + imagenf2))
                             {
@@ -4584,7 +4675,7 @@ namespace OrfeoScan_IDU_STRT
                                     funciones.desconectar(con);
                                 }
 
-                                IISQL = "Select par_serv_nombre from radicado r, par_serv_servicios p where p.par_serv_secue = r.par_serv_secue and r.radi_nume_radi = " + numero_documento;
+                                IISQL = "SELECT  PQRS.VERIFICAR_TIPO_REQUERIMIENTO(r.RADI_NUME_RADI, 2) from   radicado r where r.RADI_NUME_RADI =" + numero_documento;
                                 con = new OracleConnection(funciones.conni);
                                 try
                                 {
@@ -4655,21 +4746,33 @@ namespace OrfeoScan_IDU_STRT
                                 anex_desc = anex_desc.Replace(System.Environment.NewLine, " ");
 
                                 etiquetas etiquetas = new etiquetas();
-                                etiquetas.LINEA1 = "No. " + numero_documento + " de "+ fechaRad;
+                                etiquetas.LINEA1 = "No. " + numero_documento + " de " + fechaRad;
                                 etiquetas.LINEA2 = "Remite: " + tipo_rem;
                                 etiquetas.LINEA3 = "Dep.: " + nombre_dep;
                                 etiquetas.LINEA4 = "Anexos: " + anex_desc;
-                                etiquetas.LINEA5 = "Novedad: " + novedad;
+                                if (!string.IsNullOrEmpty(novedad))
+                                {
+                                    string[] words = novedad.Split('/');
+                                    if (words.Length == 0)
+                                    {
+                                        etiquetas.LINEA5 = "Tr: " + novedad;
+                                    }
+                                    else
+                                    {
+                                        etiquetas.LINEA5 = "Tr: " + words[0];
+                                    }
+                                }
+                                //etiquetas.LINEA5 = "Tr: " + novedad;
 
                                 ListaEtiquetas.Add(etiquetas);
                             }
                             else if (tipo == "EXPEDIENTE")
                             {
-                                
+
                             }
                         }
                     }
-                    if (ListaEtiquetas.Count>0)
+                    if (ListaEtiquetas.Count > 0)
                         print();
                 }
                 #endregion
@@ -4680,30 +4783,89 @@ namespace OrfeoScan_IDU_STRT
                 if (dataGridView1.Rows.Count > 0)
                 {
 
-                        string tipo = "";
-                        string numero_documento = "";
-                        string tipo_rem = "";
-                        string fecha = "";
-                        string dependencia = "";
-                        int OEM = 0;
-                        int ESP = 0;
-                        int CIU = 0;
-                        string FUN = "";
-                        string remitente = "";
-                        string nombre_dep = "";
-                        string anex_desc = "";
-                        string novedad = "";
+                    string tipo = "";
+                    string numero_documento = "";
+                    string tipo_rem = "";
+                    string fecha = "";
+                    string dependencia = "";
+                    int OEM = 0;
+                    int ESP = 0;
+                    int CIU = 0;
+                    string FUN = "";
+                    string remitente = "";
+                    string nombre_dep = "";
+                    string anex_desc = "";
+                    string novedad = "";
 
-                        if (dataGridView1.CurrentRow.Cells[0].Value != null)
-                            tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-                        if (dataGridView1.CurrentRow.Cells[2].Value != null)
-                            numero_documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                    if (dataGridView1.CurrentRow.Cells[0].Value != null)
+                        tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                    if (dataGridView1.CurrentRow.Cells[2].Value != null)
+                        numero_documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
 
-                        if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(numero_documento))
+                    if (!string.IsNullOrEmpty(tipo) && !string.IsNullOrEmpty(numero_documento))
+                    {
+                        string IISQL = "Select a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,a.SGD_DOC_FUN, r.RADI_DESC_ANEX from sgd_dir_drecciones a, radicado r where a.radi_nume_radi=r.radi_nume_radi and a.radi_nume_radi=" + numero_documento;
+                        IISQL = IISQL + " ORDER BY SGD_DIR_TIPO  ";
+                        OracleConnection con = new OracleConnection(funciones.conni);
+                        try
                         {
-                            string IISQL = "Select a.SGD_CIU_CODIGO,a.SGD_ESP_CODI,a.SGD_OEM_CODIGO,a.SGD_DOC_FUN, r.RADI_DESC_ANEX from sgd_dir_drecciones a, radicado r where a.radi_nume_radi=r.radi_nume_radi and a.radi_nume_radi=" + numero_documento;
-                            IISQL = IISQL + " ORDER BY SGD_DIR_TIPO  ";
-                            OracleConnection con = new OracleConnection(funciones.conni);
+                            con.Open();
+                            OracleCommand command = new OracleCommand(IISQL, con);
+                            OracleDataReader reader = command.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                if (int.TryParse(reader[0].ToString(), out CIU))
+                                    FUN = "";
+                                if (int.TryParse(reader[1].ToString(), out ESP))
+                                    FUN = "";
+                                if (int.TryParse(reader[2].ToString(), out OEM))
+                                    FUN = "";
+                                if (reader[3] != null)
+                                {
+                                    FUN = reader[3].ToString();
+                                }
+                                if (reader[4] != null)
+                                {
+                                    anex_desc = reader[4].ToString();
+                                }
+                                funciones.desconectar(con);
+                            }
+                            else
+                                funciones.desconectar(con);
+                        }
+                        catch (Exception)
+                        {
+                            funciones.desconectar(con);
+                        }
+                        if (tipo == "RADICADO")
+                        {
+                            if (dataGridView1.CurrentRow.Cells[3].Value != null)
+                                fecha = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+                            if (dataGridView1.CurrentRow.Cells[5].Value != null)
+                                dependencia = dataGridView1.CurrentRow.Cells[5].Value.ToString();
+
+                            if (OEM > 0)
+                            {
+                                IISQL = "Select a.sgd_oem_oempresa REMITENTE from SGD_OEM_OEMPRESAS a where a.SGD_OEM_CODIGO=" + OEM.ToString();
+                                tipo_rem += "(OEM) ";
+                            }
+                            if (CIU > 0)
+                            {
+                                IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
+                                tipo_rem += "(CIU) ";
+                            }
+                            if (ESP > 0)
+                            {
+                                IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
+                                tipo_rem += "(ESP) ";
+                            }
+                            if (FUN != string.Empty)
+                            {
+                                IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
+                                tipo_rem += "(FUN) ";
+                            }
+
+                            con = new OracleConnection(funciones.conni);
                             try
                             {
                                 con.Open();
@@ -4711,20 +4873,8 @@ namespace OrfeoScan_IDU_STRT
                                 OracleDataReader reader = command.ExecuteReader();
                                 if (reader.Read())
                                 {
-                                    if (int.TryParse(reader[0].ToString(), out CIU))
-                                        FUN = "";
-                                    if (int.TryParse(reader[1].ToString(), out ESP))
-                                        FUN = "";
-                                    if (int.TryParse(reader[2].ToString(), out OEM))
-                                        FUN = "";
-                                    if (reader[3] != null)
-                                    {
-                                        FUN = reader[3].ToString();
-                                    }
-                                    if (reader[4] != null)
-                                    {
-                                        anex_desc = reader[4].ToString();
-                                    }
+                                    if (reader[0] != null)
+                                        remitente = reader[0].ToString();
                                     funciones.desconectar(con);
                                 }
                                 else
@@ -4734,130 +4884,94 @@ namespace OrfeoScan_IDU_STRT
                             {
                                 funciones.desconectar(con);
                             }
-                            if (tipo == "RADICADO")
+
+                            IISQL = "SELECT  PQRS.VERIFICAR_TIPO_REQUERIMIENTO(r.RADI_NUME_RADI, 2) from   radicado r where r.RADI_NUME_RADI =" + numero_documento;
+                            con = new OracleConnection(funciones.conni);
+                            try
                             {
-                                if (dataGridView1.CurrentRow.Cells[3].Value != null)
-                                    fecha = dataGridView1.CurrentRow.Cells[3].Value.ToString();
-                                if (dataGridView1.CurrentRow.Cells[5].Value != null)
-                                    dependencia = dataGridView1.CurrentRow.Cells[5].Value.ToString();
-
-                                if (OEM > 0)
+                                con.Open();
+                                OracleCommand command = new OracleCommand(IISQL, con);
+                                OracleDataReader reader = command.ExecuteReader();
+                                if (reader.Read())
                                 {
-                                    IISQL = "Select a.sgd_oem_oempresa REMITENTE from SGD_OEM_OEMPRESAS a where a.SGD_OEM_CODIGO=" + OEM.ToString();
-                                    tipo_rem += "(OEM) ";
-                                }
-                                if (CIU > 0)
-                                {
-                                    IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
-                                    tipo_rem += "(CIU) ";
-                                }
-                                if (ESP > 0)
-                                {
-                                    IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
-                                    tipo_rem += "(ESP) ";
-                                }
-                                if (FUN != string.Empty)
-                                {
-                                    IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
-                                    tipo_rem += "(FUN) ";
-                                }
-
-                                con = new OracleConnection(funciones.conni);
-                                try
-                                {
-                                    con.Open();
-                                    OracleCommand command = new OracleCommand(IISQL, con);
-                                    OracleDataReader reader = command.ExecuteReader();
-                                    if (reader.Read())
-                                    {
-                                        if (reader[0] != null)
-                                            remitente = reader[0].ToString();
-                                        funciones.desconectar(con);
-                                    }
-                                    else
-                                        funciones.desconectar(con);
-                                }
-                                catch (Exception)
-                                {
+                                    if (reader[0] != null)
+                                        novedad = reader[0].ToString();
                                     funciones.desconectar(con);
                                 }
-
-                                IISQL = "Select par_serv_nombre from radicado r, par_serv_servicios p where p.par_serv_secue = r.par_serv_secue and r.radi_nume_radi = " + numero_documento;
-                                con = new OracleConnection(funciones.conni);
-                                try
-                                {
-                                    con.Open();
-                                    OracleCommand command = new OracleCommand(IISQL, con);
-                                    OracleDataReader reader = command.ExecuteReader();
-                                    if (reader.Read())
-                                    {
-                                        if (reader[0] != null)
-                                            novedad = reader[0].ToString();
-                                        funciones.desconectar(con);
-                                    }
-                                    else
-                                        funciones.desconectar(con);
-                                }
-                                catch (Exception)
-                                {
-                                    funciones.desconectar(con);
-                                }
-
-                                IISQL = "SELECT DEPE_NOMB FROM dependencia where DEPE_CODI=" + dependencia;
-                                con = new OracleConnection(funciones.conni);
-                                try
-                                {
-                                    con.Open();
-                                    OracleCommand command = new OracleCommand(IISQL, con);
-                                    OracleDataReader reader = command.ExecuteReader();
-                                    if (reader.Read())
-                                    {
-                                        if (reader[0] != null)
-                                            nombre_dep = reader[0].ToString();
-                                        funciones.desconectar(con);
-                                    }
-                                    else
-                                        funciones.desconectar(con);
-                                }
-                                catch (Exception)
-                                {
-                                    funciones.desconectar(con);
-                                }
-
-                                string fechaRad = string.Format(fecha, "dd/mm/yyyy hh:mm AMPM");
-                                tipo_rem += remitente;
-                                codbarras_private = generarCodigoBarras_sinver(numero_documento);
-
-                                tipo_rem = tipo_rem.Replace("DIRECCION", "DIR");
-                                tipo_rem = tipo_rem.Replace("DEPENDENCIA", "DEP");
-                                tipo_rem = tipo_rem.Replace("OFICINA", "OFIC");
-                                tipo_rem = tipo_rem.Replace("SUPERINTENDENCIA", "SUP");
-
-                                nombre_dep = nombre_dep.Replace("DIRECCION", "DIR");
-                                nombre_dep = nombre_dep.Replace("DEPENDENCIA", "DEP");
-                                nombre_dep = nombre_dep.Replace("OFICINA", "OFIC");
-                                nombre_dep = nombre_dep.Replace("SUPERINTENDENCIA", "SUP");
-
-                                if (anex_desc.Length >= 58)
-                                    anex_desc = anex_desc.Substring(0, 58);
                                 else
-                                    anex_desc = anex_desc.Substring(0, anex_desc.Length);
-                                anex_desc = anex_desc.Replace(System.Environment.NewLine, " ");
-
-                                etiquetas etiquetas = new etiquetas();
-                                etiquetas.LINEA1 = "No. " + numero_documento + " de " + fechaRad;
-                                etiquetas.LINEA2 = "Remite: " + tipo_rem;
-                                etiquetas.LINEA3 = "Dep.: " + nombre_dep;
-                                etiquetas.LINEA4 = "Anexos: " + anex_desc;
-                                etiquetas.LINEA5 = "Novedad: " + novedad;
-
-                                ListaEtiquetas.Add(etiquetas);
+                                    funciones.desconectar(con);
                             }
-                            else if (tipo == "EXPEDIENTE")
+                            catch (Exception)
                             {
-
+                                funciones.desconectar(con);
                             }
-                        
+
+                            IISQL = "SELECT DEPE_NOMB FROM dependencia where DEPE_CODI=" + dependencia;
+                            con = new OracleConnection(funciones.conni);
+                            try
+                            {
+                                con.Open();
+                                OracleCommand command = new OracleCommand(IISQL, con);
+                                OracleDataReader reader = command.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    if (reader[0] != null)
+                                        nombre_dep = reader[0].ToString();
+                                    funciones.desconectar(con);
+                                }
+                                else
+                                    funciones.desconectar(con);
+                            }
+                            catch (Exception)
+                            {
+                                funciones.desconectar(con);
+                            }
+
+                            string fechaRad = string.Format(fecha, "dd/mm/yyyy hh:mm AMPM");
+                            tipo_rem += remitente;
+                            codbarras_private = generarCodigoBarras_sinver(numero_documento);
+
+                            tipo_rem = tipo_rem.Replace("DIRECCION", "DIR");
+                            tipo_rem = tipo_rem.Replace("DEPENDENCIA", "DEP");
+                            tipo_rem = tipo_rem.Replace("OFICINA", "OFIC");
+                            tipo_rem = tipo_rem.Replace("SUPERINTENDENCIA", "SUP");
+
+                            nombre_dep = nombre_dep.Replace("DIRECCION", "DIR");
+                            nombre_dep = nombre_dep.Replace("DEPENDENCIA", "DEP");
+                            nombre_dep = nombre_dep.Replace("OFICINA", "OFIC");
+                            nombre_dep = nombre_dep.Replace("SUPERINTENDENCIA", "SUP");
+
+                            if (anex_desc.Length >= 58)
+                                anex_desc = anex_desc.Substring(0, 58);
+                            else
+                                anex_desc = anex_desc.Substring(0, anex_desc.Length);
+                            anex_desc = anex_desc.Replace(System.Environment.NewLine, " ");
+
+                            etiquetas etiquetas = new etiquetas();
+                            etiquetas.LINEA1 = "No. " + numero_documento + " de " + fechaRad;
+                            etiquetas.LINEA2 = "Remite: " + tipo_rem;
+                            etiquetas.LINEA3 = "Dep.: " + nombre_dep;
+                            etiquetas.LINEA4 = "Anexos: " + anex_desc;
+
+                            if (!string.IsNullOrEmpty(novedad))
+                            {
+                                string[] words = novedad.Split('/');
+                                if (words.Length==0)
+                                {
+                                    etiquetas.LINEA5 = "Tr: " + novedad;
+                                }
+                                else
+                                {
+                                    etiquetas.LINEA5 = "Tr: " + words[0];
+                                }
+                            }
+                            ListaEtiquetas.Add(etiquetas);
+                        }
+                        else if (tipo == "EXPEDIENTE")
+                        {
+
+                        }
+
                     }
                     if (ListaEtiquetas.Count > 0)
                         print();
@@ -5071,23 +5185,32 @@ namespace OrfeoScan_IDU_STRT
             if (total_page>0)
             {
                 show_loading_panel(600, 177, 359, 20, "Guardando Imagen, por favor espere");
-                System.Drawing.Image actualBitmap_;
-                List<byte[]> li = new List<byte[]>();
-                for (int i = 0; i < total_page; i++)
-                {
-                    actualBitmap_ = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff");
-                    li.Add(ImageToByte(actualBitmap_));
-                    garbage_collector();
-                }
-                var bite = MergeTiff(li);
+                System.Drawing.Image actualBitmap_ = null;
+                //List<byte[]> li = new List<byte[]>();
+                //for (int i = 0; i < total_page; i++)
+                //{
+                //    actualBitmap_ = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff");
+                //    li.Add(ImageToByte(actualBitmap_));
+                //    garbage_collector();
+                //}
+                var bite = MergeTiff();
                 System.IO.File.WriteAllBytes(path, bite);
                 MessageBox.Show("Imagen Guardada");
                 hide_loading_panel();
+                try
+                {
+                    actualBitmap_.Dispose();
+                }
+                catch (Exception)
+                {
+
+                }
             }
             else
             {
                 MessageBox.Show("No hay una colección de imagenes para guardar");
             }
+            
             ////int i = 0;
             //try
             //{
@@ -5116,7 +5239,38 @@ namespace OrfeoScan_IDU_STRT
             //}
             return true;
         }
+        private bool guardarTiffActual_enviar(string path)
+        {
+            try
+            {
+                if (total_page > 0)
+                {
+                    show_loading_panel(600, 177, 359, 20, "Guardando Imagen...");
+                    System.Drawing.Image actualBitmap_ = null;
+                    var bite = MergeTiff();
+                    System.IO.File.WriteAllBytes(path, bite);
+                    hide_loading_panel();
+                    try
+                    {
+                        actualBitmap_.Dispose();
+                    }
+                    catch (Exception)
+                    {
 
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No hay una colección de imagenes para guardar");
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
         private void button5_Click_1(object sender, EventArgs e)
         {
             //cuando existen imagenes
