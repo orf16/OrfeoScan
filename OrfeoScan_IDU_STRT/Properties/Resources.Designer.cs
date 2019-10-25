@@ -113,6 +113,16 @@ namespace OrfeoScan_IDU_STRT.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_pdf_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_pdf_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_remove_property_30 {
             get {
                 object obj = ResourceManager.GetObject("icons8_remove_property_30", resourceCulture);

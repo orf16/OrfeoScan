@@ -632,8 +632,6 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page > 0)
             {
-                
-                
                 if (pageRange[0] + 1 <= total_page)
                 {
                     actual_page = pageRange[0];
@@ -967,6 +965,7 @@ namespace OrfeoScan_IDU_STRT
             lblScreen2.BackColor = System.Drawing.Color.Goldenrod;
             lblScreen3.BackColor = System.Drawing.Color.Goldenrod;
             editadas.Clear();
+            label28.Text = "";
             Es_inicial = true;
         }
         private void button17_Click(object sender, EventArgs e)
@@ -1027,6 +1026,7 @@ namespace OrfeoScan_IDU_STRT
                         }
                     }
                     total_page = paginas_nuevas;
+                    label28.Text = total_page + " Páginas";
                     cambio_flecha = true;
                     comboBox1.Text = "1";
                     comboBox2.Text = "1";
@@ -1082,6 +1082,7 @@ namespace OrfeoScan_IDU_STRT
                             }
                         }
                         total_page = paginas_nuevas;
+                        label28.Text = total_page + " Páginas";
                         cambio_flecha = true;
                         comboBox1.Text = (actual_page+1).ToString();
                         comboBox2.Text = (actual_page + 1).ToString();
@@ -1368,6 +1369,7 @@ namespace OrfeoScan_IDU_STRT
                             pageRange[0] = 0;
                             pageRange[1] = 2;
                             cargarImagen0000(pageRange, total_page);
+                            label28.Text = total_page + " Páginas";
                             cargarPrincipal(pageRange[0]);
                             garbage_collector();
                         }
@@ -1419,6 +1421,7 @@ namespace OrfeoScan_IDU_STRT
                         pageRange[0] = 0;
                         pageRange[1] = 2;
                         cargarImagen0000(pageRange, total_page);
+                        label28.Text = total_page + " Páginas";
                         cargarPrincipal(pageRange[0]);
                         garbage_collector();
                     }
@@ -2601,6 +2604,7 @@ namespace OrfeoScan_IDU_STRT
                                 image.Save(work_folder + (total_page - 1).ToString() + ".tiff");
                                 comboBox1.Items.Add(total_page.ToString());
                                 comboBox2.Items.Add(total_page.ToString());
+                                label28.Text = total_page + " Páginas";
                                 garbage_collector();
                             }
                         }
@@ -2645,6 +2649,7 @@ namespace OrfeoScan_IDU_STRT
                                 pageRange[0] = 0;
                                 pageRange[1] = 2;
                                 cargarImagen0000(pageRange, total_page);
+                                label28.Text = total_page + " Páginas";
                                 cargarPrincipal(pageRange[0]);
                                 garbage_collector();
 
@@ -2668,6 +2673,7 @@ namespace OrfeoScan_IDU_STRT
                                 comboBox1.Items.Clear();
                                 comboBox2.Text = "";
                                 comboBox2.Items.Clear();
+                                label28.Text = "";
                                 garbage_collector();
                                 total_page = 0;
 
@@ -2711,6 +2717,7 @@ namespace OrfeoScan_IDU_STRT
                                                 comboBox2.Items.Add(paginas_nuevas);
                                             }
                                         }
+                                        label28.Text = total_page + " Páginas";
                                     }
                                     int actual_page_copy = actual_page;
                                     for (int i = 0; i < TiffCarga.Count(); i++)
@@ -2731,6 +2738,7 @@ namespace OrfeoScan_IDU_STRT
                                             return;
                                         }
                                     }
+                                    label28.Text = total_page + " Páginas";
                                 }
                                 else
                                 {
@@ -2770,6 +2778,7 @@ namespace OrfeoScan_IDU_STRT
                                                 comboBox2.Items.Add(paginas_nuevas);
                                             }
                                         }
+                                        label28.Text = total_page + " Páginas";
                                     }
                                     int actual_page_copy = actual_page + 1;
                                     for (int i = 0; i < TiffCarga.Count(); i++)
@@ -2790,6 +2799,7 @@ namespace OrfeoScan_IDU_STRT
                                             return;
                                         }
                                     }
+                                    label28.Text = total_page + " Páginas";
                                 }
 
 
@@ -2799,6 +2809,7 @@ namespace OrfeoScan_IDU_STRT
                                 cambio_flecha = true;
                                 comboBox1.Text = (actual_page + 1).ToString();
                                 comboBox2.Text = (actual_page + 1).ToString();
+                                label28.Text = total_page + " Páginas";
                                 pintar_imagen(1, actual_page);
                                 cambio_flecha = false;
                                 foreach (var item in TiffCarga)
@@ -2833,6 +2844,7 @@ namespace OrfeoScan_IDU_STRT
                             pageRange[0] = 0;
                             pageRange[1] = 2;
                             cargarImagen0000(pageRange, total_page);
+                            label28.Text = total_page + " Páginas";
                             cargarPrincipal(pageRange[0]);
                             garbage_collector();
 
@@ -3499,11 +3511,11 @@ namespace OrfeoScan_IDU_STRT
         {
             //tiene que tener una fila seleccionada
 
-            if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
-            {
-                MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
-                return;
-            }
+            //if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
+            //{
+            //    MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
+            //    return;
+            //}
 
 
             if (dataGridView1.Rows.Count > 0)
@@ -3654,7 +3666,7 @@ namespace OrfeoScan_IDU_STRT
                             string dirserver = "";
                             if (enviarTiffToolStripMenuItem.Checked)
                             {
-                                extension = ".tiff";
+                                extension = ".tif";
                                 epath = ConfigurationManager.AppSettings["DPATH"];
                                 resend = "Una operación anterior fallo, desea enviar el ultimo archivo nuevamente";
                             }
@@ -3663,7 +3675,7 @@ namespace OrfeoScan_IDU_STRT
 
                             //lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
                             imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + extension;
-                            string imagenf1 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".tiff";
+                            string imagenf1 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".tif";
                             string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + extension;
                             string imagenf3 = servidor + imagenf;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
@@ -3846,10 +3858,19 @@ namespace OrfeoScan_IDU_STRT
 
                             if (enviarTiffToolStripMenuItem.Checked)
                             {
-                                extension = ".tiff";
+                                extension = ".tif";
                                 epath = ConfigurationManager.AppSettings["DPATH"];
                                 resend = "Una operación anterior fallo, desea enviar el ultimo archivo nuevamente";
                             }
+
+                            string nombrearchivo = numero_documento + "_" + anex_codigo.ToString().PadLeft(5, '0') + extension;
+
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
+                            dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
+
+                            string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
+                            string imagenf3 = servidor + imagenf;
+
 
 
                             //string nombrearchivo = numero_documento + extension;
@@ -3864,40 +3885,52 @@ namespace OrfeoScan_IDU_STRT
 
                             //string archivo_enviar = epath + imagenf2;
 
-
-
-
-                            string nombrearchivo = numero_documento + extension;
-
-                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
-                            dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
-
-                            string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
-                            string imagenf3 = servidor + imagenf;
                             string archivo_enviar = epath + imagenf2;
 
-
-                            //if (enviarTiffToolStripMenuItem.Checked)
-                            //{
-
-                            //}
-                            //else
-                            //{
-
-                            //}
-
-
-                            if (crearPdf_1(ConfigurationManager.AppSettings["EPATH"] + imagenf2))
+                            bool conversion = false;
+                            if (path_recycle.Contains(numero_documento))
                             {
-                                FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
-                                if (IsFileLocked(fi))
+                                if (File.Exists(path_recycle))
                                 {
-                                    MessageBox.Show("El pdf a convertir esta aun en uso, por favor vuelva a intentar");
-                                    return;
+                                    var confirmResult = MessageBox.Show(resend,
+                                                     "Confirmación de reenvio",
+                                                     MessageBoxButtons.YesNo);
+                                    if (confirmResult == DialogResult.Yes)
+                                    {
+                                        archivo_enviar = path_recycle;
+                                        conversion = true;
+                                    }
                                 }
-                                if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
+                            }
+
+                            if (!conversion)
+                            {
+                                if (!enviarTiffToolStripMenuItem.Checked)
                                 {
-                                    long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
+                                    if (!crearPdf_1(archivo_enviar))
+                                    {
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!guardarTiffActual_enviar(archivo_enviar))
+                                    {
+                                        return;
+                                    }
+                                }
+                            }
+
+                            FileInfo fi = new FileInfo(archivo_enviar);
+                            if (IsFileLocked(fi))
+                            {
+                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar");
+                                return;
+                            }
+
+                                if (sendFile(archivo_enviar, imagenf3, ""))
+                                {
+                                    long length = new System.IO.FileInfo(archivo_enviar).Length;
                                     length = length / 1024;
                                     string IISQL = "insert into anexos";
                                     IISQL = IISQL + "        (sgd_rem_destino,anex_radi_nume ,anex_codigo ,anex_tipo,anex_tamano ,anex_solo_lect,anex_creador ,anex_desc ,anex_numero ,anex_nomb_archivo ,anex_borrado,anex_salida ,sgd_dir_tipo,anex_depe_creador,sgd_tpr_codigo ,anex_fech_anex)";
@@ -3958,6 +3991,13 @@ namespace OrfeoScan_IDU_STRT
                                         return;
                                     }
                                 }
+                            else
+                            {
+                                if (!conversion)
+                                {
+                                    path_recycle = epath + imagenf2;
+                                }
+                                return;
                             }
                         }
                         #endregion
@@ -4028,7 +4068,7 @@ namespace OrfeoScan_IDU_STRT
                                                 {
                                                     anexo_count_file = "0" + anexo_count_file;
                                                 }
-                                                anexo_count_file += anexo_count.ToString() + ".pdf";
+                                                anexo_count_file += anexo_count.ToString();
                                             }
                                         }
                                         funciones.desconectar(con);
@@ -4047,22 +4087,74 @@ namespace OrfeoScan_IDU_STRT
                             string imagenf = "";
                             string dirserver = "";
 
-                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento +"_"+ anexo_count_file;
+                            if (enviarTiffToolStripMenuItem.Checked)
+                            {
+                                extension = ".tif";
+                                epath = ConfigurationManager.AppSettings["DPATH"];
+                                resend = "Una operación anterior fallo, desea enviar el ultimo archivo nuevamente";
+                            }
+
+                            string nombrearchivo = numero_documento + "_" + anexo_count_file + extension;
+
+                            imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento +"_"+ anexo_count_file+extension;
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
-                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + numero_documento + "_" + anexo_count_file;
+                            string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\docs\" + numero_documento + "_" + anexo_count_file + extension;
                             string imagenf3 = servidor + imagenf;
 
-                            if (crearPdf_1(ConfigurationManager.AppSettings["EPATH"] + imagenf2))
+
+                            //imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
+                            //dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/";
+
+                            //string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + numero_documento + extension;
+                            //string imagenf3 = servidor + imagenf;
+                            string archivo_enviar = epath + imagenf2;
+
+
+                            bool conversion = false;
+                            if (path_recycle.Contains(numero_documento))
                             {
-                                FileInfo fi = new FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2);
-                                if (IsFileLocked(fi))
+                                if (File.Exists(path_recycle))
                                 {
-                                    MessageBox.Show("El pdf a convertir esta aun en uso, por favor vuelva a intentar");
-                                    return;
+                                    var confirmResult = MessageBox.Show(resend,
+                                                     "Confirmación de reenvio",
+                                                     MessageBoxButtons.YesNo);
+                                    if (confirmResult == DialogResult.Yes)
+                                    {
+                                        archivo_enviar = path_recycle;
+                                        conversion = true;
+                                    }
                                 }
-                                if (sendFile(ConfigurationManager.AppSettings["EPATH"] + imagenf2, imagenf3, ""))
+                            }
+
+                            if (!conversion)
+                            {
+                                if (!enviarTiffToolStripMenuItem.Checked)
                                 {
-                                    long length = new System.IO.FileInfo(ConfigurationManager.AppSettings["EPATH"] + imagenf2).Length;
+                                    if (!crearPdf_1(archivo_enviar))
+                                    {
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!guardarTiffActual_enviar(archivo_enviar))
+                                    {
+                                        return;
+                                    }
+                                }
+                            }
+
+                            FileInfo fi = new FileInfo(archivo_enviar);
+                            if (IsFileLocked(fi))
+                            {
+                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar");
+                                return;
+                            }
+
+
+                                if (sendFile(archivo_enviar, imagenf3, ""))
+                                {
+                                    long length = new System.IO.FileInfo(archivo_enviar).Length;
                                     string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
                                     ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,"+ length.ToString() + ", '" + observacion + "'";
                                     ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + NumeroDeHojas.ToString() + ")";
@@ -4118,7 +4210,6 @@ namespace OrfeoScan_IDU_STRT
                                     }
 
                                 }
-                            }
                         }
                         #endregion
                     }
@@ -5297,6 +5388,7 @@ namespace OrfeoScan_IDU_STRT
                     comboBox1.Items.Clear();
                     comboBox2.Text = "";
                     comboBox2.Items.Clear();
+                    label28.Text = "";
                     garbage_collector();
                     total_page = 0;
 
@@ -5345,6 +5437,7 @@ namespace OrfeoScan_IDU_STRT
                                     comboBox2.Items.Add(paginas_nuevas);
                                 }
                             }
+                            label28.Text = total_page + " Páginas";
                         }
                         int actual_page_copy = actual_page;
                         for (int i = 0; i < total_page_offset; i++)
@@ -5366,6 +5459,7 @@ namespace OrfeoScan_IDU_STRT
                                 return;
                             }
                         }
+                        label28.Text = total_page + " Páginas";
                     }
                     else
                     {
@@ -5405,6 +5499,7 @@ namespace OrfeoScan_IDU_STRT
                                     comboBox2.Items.Add(paginas_nuevas);
                                 }
                             }
+                            label28.Text = total_page + " Páginas";
                         }
                         int actual_page_copy = actual_page+1;
                         for (int i = 0; i < total_page_offset; i++)
@@ -5426,6 +5521,7 @@ namespace OrfeoScan_IDU_STRT
                                 return;
                             }
                         }
+                        label28.Text = total_page + " Páginas";
                     }
 
                     cambio_flecha = true;
@@ -5437,6 +5533,7 @@ namespace OrfeoScan_IDU_STRT
                     pageRange[0] = actual_page;
                     pageRange[1] = actual_page+2;
                     cargarImagen0000(pageRange, total_page);
+                    label28.Text = total_page + " Páginas";
                     cargarPrincipal(actual_page);
                     garbage_collector();
                     hide_loading_panel();
@@ -5507,6 +5604,7 @@ namespace OrfeoScan_IDU_STRT
                                 cargarImagen0000(pageRange, total_page);
                             }
                         }
+                        label28.Text = total_page + " Páginas";
                         actualBitmap_.Dispose();
 
                         garbage_collector();
@@ -5553,7 +5651,7 @@ namespace OrfeoScan_IDU_STRT
                 }
 
             }
-
+            label28.Text = total_page + " Páginas";
             im.Dispose();
         }
 
@@ -5959,6 +6057,30 @@ namespace OrfeoScan_IDU_STRT
                     seleccionPage(2);
                 }
             }
+        }
+
+        private void enviarPDFAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enviarTiffToolStripMenuItem.Checked)
+            {
+                enviarPDFAToolStripMenuItem.Checked = true;
+                enviarTiffToolStripMenuItem.Checked = false;
+            }
+            
+        }
+
+        private void enviarTiffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enviarPDFAToolStripMenuItem.Checked)
+            {
+                enviarPDFAToolStripMenuItem.Checked = false;
+                enviarTiffToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+
         }
     }
     public class InputBoxResult
