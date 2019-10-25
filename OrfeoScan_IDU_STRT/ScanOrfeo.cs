@@ -905,6 +905,7 @@ namespace OrfeoScan_IDU_STRT
             garbage_collector();
             return true;
         }
+        
         private void limpiar_imagen()
         {
             for (int i = 0; i < editor.Length; i++)
@@ -1654,6 +1655,8 @@ namespace OrfeoScan_IDU_STRT
             toolTip1.SetToolTip(this.button18, "Guardar Imagen");
             toolTip1.SetToolTip(this.button5, "Abrir Imagen desde archivo");
             toolTip1.SetToolTip(this.button28, "Descargar Archivo Desde Servidor");
+            toolTip1.SetToolTip(this.button15, "Guardar PDF");
+            
 
             toolTip1.SetToolTip(this.PageScreen1, "Seleccionar Imagen");
             toolTip1.SetToolTip(this.PageScreen2, "Seleccionar Imagen");
@@ -3511,11 +3514,15 @@ namespace OrfeoScan_IDU_STRT
         {
             //tiene que tener una fila seleccionada
 
-            //if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
-            //{
-            //    MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
-            //    return;
-            //}
+            if (false)
+            {
+                if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
+                {
+                    MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
+                    return;
+                }
+            }
+            
 
 
             if (dataGridView1.Rows.Count > 0)
@@ -5271,6 +5278,115 @@ namespace OrfeoScan_IDU_STRT
                 guardarTiffActual(nombreArchivo);
             }
         }
+        private bool crearPdf_2(string rutaFinal)
+        {
+
+            show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
+            try
+            {
+                garbage_collector();
+
+                //Crear primera pagina 
+                System.Drawing.Image bmp = System.Drawing.Image.FromFile(work_folder + 0 + ".tiff");
+                var width0 = bmp.Width;
+                var height0 = bmp.Height;
+                iTextSharp.text.Rectangle cero = new iTextSharp.text.Rectangle(width0, height0);
+
+                Document doc = new Document(cero, 0, 0, 0, 0);
+
+                doc.SetMargins(0, 0, 0, 0);
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(rutaFinal, FileMode.Create));
+                writer.PDFXConformance = PdfWriter.PDFA1B;
+                doc.Open();
+
+                PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
+                outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
+                outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
+                outi.Put(PdfName.S, PdfName.GTS_PDFA1);
+
+                //Perfiles icc
+                var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+                path = path.Replace("file:\\", "");
+                ICC_Profile icc = ICC_Profile.GetInstance(path + @"\sRGB_v4.icc");
+                PdfICCBased ib = new PdfICCBased(icc);
+                ib.Remove(PdfName.ALTERNATE);
+                outi.Put(PdfName.DESTOUTPUTPROFILE, writer.AddToBody(ib).IndirectReference);
+
+                writer.ExtraCatalog.Put(PdfName.OUTPUTINTENTS, new PdfArray(outi));
+                BaseFont bf = BaseFont.CreateFont(path + @"\arial.ttf", BaseFont.WINANSI, true);
+                iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
+
+                float subtrahend0 = doc.PageSize.Height - 10;
+
+                iTextSharp.text.Image pool0;
+                bool editada = false;
+                foreach (var item in editadas)
+                {
+                    if (item == 0)
+                        editada = true;
+                }
+                if (editada)
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                else
+                {
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                }
+
+                pool0.Alignment = 3;
+                pool0.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend0);
+                doc.Add(pool0);
+                garbage_collector();
+                //Crear las paginas
+                for (int i = 1; i < total_page; ++i)
+                {
+                    bool editada1 = false;
+                    foreach (var item in editadas)
+                    {
+                        if (item == i)
+                            editada1 = true;
+                    }
+
+                    System.Drawing.Image bmp1 = System.Drawing.Image.FromFile(work_folder + i + ".tiff");
+                    var width = bmp1.Width;
+                    var height = bmp1.Height;
+                    iTextSharp.text.Rectangle one = new iTextSharp.text.Rectangle(width, height);
+                    doc.SetPageSize(one);
+                    doc.NewPage();
+                    float subtrahend = doc.PageSize.Height - 10;
+                    iTextSharp.text.Image pool;
+
+                    if (editada1)
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
+                    else
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
+
+                    pool.Alignment = 3;
+                    pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
+                    doc.Add(pool);
+                    bmp1.Dispose();
+                    garbage_collector();
+                }
+                writer.CreateXmpMetadata();
+                doc.Close();
+                bmp.Dispose();
+                hide_loading_panel();
+            }
+            catch (Exception ex)
+            {
+                hide_loading_panel();
+                MessageBox.Show("Falla de sistema en la conversión a PDF/A");
+                if (ex.ToString().Contains("utilizado en otro proceso"))
+                {
+                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+
+                }
+                MessageBox.Show(ex.ToString());
+                garbage_collector();
+                return false;
+            }
+            garbage_collector();
+            return true;
+        }
         private bool guardarTiffActual(string path)
         {
             if (total_page>0)
@@ -6080,7 +6196,26 @@ namespace OrfeoScan_IDU_STRT
 
         private void button15_Click(object sender, EventArgs e)
         {
-
+            if (total_page>0)
+            {
+                saveFileDialog1.InitialDirectory = @"C:\";
+                saveFileDialog1.RestoreDirectory = true;
+                saveFileDialog1.Title = "Guardar PDF";
+                saveFileDialog1.DefaultExt = "pdf";
+                saveFileDialog1.Filter = "Archivos PDF (*.pdf) | *.pdf";
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string nombreArchivo = saveFileDialog1.FileName;
+                    if (crearPdf_2(nombreArchivo))
+                    {
+                        MessageBox.Show("PDF guardado");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A");
+            }
         }
     }
     public class InputBoxResult
