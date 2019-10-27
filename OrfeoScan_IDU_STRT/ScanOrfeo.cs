@@ -3296,20 +3296,22 @@ namespace OrfeoScan_IDU_STRT
                         if (anexarImagenAUnRadicadoToolStripMenuItem.Checked)
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                             label13.Visible = false;
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
+                            lblTipoEnvio.ForeColor = System.Drawing.Color.Red;
                         }
                         else
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
-                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                             label13.Visible = false;
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
+                            lblTipoEnvio.ForeColor = System.Drawing.Color.Blue;
                         }
                         if (dataGridView1.Rows[e.RowIndex].Cells[1].Value != null)
                             paginas = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
@@ -3383,11 +3385,12 @@ namespace OrfeoScan_IDU_STRT
                     else if (tipo == "EXPEDIENTE")
                     {
                         btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-                        btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                         label13.Visible = true;
                         dtFechaAnexo.Visible = true;
                         dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
+                        lblTipoEnvio.ForeColor = System.Drawing.Color.Black;
                         if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
                         if (dataGridView1.Rows[e.RowIndex].Cells[5].Value != null)
@@ -3514,7 +3517,7 @@ namespace OrfeoScan_IDU_STRT
         {
             //tiene que tener una fila seleccionada
 
-            if (false)
+            if (true)
             {
                 if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
                 {
@@ -3750,8 +3753,8 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Error al actualizar registro de ruta de radicado");
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    limpiar_informacion_radicado();
-                                    limpiar_gridview();
+                                    //limpiar_informacion_radicado();
+                                    //limpiar_gridview();
                                     hide_loading_panel();
                                     funciones.desconectar(con);
                                 }
@@ -3771,8 +3774,8 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Archivo enviado correctamente");
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    limpiar_informacion_radicado();
-                                    limpiar_gridview();
+                                    //limpiar_informacion_radicado();
+                                    //limpiar_gridview();
                                     hide_loading_panel();
                                 }
                                 catch (Exception)
@@ -3780,8 +3783,8 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Error en insertar registro historico");
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    limpiar_informacion_radicado();
-                                    limpiar_gridview();
+                                    //limpiar_informacion_radicado();
+                                    //limpiar_gridview();
                                     hide_loading_panel();
                                     funciones.desconectar(con);
                                 }
@@ -3958,8 +3961,8 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Error al insertar registro de anexo de radicado");
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                        //limpiar_gridview();
                                         funciones.desconectar(con);
                                         hide_loading_panel();
                                         return;
@@ -3981,8 +3984,8 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Archivo enviado correctamente");
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                        //limpiar_gridview();
                                         hide_loading_panel();
                                     }
                                     catch (Exception)
@@ -3992,8 +3995,8 @@ namespace OrfeoScan_IDU_STRT
                                         funciones.desconectar(con);
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                        //limpiar_gridview();
                                         hide_loading_panel();
                                         return;
                                     }
@@ -4164,7 +4167,7 @@ namespace OrfeoScan_IDU_STRT
                                     long length = new System.IO.FileInfo(archivo_enviar).Length;
                                     string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
                                     ISQL_aux = ISQL_aux + "'" + numero_documento + "'," + anexo_count + ",1,"+ length.ToString() + ", '" + observacion + "'";
-                                    ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + NumeroDeHojas.ToString() + ")";
+                                    ISQL_aux = ISQL_aux + ", '" + numero_documento + "_" + anexo_count_file+extension + "','N',TO_DATE('" + fecha_str + "', 'yyyy-mm-dd HH24:mi:ss'),TO_DATE('" + fecha_str_now + "', 'yyyy-mm-dd HH24:mi:ss'),'" + tDocumental + "'," + NumeroDeHojas.ToString() + ")";
 
                                     con = new OracleConnection(funciones.conni);
                                     try
@@ -4181,8 +4184,8 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Error al insertar registro de anexo de expediente");
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                       // limpiar_gridview();
                                         funciones.desconectar(con);
                                         hide_loading_panel();
                                     }
@@ -4201,8 +4204,8 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Archivo enviado correctamente");
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                        //limpiar_gridview();
                                         hide_loading_panel();
                                     }
                                     catch (Exception)
@@ -4210,8 +4213,8 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Error al insertar registro historico de anexo de expediente");
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        limpiar_informacion_radicado();
-                                        limpiar_gridview();
+                                        //limpiar_informacion_radicado();
+                                        //limpiar_gridview();
                                         funciones.desconectar(con);
                                         hide_loading_panel();
                                     }
@@ -4237,7 +4240,7 @@ namespace OrfeoScan_IDU_STRT
                 var request = (FtpWebRequest)WebRequest.Create(servidor);
                 request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
                 request.Method = WebRequestMethods.Ftp.GetFileSize;
-
+                request.KeepAlive = false;
                 try
                 {
                     FtpWebResponse response = (FtpWebResponse)request.GetResponse();
@@ -4314,7 +4317,7 @@ namespace OrfeoScan_IDU_STRT
                 request.Method = WebRequestMethods.Ftp.UploadFile;
                 request.UseBinary = true;
                 request.UsePassive = false;
-                request.KeepAlive = true;
+                request.KeepAlive = false;
                 request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
                 request.ConnectionGroupName = "group";
 
@@ -4340,27 +4343,11 @@ namespace OrfeoScan_IDU_STRT
                     }
                 }
 
-
-
-                FtpWebRequest requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
+                FtpWebRequest requests;
+                requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
                 requests.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                requests.KeepAlive = false;
                 requests.Method = WebRequestMethods.Ftp.GetFileSize;
-
-                //using (Stream fileStream = File.OpenRead(ruta_archivo))
-                //using (Stream ftpStream = requests.GetRequestStream())
-                //{
-                //    fileStream.CopyTo(ftpStream);
-                //}
-
-
-                //using (var client = new WebClient())
-                //{
-                //    client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
-                //    client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
-                //}
-
-
-
 
                 try
                 {
@@ -4382,6 +4369,14 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (WebException e)
             {
+                try
+                {
+                    
+                }
+                catch (Exception)
+                {
+
+                }
                 hide_loading_panel();
                 String status = ((FtpWebResponse)e.Response).StatusDescription;
                 MessageBox.Show(status);
@@ -5192,30 +5187,33 @@ namespace OrfeoScan_IDU_STRT
                         if (anexarImagenAUnRadicadoToolStripMenuItem.Checked)
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                             label13.Visible = false;
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
+                            lblTipoEnvio.ForeColor = System.Drawing.Color.Red;
                         }
                         else
                         {
                             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
-                            btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                            btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                             label13.Visible = false;
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
+                            lblTipoEnvio.ForeColor = System.Drawing.Color.Blue;
                         }
                     }
                     if (tipo == "EXPEDIENTE")
                     {
                         btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-                        btnEnviarPDF1.FlatAppearance.BorderSize = 2;
+                        btnEnviarPDF1.FlatAppearance.BorderSize = 5;
                         label13.Visible = true;
                         dtFechaAnexo.Visible = true;
                         dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
+                        lblTipoEnvio.ForeColor = System.Drawing.Color.Black;
                     }
                 }
 
@@ -5678,13 +5676,7 @@ namespace OrfeoScan_IDU_STRT
                         total_page = actualBitmap_.GetFrameCount(objDimension);
 
                         
-                        cambio_flecha = true;
-                        comboBox1.Text = "1";
-                        comboBox2.Text = "1";
-                        pageRange[0] = 0;
-                        pageRange[1] = 2;
-                        pintar_imagen(1, 0);
-                        cambio_flecha = false;
+                        
                         //SearchContentAsync().Wait();
                         //cargarsync(objDimension, total_page, actualBitmap_, pageRange);
                         for (int i = 0; i < total_page; i++)
@@ -5720,6 +5712,13 @@ namespace OrfeoScan_IDU_STRT
                                 cargarImagen0000(pageRange, total_page);
                             }
                         }
+                        cambio_flecha = true;
+                        comboBox1.Text = "1";
+                        comboBox2.Text = "1";
+                        pageRange[0] = 0;
+                        pageRange[1] = 2;
+                        pintar_imagen(1, 0);
+                        cambio_flecha = false;
                         label28.Text = total_page + " Páginas";
                         actualBitmap_.Dispose();
 
@@ -5849,17 +5848,30 @@ namespace OrfeoScan_IDU_STRT
             {
                 panel6.Dock = DockStyle.None;
                 panel4.Dock = DockStyle.None;
+
                 panel6.Location = new Point(1659, 247);
-                panel4.Location = new Point(0, 271);
                 panel6.Size = new Size(0, 0);
+
+                panel4.Location = new Point(0, 400);
                 panel4.Size = new Size(0, 0);
-                panel6.Size = new Size(1710, 247);
-                panel4.Size = new Size(1642, 723);
+
+                panel6.Size = new Size(1854, 286);
+                panel4.Size = new Size(1854, 723);
+
                 panel6.Dock = DockStyle.Top;
                 panel4.Dock = DockStyle.Bottom;
+
                 comboBox2.Visible = false;
                 button4.Visible = false;
                 button14.Visible = false;
+
+//                panel 6
+//1854; 286
+//0; 24
+
+//panel 4
+//0; 316
+//1854; 723
 
             }
             else

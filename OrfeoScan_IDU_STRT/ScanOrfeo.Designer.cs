@@ -182,8 +182,8 @@
             this.pan_loading = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblTipoEnvio = new System.Windows.Forms.Label();
             this.lbl_num_doc = new System.Windows.Forms.Label();
+            this.lblTipoEnvio = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
@@ -198,6 +198,7 @@
             this.btnNextScreen = new System.Windows.Forms.Button();
             this.btnPrevScreen = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -231,6 +232,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -246,7 +248,7 @@
             this.expedientesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1854, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -276,7 +278,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -286,7 +288,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expediente";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -295,65 +297,65 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(272, 6);
             // 
             // radicados60DíasToolStripMenuItem
             // 
             this.radicados60DíasToolStripMenuItem.Name = "radicados60DíasToolStripMenuItem";
-            this.radicados60DíasToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.radicados60DíasToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.radicados60DíasToolStripMenuItem.Text = "Ver Radicados...";
             this.radicados60DíasToolStripMenuItem.Click += new System.EventHandler(this.radicados60DíasToolStripMenuItem_Click);
             // 
             // expedientes60DiasToolStripMenuItem
             // 
             this.expedientes60DiasToolStripMenuItem.Name = "expedientes60DiasToolStripMenuItem";
-            this.expedientes60DiasToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.expedientes60DiasToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.expedientes60DiasToolStripMenuItem.Text = "Ver Expedientes...";
             this.expedientes60DiasToolStripMenuItem.Click += new System.EventHandler(this.expedientes60DiasToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(271, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(272, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(271, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -362,14 +364,14 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             this.borrarSelecciónToolStripMenuItem.Click += new System.EventHandler(this.borrarSelecciónToolStripMenuItem_Click);
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Visible = false;
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
@@ -602,7 +604,7 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             this.pQRTelefónicasToolStripMenuItem.Click += new System.EventHandler(this.pQRTelefónicasToolStripMenuItem_Click);
             // 
@@ -610,7 +612,7 @@
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             this.pQRPersonalToolStripMenuItem.Click += new System.EventHandler(this.pQRPersonalToolStripMenuItem_Click);
             // 
@@ -620,7 +622,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             this.expedientesToolStripMenuItem.Visible = false;
             // 
@@ -629,7 +631,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -637,7 +639,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // PageEdit
@@ -1021,9 +1023,9 @@
             this.tssl_valor_dependencia,
             this.tssl_label_usuario,
             this.tssl_valor_usuario});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1009);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1854, 22);
             this.statusStrip1.TabIndex = 86;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1058,9 +1060,9 @@
             this.panel4.Controls.Add(this.panel2);
             this.panel4.Controls.Add(this.panel3);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 286);
+            this.panel4.Location = new System.Drawing.Point(0, 316);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1370, 723);
+            this.panel4.Size = new System.Drawing.Size(1854, 723);
             this.panel4.TabIndex = 88;
             // 
             // numericUpDown2
@@ -1878,37 +1880,36 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblTipoEnvio);
             this.groupBox1.Controls.Add(this.lbl_num_doc);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(552, 182);
+            this.groupBox1.Location = new System.Drawing.Point(614, 187);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(869, 74);
+            this.groupBox1.Size = new System.Drawing.Size(383, 91);
             this.groupBox1.TabIndex = 86;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Información";
-            // 
-            // lblTipoEnvio
-            // 
-            this.lblTipoEnvio.AutoSize = true;
-            this.lblTipoEnvio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTipoEnvio.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lblTipoEnvio.Location = new System.Drawing.Point(450, 17);
-            this.lblTipoEnvio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTipoEnvio.Name = "lblTipoEnvio";
-            this.lblTipoEnvio.Size = new System.Drawing.Size(0, 23);
-            this.lblTipoEnvio.TabIndex = 85;
             // 
             // lbl_num_doc
             // 
             this.lbl_num_doc.AutoSize = true;
             this.lbl_num_doc.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_num_doc.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lbl_num_doc.Location = new System.Drawing.Point(4, 12);
+            this.lbl_num_doc.Location = new System.Drawing.Point(7, 22);
             this.lbl_num_doc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_num_doc.Name = "lbl_num_doc";
             this.lbl_num_doc.Size = new System.Drawing.Size(0, 29);
             this.lbl_num_doc.TabIndex = 68;
+            // 
+            // lblTipoEnvio
+            // 
+            this.lblTipoEnvio.AutoSize = true;
+            this.lblTipoEnvio.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTipoEnvio.ForeColor = System.Drawing.Color.DarkOrange;
+            this.lblTipoEnvio.Location = new System.Drawing.Point(7, 25);
+            this.lblTipoEnvio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTipoEnvio.Name = "lblTipoEnvio";
+            this.lblTipoEnvio.Size = new System.Drawing.Size(0, 23);
+            this.lblTipoEnvio.TabIndex = 85;
             // 
             // groupBox4
             // 
@@ -1922,47 +1923,49 @@
             this.groupBox4.Controls.Add(this.button28);
             this.groupBox4.Controls.Add(this.button18);
             this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(323, 183);
+            this.groupBox4.Location = new System.Drawing.Point(349, 186);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(226, 73);
+            this.groupBox4.Size = new System.Drawing.Size(259, 92);
             this.groupBox4.TabIndex = 87;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opciones de Imagen";
             // 
             // label36
             // 
-            this.label36.Location = new System.Drawing.Point(166, 51);
+            this.label36.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label36.Location = new System.Drawing.Point(160, 48);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(57, 17);
+            this.label36.Size = new System.Drawing.Size(57, 37);
             this.label36.TabIndex = 96;
             this.label36.Text = "Guardar pdf";
+            this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label35
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(116, 52);
+            this.label35.Location = new System.Drawing.Point(113, 53);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(33, 14);
+            this.label35.Size = new System.Drawing.Size(49, 37);
             this.label35.TabIndex = 95;
-            this.label35.Text = "Abrir";
+            this.label35.Text = "Abrir Imagen";
+            this.label35.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label34
             // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(56, 52);
+            this.label34.Location = new System.Drawing.Point(56, 53);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(51, 14);
+            this.label34.Size = new System.Drawing.Size(51, 37);
             this.label34.TabIndex = 94;
-            this.label34.Text = "Guardar";
+            this.label34.Text = "Guardar Tiff";
+            this.label34.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label33
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(2, 52);
+            this.label33.Location = new System.Drawing.Point(2, 53);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(48, 14);
+            this.label33.Size = new System.Drawing.Size(48, 37);
             this.label33.TabIndex = 93;
-            this.label33.Text = "Limpiar";
+            this.label33.Text = "Limpiar Imagenes";
+            this.label33.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // button15
             // 
@@ -1973,7 +1976,7 @@
             this.button15.FlatAppearance.BorderSize = 0;
             this.button15.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button15.Location = new System.Drawing.Point(173, 13);
+            this.button15.Location = new System.Drawing.Point(173, 14);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(35, 35);
             this.button15.TabIndex = 88;
@@ -1989,7 +1992,7 @@
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(117, 14);
+            this.button5.Location = new System.Drawing.Point(117, 15);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(35, 35);
             this.button5.TabIndex = 83;
@@ -2005,7 +2008,7 @@
             this.button12.FlatAppearance.BorderSize = 0;
             this.button12.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(9, 14);
+            this.button12.Location = new System.Drawing.Point(9, 15);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(35, 35);
             this.button12.TabIndex = 87;
@@ -2039,7 +2042,7 @@
             this.button18.FlatAppearance.BorderSize = 0;
             this.button18.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.Location = new System.Drawing.Point(62, 14);
+            this.button18.Location = new System.Drawing.Point(62, 15);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(35, 35);
             this.button18.TabIndex = 78;
@@ -2051,7 +2054,7 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(59, 15);
+            this.comboBox1.Location = new System.Drawing.Point(64, 17);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(70, 27);
             this.comboBox1.TabIndex = 84;
@@ -2067,7 +2070,7 @@
             this.btnNextScreen.FlatAppearance.BorderSize = 0;
             this.btnNextScreen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnNextScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNextScreen.Location = new System.Drawing.Point(138, 15);
+            this.btnNextScreen.Location = new System.Drawing.Point(143, 17);
             this.btnNextScreen.Name = "btnNextScreen";
             this.btnNextScreen.Size = new System.Drawing.Size(41, 28);
             this.btnNextScreen.TabIndex = 70;
@@ -2084,7 +2087,7 @@
             this.btnPrevScreen.FlatAppearance.BorderSize = 0;
             this.btnPrevScreen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnPrevScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrevScreen.Location = new System.Drawing.Point(7, 15);
+            this.btnPrevScreen.Location = new System.Drawing.Point(12, 17);
             this.btnPrevScreen.Name = "btnPrevScreen";
             this.btnPrevScreen.Size = new System.Drawing.Size(41, 27);
             this.btnPrevScreen.TabIndex = 69;
@@ -2093,6 +2096,7 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.groupBox7);
             this.panel6.Controls.Add(this.groupBox5);
             this.panel6.Controls.Add(this.pictureBox1);
             this.panel6.Controls.Add(this.pan_loading);
@@ -2133,8 +2137,19 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 24);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1370, 262);
+            this.panel6.Size = new System.Drawing.Size(1854, 286);
             this.panel6.TabIndex = 87;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.lblTipoEnvio);
+            this.groupBox7.ForeColor = System.Drawing.Color.White;
+            this.groupBox7.Location = new System.Drawing.Point(1003, 187);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(415, 91);
+            this.groupBox7.TabIndex = 89;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Tipo de Envío";
             // 
             // groupBox5
             // 
@@ -2147,9 +2162,9 @@
             this.groupBox5.Controls.Add(this.comboBox1);
             this.groupBox5.Controls.Add(this.btnPrevScreen);
             this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(4, 183);
+            this.groupBox5.Location = new System.Drawing.Point(3, 186);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(313, 73);
+            this.groupBox5.Size = new System.Drawing.Size(340, 92);
             this.groupBox5.TabIndex = 88;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Navegación";
@@ -2157,7 +2172,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(59, 46);
+            this.label32.Location = new System.Drawing.Point(64, 48);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(65, 14);
             this.label32.TabIndex = 92;
@@ -2166,16 +2181,16 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(212, 46);
+            this.label31.Location = new System.Drawing.Point(213, 48);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(69, 14);
+            this.label31.Size = new System.Drawing.Size(80, 14);
             this.label31.TabIndex = 91;
-            this.label31.Text = "Tot Páginas";
+            this.label31.Text = "Total Páginas";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(132, 46);
+            this.label30.Location = new System.Drawing.Point(137, 48);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(59, 14);
             this.label30.TabIndex = 90;
@@ -2184,7 +2199,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(0, 46);
+            this.label29.Location = new System.Drawing.Point(5, 48);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(51, 14);
             this.label29.TabIndex = 89;
@@ -2195,7 +2210,7 @@
             this.label28.BackColor = System.Drawing.Color.White;
             this.label28.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.ForeColor = System.Drawing.Color.DarkOrange;
-            this.label28.Location = new System.Drawing.Point(187, 16);
+            this.label28.Location = new System.Drawing.Point(199, 15);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(123, 25);
@@ -2218,7 +2233,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1387, 749);
+            this.ClientSize = new System.Drawing.Size(1854, 1061);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.statusStrip1);
@@ -2269,9 +2284,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -2457,5 +2473,6 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.GroupBox groupBox7;
     }
 }
