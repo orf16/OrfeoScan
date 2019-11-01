@@ -121,23 +121,5 @@ namespace OrfeoScan_IDU_STRT
             }
             return null;
         }
-
-        private void Login_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                btn_ingresar_Click(null, null);
-        }
-
-        private void txtUsuario_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                btn_ingresar_Click(null, null);
-        }
-
-        private void txtContraseña_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                btn_ingresar_Click(null, null);
-        }
     }
 }
