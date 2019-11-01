@@ -21,6 +21,7 @@ using System.Net;
 using System.Drawing.Drawing2D;
 using funciones;
 using System.Threading.Tasks;
+using Spire.Pdf;
 
 namespace OrfeoScan_IDU_STRT
 {
@@ -102,6 +103,7 @@ namespace OrfeoScan_IDU_STRT
         private string temp_radicado = "";
         private string temp_expediente = "";
 
+        private string title = "Mensaje de OrfeoScan";
         private void zoomALaSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int w_p = panel2.Width- System.Windows.Forms.SystemInformation.VerticalScrollBarWidth;
@@ -892,13 +894,13 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show("Falla de sistema en la conversión a PDF/A");
+                MessageBox.Show("Falla de sistema en la conversión a PDF/A", title);
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
-                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso", title);
                    
                 }
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
                 garbage_collector();
                 return false;
             }
@@ -965,9 +967,19 @@ namespace OrfeoScan_IDU_STRT
             lblScreen1.BackColor = System.Drawing.Color.Goldenrod;
             lblScreen2.BackColor = System.Drawing.Color.Goldenrod;
             lblScreen3.BackColor = System.Drawing.Color.Goldenrod;
+            PageScreen1.BackColor = System.Drawing.Color.DarkGray;
+            PageScreen2.BackColor = System.Drawing.Color.DarkGray;
+            PageScreen3.BackColor = System.Drawing.Color.DarkGray;
+
             editadas.Clear();
             label28.Text = "";
             Es_inicial = true;
+
+            enviarSoloArchivoToolStripMenuItem.Checked = false;
+            richTextBox1.Text = string.Empty;
+            groupBox7.Visible = false;
+            send_only_path = string.Empty;
+            panel4.Visible = true;
         }
         private void button17_Click(object sender, EventArgs e)
         {
@@ -1038,7 +1050,7 @@ namespace OrfeoScan_IDU_STRT
                     cargarImagen0000(pageRange, total_page);
                     cargarPrincipal(pageRange[0]);
                     garbage_collector();
-                    MessageBox.Show("Página Eliminada");
+                    MessageBox.Show("Página Eliminada", title);
                 }
                 else
                 {
@@ -1094,7 +1106,7 @@ namespace OrfeoScan_IDU_STRT
                         cargarImagen0000(pageRange, total_page);
                         cargarPrincipal(actual_page);
                         garbage_collector();
-                        MessageBox.Show("Página Eliminada");
+                        MessageBox.Show("Página Eliminada", title);
                     }
                 }
             }
@@ -1819,16 +1831,17 @@ namespace OrfeoScan_IDU_STRT
             InputBoxResult result = InputBox.Show("Digite el registro de radicado a consultar", "Consultar Radicado", temp_radicado, 100, 0);
             if (result.ReturnCode == DialogResult.OK)
             {
+                tabControl1.SelectedTab = tabPage1;
                 if (result.Text.Length > 4)
                 {
                     temp_radicado = result.Text;
                     if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                         BuscarRadicado(result.Text);
                     else
-                        MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                        MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
                 }
                 else
-                    MessageBox.Show("El número de radicado debe tener más de 4 caracteres");
+                    MessageBox.Show("El número de radicado debe tener más de 4 caracteres", title);
             }
         }
         private void buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1836,16 +1849,17 @@ namespace OrfeoScan_IDU_STRT
             InputBoxResult result = InputBox.Show("Registro a Buscar", "Buscar Expediente", temp_expediente, 100, 0);
             if (result.ReturnCode == DialogResult.OK)
             {
+                tabControl1.SelectedTab = tabPage1;
                 if (result.Text.Length > 4)
                 {
                     temp_expediente = result.Text;
                     if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                         BuscarRadicadoExpediente(result.Text);
                     else
-                        MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                        MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
                 }
                 else
-                    MessageBox.Show("El número de expediente debe tener más de 4 caracteres");
+                    MessageBox.Show("El número de expediente debe tener más de 4 caracteres", title);
             }
         }
         private void BuscarRadicadoExpediente(string numradicado)
@@ -1879,7 +1893,7 @@ namespace OrfeoScan_IDU_STRT
                 hide_loading_panel();
                 con.Close();
                 con.Dispose();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
             //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
@@ -1926,7 +1940,7 @@ namespace OrfeoScan_IDU_STRT
                 hide_loading_panel();
                 con.Close();
                 con.Dispose();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
             //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
@@ -1949,20 +1963,21 @@ namespace OrfeoScan_IDU_STRT
                 InputBoxResult result = InputBox.Show("Registro a Buscar Tipo de Radicacion " + cBoxtRadicado.Text, "Consultar Radicado por Tipo", temp_radicado, 100, 0);
                 if (result.ReturnCode == DialogResult.OK)
                 {
+                    tabControl1.SelectedTab = tabPage1;
                     if (result.Text.Length > 4)
                     {
                         temp_radicado = result.Text;
                         if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                             BuscarRadicadoTP(result.Text);
                         else
-                            MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                            MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
                     }
                     else
-                        MessageBox.Show("Introduzca mínimo 4 caracteres");
+                        MessageBox.Show("Introduzca mínimo 4 caracteres", title);
                 }
             }
             else
-                MessageBox.Show("Debe seleccionar un Tipo antes de iniciar la consulta");
+                MessageBox.Show("Debe seleccionar un Tipo antes de iniciar la consulta", title);
         }
         private void BuscarRadicadoTP(string numradicado)
         {
@@ -2005,7 +2020,7 @@ namespace OrfeoScan_IDU_STRT
                 hide_loading_panel();
                 con.Close();
                 con.Dispose();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
             //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
@@ -2014,15 +2029,16 @@ namespace OrfeoScan_IDU_STRT
             InputBoxResult result = InputBox.Show("Registro a Buscar Tipo de Radicacion Masiva, Digite el nombre exacto del Grupo de masiva o el PRIMER NUMERO DE RADICADO DEL GRUPO que ha enviado ", "Consultar Radicado por Masiva", string.Empty, 100, 0);
             if (result.ReturnCode == DialogResult.OK)
             {
+                tabControl1.SelectedTab = tabPage1;
                 if (result.Text.Length > 4)
                 {
                     if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                         BuscarRadicadoMasiva(result.Text);
                     else
-                        MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                        MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
                 }
                 else
-                    MessageBox.Show("Introduzca mínimo 4 caracteres");
+                    MessageBox.Show("Introduzca mínimo 4 caracteres", title);
             }
         }
         private void BuscarRadicadoMasiva(string numradicado)
@@ -2064,7 +2080,7 @@ namespace OrfeoScan_IDU_STRT
                     hide_loading_panel();
                     con.Close();
                     con.Dispose();
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.ToString(), title);
                 }
                 //System.Windows.Forms.Clipboard.SetText(IISQL);
             }
@@ -2370,7 +2386,7 @@ namespace OrfeoScan_IDU_STRT
                 {
                     client.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
                     client.UploadFile("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf", WebRequestMethods.Ftp.UploadFile, @"D:\hello_A1_b_cs.pdf");
-                    MessageBox.Show("El archivo se subió correctamente");
+                    MessageBox.Show("El archivo se subió correctamente", title);
                 }
                 var request = (FtpWebRequest)WebRequest.Create("ftp://fs04cc01/bodega_dev_of01/hello_A1_b_cs.pdf");
                 request.Credentials = new NetworkCredential(digitalizador_user, digitalizador);
@@ -2379,7 +2395,7 @@ namespace OrfeoScan_IDU_STRT
                 try
                 {
                     FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-                    MessageBox.Show("El archivo se subió correctamente");
+                    MessageBox.Show("El archivo se subió correctamente", title);
                 }
                 catch (WebException ex)
                 {
@@ -2387,13 +2403,13 @@ namespace OrfeoScan_IDU_STRT
                     if (response.StatusCode ==
                         FtpStatusCode.ActionNotTakenFileUnavailable)
                     {
-                        MessageBox.Show("El archivo no se subió correctamente, por favor vuelva a intentar");
+                        MessageBox.Show("El archivo no se subió correctamente, por favor vuelva a intentar", title);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
         }
 
@@ -2402,13 +2418,28 @@ namespace OrfeoScan_IDU_STRT
             lblScreen1.BackColor = System.Drawing.Color.DarkOrange;
             lblScreen2.BackColor = System.Drawing.Color.DarkOrange;
             lblScreen3.BackColor = System.Drawing.Color.DarkOrange;
+            PageScreen1.BackColor = System.Drawing.Color.DarkGray;
+            PageScreen2.BackColor = System.Drawing.Color.DarkGray;
+            PageScreen3.BackColor = System.Drawing.Color.DarkGray;
 
             if (page == 1)
-                lblScreen1.BackColor = System.Drawing.Color.Black;
+            {
+                PageScreen1.BackColor = System.Drawing.Color.DarkBlue;
+                lblScreen1.BackColor = System.Drawing.Color.DarkBlue;
+            }
+                
             if (page == 2)
-                lblScreen2.BackColor = System.Drawing.Color.Black;
+            {
+                PageScreen2.BackColor = System.Drawing.Color.DarkBlue;
+                lblScreen2.BackColor = System.Drawing.Color.DarkBlue;
+            }
+                
             if (page == 3)
-                lblScreen3.BackColor = System.Drawing.Color.Black;
+            {
+                PageScreen3.BackColor = System.Drawing.Color.DarkBlue;
+                lblScreen3.BackColor = System.Drawing.Color.DarkBlue;
+            }
+                
 
         }
 
@@ -2993,7 +3024,7 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (Exception)
             {
-                MessageBox.Show("Asegurese que exista un escaner conectado y encendido para iniciar la configuración");
+                MessageBox.Show("Asegurese que exista un escaner conectado y encendido para iniciar la configuración", title);
             }
             
         }
@@ -3230,6 +3261,25 @@ namespace OrfeoScan_IDU_STRT
             img = b.GenerateBarcodeImage(codbarras.Width, codbarras.Height, numero_documento);
             return img;
         }
+        private void esconder_obs() {
+            label4.Visible = false;
+            cBoxtDocumento.Visible = false;
+            label12.Visible = false;
+            txtObservaciones.Visible = false;
+            label37.Visible = false;
+            btnLimpiarAnexo.Visible = false;
+        }
+
+        private void mostrar_obs()
+        {
+            label4.Visible = true;
+            cBoxtDocumento.Visible = true;
+            label12.Visible = true;
+            txtObservaciones.Visible = true;
+            label37.Visible = true;
+            btnLimpiarAnexo.Visible = true;
+        }
+
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             lblTipoEnvio.Text = "";
@@ -3302,6 +3352,7 @@ namespace OrfeoScan_IDU_STRT
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
                             lblTipoEnvio.ForeColor = System.Drawing.Color.Red;
+                            mostrar_obs();
                         }
                         else
                         {
@@ -3312,6 +3363,7 @@ namespace OrfeoScan_IDU_STRT
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
                             lblTipoEnvio.ForeColor = System.Drawing.Color.Blue;
+                            esconder_obs();
                         }
                         if (dataGridView1.Rows[e.RowIndex].Cells[1].Value != null)
                             paginas = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
@@ -3380,7 +3432,7 @@ namespace OrfeoScan_IDU_STRT
                         lbl_num_doc.Text = "RADICADO " + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(numero_documento.Length - 1);
 
                         if (path.Contains("pdf") || path.Contains("tif") || path.Contains("tiff"))
-                            MessageBox.Show("El radicado seleccionado ya tiene un archivo asociado. Si continua, el pdf será remplazado.");
+                            MessageBox.Show("El radicado seleccionado ya tiene un archivo asociado. Si continua, el pdf o tif será remplazado.", title);
                     }
                     else if (tipo == "EXPEDIENTE")
                     {
@@ -3390,6 +3442,7 @@ namespace OrfeoScan_IDU_STRT
                         dtFechaAnexo.Visible = true;
                         dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
+                        mostrar_obs();
                         lblTipoEnvio.ForeColor = System.Drawing.Color.Black;
                         if (dataGridView1.Rows[e.RowIndex].Cells[4].Value != null)
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
@@ -3418,6 +3471,7 @@ namespace OrfeoScan_IDU_STRT
             lbl_InfoRadicado5.Text = "";
             lbl_num_doc.Text = "";
             lblTipoEnvio.Text = "";
+            esconder_obs();
             codbarras.Image = null;
             btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(0, 255, 255, 255);
             btnEnviarPDF1.FlatAppearance.BorderSize = 0;
@@ -3500,14 +3554,14 @@ namespace OrfeoScan_IDU_STRT
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("No es posible eliminar las imagenes con las que se va trabajar");
+                        MessageBox.Show("No es posible eliminar las imagenes con las que se va trabajar", title);
                         return false;
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No se han creado las carpetas necesarias para que la aplicación funcione correctamente, pida asistencia para la creación de las carpetas");
+                MessageBox.Show("No se han creado las carpetas necesarias para que la aplicación funcione correctamente, pida asistencia para la creación de las carpetas", title);
                 return false;
             }
             return true;
@@ -3517,22 +3571,33 @@ namespace OrfeoScan_IDU_STRT
         {
             //tiene que tener una fila seleccionada
 
-            if (true)
+            if (false)
             {
                 if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
                 {
-                    MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar");
+                    MessageBox.Show("No hay conexión con el servidor FTP, por favor espere unos instantes y vuelva a intentar", title);
                     return;
                 }
             }
-            
 
+            bool bool_page = false;
+            if (string.IsNullOrEmpty(send_only_path))
+            {
+                if (total_page > 0)
+                {
+                    bool_page = true;
+                }
+            }
+            else
+            {
+                bool_page = true;
+            }
 
             if (dataGridView1.Rows.Count > 0)
             {
                 if (dataGridView1.SelectedCells.Count > 0)
                 {
-                    if (total_page>0)
+                    if (bool_page)
                     {
                         string tipo = "";
                         string numero_documento = "";
@@ -3557,13 +3622,13 @@ namespace OrfeoScan_IDU_STRT
                             tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
                             if (tipo.Replace(" ", "") == string.Empty)
                             {
-                                MessageBox.Show("El registro no especifica un tipo (radicado o expediente)");
+                                MessageBox.Show("El registro no especifica un tipo (radicado o expediente)", title);
                                 return;
                             }
                         }
                         else
                         {
-                            MessageBox.Show("El registro no especifica un tipo (radicado o expediente)");
+                            MessageBox.Show("El registro no especifica un tipo (radicado o expediente)", title);
                             return;
                         }
                         if (dataGridView1.CurrentRow.Cells[2].Value != null)
@@ -3571,13 +3636,13 @@ namespace OrfeoScan_IDU_STRT
                             numero_documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                             if (tipo.Replace(" ", "") == string.Empty)
                             {
-                                MessageBox.Show("El registro no especifica un numero de documento");
+                                MessageBox.Show("El registro no especifica un numero de documento", title);
                                 return;
                             }
                         }
                         else
                         {
-                            MessageBox.Show("El registro no especifica un numero de documento");
+                            MessageBox.Show("El registro no especifica un numero de documento", title);
                             return;
                         }
 
@@ -3691,6 +3756,9 @@ namespace OrfeoScan_IDU_STRT
                             dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
 
                             string archivo_enviar = epath + imagenf2;
+
+
+
                             bool conversion = false;
                             if (path_recycle.Contains(numero_documento))
                             {
@@ -3707,35 +3775,48 @@ namespace OrfeoScan_IDU_STRT
                                 }
                             }
 
-                            if (!conversion)
+
+                            if (string.IsNullOrEmpty(send_only_path))
                             {
-                                if (!enviarTiffToolStripMenuItem.Checked)
+                                if (!conversion)
                                 {
-                                    if (!crearPdf_1(archivo_enviar))
+                                    if (!enviarTiffToolStripMenuItem.Checked)
                                     {
-                                        return;
+                                        if (!crearPdf_1(archivo_enviar))
+                                        {
+                                            return;
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    
-                                    if (!guardarTiffActual_enviar(archivo_enviar))
+                                    else
                                     {
-                                        return;
+
+                                        if (!guardarTiffActual_enviar(archivo_enviar))
+                                        {
+                                            return;
+                                        }
                                     }
                                 }
                             }
-                            
+
+                            if (!string.IsNullOrEmpty(send_only_path))
+                            {
+                                archivo_enviar = send_only_path;
+                            }
 
                             FileInfo fi = new FileInfo(archivo_enviar);
                             if (IsFileLocked(fi))
                             {
-                                MessageBox.Show("El archivo "+extension+" a convertir está aun en uso, por favor vuelva a intentar");
+                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar", title);
                                 return;
                             }
 
+
+
+
                             if (sendFile(archivo_enviar, imagenf3, ""))
                             {
+                                
+
                                 //guardar registro
                                 string IISQL = "update radicado set RADI_NUME_HOJA=" + NumeroDeHojas + ", radi_path='" + imagenf.Replace(" ", "") + "'  where radi_nume_radi=" + numero_documento;
                                 con = new OracleConnection(funciones.conni);
@@ -3750,7 +3831,7 @@ namespace OrfeoScan_IDU_STRT
                                 }
                                 catch (Exception)
                                 {
-                                    MessageBox.Show("Error al actualizar registro de ruta de radicado");
+                                    MessageBox.Show("Error al actualizar registro de ruta de radicado", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
                                     //limpiar_informacion_radicado();
@@ -3771,7 +3852,7 @@ namespace OrfeoScan_IDU_STRT
                                         int result = command.ExecuteNonQuery();
                                     }
                                     funciones.desconectar(con);
-                                    MessageBox.Show("Archivo enviado correctamente");
+                                    MessageBox.Show("Archivo enviado correctamente", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
                                     //limpiar_informacion_radicado();
@@ -3780,7 +3861,7 @@ namespace OrfeoScan_IDU_STRT
                                 }
                                 catch (Exception)
                                 {
-                                    MessageBox.Show("Error en insertar registro historico");
+                                    MessageBox.Show("Error en insertar registro historico", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
                                     //limpiar_informacion_radicado();
@@ -3849,7 +3930,7 @@ namespace OrfeoScan_IDU_STRT
                             }
                             if (tipoDocumentalIndex == -1)
                             {
-                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.");
+                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.", title);
                                 return;
                             }
                             if (!string.IsNullOrEmpty(txtObservaciones.Text))
@@ -3858,7 +3939,7 @@ namespace OrfeoScan_IDU_STRT
                             }
                             else
                             {
-                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.");
+                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.", title);
                                 return;
                             }
                             ObservacioneS = "(" + NumeroDeHojas.ToString() + " Paginas) " + observacion;
@@ -3912,29 +3993,36 @@ namespace OrfeoScan_IDU_STRT
                                     }
                                 }
                             }
-
-                            if (!conversion)
+                            if (string.IsNullOrEmpty(send_only_path))
                             {
-                                if (!enviarTiffToolStripMenuItem.Checked)
+                                if (!conversion)
                                 {
-                                    if (!crearPdf_1(archivo_enviar))
+                                    if (!enviarTiffToolStripMenuItem.Checked)
                                     {
-                                        return;
+                                        if (!crearPdf_1(archivo_enviar))
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!guardarTiffActual_enviar(archivo_enviar))
+                                        {
+                                            return;
+                                        }
                                     }
                                 }
-                                else
-                                {
-                                    if (!guardarTiffActual_enviar(archivo_enviar))
-                                    {
-                                        return;
-                                    }
-                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(send_only_path))
+                            {
+                                archivo_enviar = send_only_path;
                             }
 
                             FileInfo fi = new FileInfo(archivo_enviar);
                             if (IsFileLocked(fi))
                             {
-                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar");
+                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar", title);
                                 return;
                             }
 
@@ -3958,7 +4046,7 @@ namespace OrfeoScan_IDU_STRT
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("Error al insertar registro de anexo de radicado");
+                                        MessageBox.Show("Error al insertar registro de anexo de radicado", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
                                         //limpiar_informacion_radicado();
@@ -3981,7 +4069,7 @@ namespace OrfeoScan_IDU_STRT
                                             int result = command.ExecuteNonQuery();
                                         }
                                         funciones.desconectar(con);
-                                        MessageBox.Show("Archivo enviado correctamente");
+                                        MessageBox.Show("Archivo enviado correctamente", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
                                         //limpiar_informacion_radicado();
@@ -3991,7 +4079,7 @@ namespace OrfeoScan_IDU_STRT
                                     catch (Exception)
                                     {
 
-                                        MessageBox.Show("Error al insertar registro historico de anexo de radicado");
+                                        MessageBox.Show("Error al insertar registro historico de anexo de radicado", title);
                                         funciones.desconectar(con);
                                         limpiar_anexos();
                                         limpiar_imagen();
@@ -4036,7 +4124,7 @@ namespace OrfeoScan_IDU_STRT
 
                             if (tipoDocumentalIndex == -1)
                             {
-                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.");
+                                MessageBox.Show("Debe Seleccionar un Tipo de Documental.", title);
                                 return;
                             }
                             if (!string.IsNullOrEmpty(txtObservaciones.Text))
@@ -4045,13 +4133,13 @@ namespace OrfeoScan_IDU_STRT
                             }
                             else
                             {
-                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.");
+                                MessageBox.Show("Debe Escribir al menos un caracter en observaciones de anexo.", title);
                                 return;
                             }
                             fechaAnexo = new DateTime(dtFechaAnexo.Value.Year, dtFechaAnexo.Value.Month, dtFechaAnexo.Value.Day).AddHours(dtHoraAnexo.Value.Hour).AddMinutes(dtHoraAnexo.Value.Minute).AddSeconds(dtHoraAnexo.Value.Second);
                             if (fechaAnexo > DateTime.Now)
                             {
-                                MessageBox.Show("La fecha y hora ingresadas deben ser inferiores a la fecha y hora actuales.");
+                                MessageBox.Show("La fecha y hora ingresadas deben ser inferiores a la fecha y hora actuales.", title);
                                 return;
                             }
                             string fecha_str = String.Format("{0:yyyy/MM/dd HH:mm:ss}", fechaAnexo);
@@ -4136,33 +4224,45 @@ namespace OrfeoScan_IDU_STRT
                                 }
                             }
 
-                            if (!conversion)
+                            if (string.IsNullOrEmpty(send_only_path))
                             {
-                                if (!enviarTiffToolStripMenuItem.Checked)
+                                if (!conversion)
                                 {
-                                    if (!crearPdf_1(archivo_enviar))
+                                    if (!enviarTiffToolStripMenuItem.Checked)
                                     {
-                                        return;
+                                        if (!crearPdf_1(archivo_enviar))
+                                        {
+                                            return;
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    if (!guardarTiffActual_enviar(archivo_enviar))
+                                    else
                                     {
-                                        return;
+                                        if (!guardarTiffActual_enviar(archivo_enviar))
+                                        {
+                                            return;
+                                        }
                                     }
                                 }
                             }
+                            if (string.IsNullOrEmpty(send_only_path))
+                            {
+
+
+                            }
+                            
 
                             FileInfo fi = new FileInfo(archivo_enviar);
                             if (IsFileLocked(fi))
                             {
-                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar");
+                                MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar", title);
                                 return;
                             }
+                            if (!string.IsNullOrEmpty(send_only_path))
+                            {
+                                archivo_enviar = send_only_path;
+                            }
 
-
-                                if (sendFile(archivo_enviar, imagenf3, ""))
+                            if (sendFile(archivo_enviar, imagenf3, ""))
                                 {
                                     long length = new System.IO.FileInfo(archivo_enviar).Length;
                                     string ISQL_aux = " INSERT INTO SGD_AEX_ANEXOEXPEDIENTE (SGD_AEX_EXPEDIENTE,SGD_AEX_NUMERO,SGD_AEX_TIPO,SGD_AEX_TAMANO,SGD_AEX_DESCRIPCION,SGD_AEX_ARCHIVO,SGD_AEX_BORRADO,SGD_AEX_FECHA,SGD_AEX_FECHACREACION,SGD_AEX_TRD,SGD_AEX_NUM_HOJAS) VALUES (";
@@ -4181,7 +4281,7 @@ namespace OrfeoScan_IDU_STRT
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("Error al insertar registro de anexo de expediente");
+                                        MessageBox.Show("Error al insertar registro de anexo de expediente", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
                                         //limpiar_informacion_radicado();
@@ -4201,7 +4301,7 @@ namespace OrfeoScan_IDU_STRT
                                             int result = command.ExecuteNonQuery();
                                         }
                                         funciones.desconectar(con);
-                                        MessageBox.Show("Archivo enviado correctamente");
+                                        MessageBox.Show("Archivo enviado correctamente", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
                                         //limpiar_informacion_radicado();
@@ -4210,7 +4310,7 @@ namespace OrfeoScan_IDU_STRT
                                     }
                                     catch (Exception)
                                     {
-                                        MessageBox.Show("Error al insertar registro historico de anexo de expediente");
+                                        MessageBox.Show("Error al insertar registro historico de anexo de expediente", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
                                         //limpiar_informacion_radicado();
@@ -4224,13 +4324,13 @@ namespace OrfeoScan_IDU_STRT
                         #endregion
                     }
                     else
-                        MessageBox.Show("No existe una imagen a convertir para enviar como PDF/A");
+                        MessageBox.Show("No existe una imagen a convertir para enviar como PDF/A o tiff", title);
                 }
                 else
-                    MessageBox.Show("Debe seleccionar una registro de radicado o expediente antes de continuar");
+                    MessageBox.Show("Debe seleccionar una registro de radicado o expediente antes de continuar", title);
             }
             else
-                MessageBox.Show("No existen filas seleccionadas, debe realizar la busqueda de un registro y seleccionar una fila");
+                MessageBox.Show("No existen filas seleccionadas, debe realizar la busqueda de un registro y seleccionar una fila", title);
             return;
         }
         public static bool CheckForInternetConnection(string servidor)
@@ -4360,7 +4460,7 @@ namespace OrfeoScan_IDU_STRT
                     if (response.StatusCode ==
                         FtpStatusCode.ActionNotTakenFileUnavailable)
                     {
-                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar");
+                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar", title);
                         return false;
                     }
                 }
@@ -4379,7 +4479,7 @@ namespace OrfeoScan_IDU_STRT
                 }
                 hide_loading_panel();
                 String status = ((FtpWebResponse)e.Response).StatusDescription;
-                MessageBox.Show(status);
+                MessageBox.Show(status, title);
                 return false;
             }
             return true;
@@ -4410,7 +4510,7 @@ namespace OrfeoScan_IDU_STRT
                     if (response.StatusCode ==
                         FtpStatusCode.ActionNotTakenFileUnavailable)
                     {
-                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar");
+                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar", title);
                         return false;
                     }
                 }
@@ -4420,7 +4520,7 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
                 return false;
             }
             return true;
@@ -4450,18 +4550,18 @@ namespace OrfeoScan_IDU_STRT
                             FtpStatusCode.ActionNotTakenFileUnavailable)
                         {
                             hide_loading_panel();
-                            MessageBox.Show(response.StatusCode.ToString());
+                            MessageBox.Show(response.StatusCode.ToString(), title);
                             return false;
                         }
                         else
                         {
-                            MessageBox.Show("1");
+                            MessageBox.Show("1", title);
                             hide_loading_panel();
                         }
                     }
                     catch (Exception ex1)
                     {
-                        MessageBox.Show(ex1.ToString());
+                        MessageBox.Show(ex1.ToString(), title);
                         hide_loading_panel();
                     }
                 }
@@ -4469,7 +4569,7 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
                 return false;
             }
             return false;
@@ -4545,10 +4645,10 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show("Falla de sistema en la conversión a PDF/A");
+                MessageBox.Show("Falla de sistema en la conversión a PDF/A", title);
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
-                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso", title);
                 }
                 garbage_collector();
                 return false;
@@ -4626,10 +4726,10 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show("Falla de sistema en la conversión a PDF/A");
+                MessageBox.Show("Falla de sistema en la conversión a PDF/A", title);
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
-                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso", title);
                 }
                 garbage_collector();
                 return false;
@@ -4642,10 +4742,17 @@ namespace OrfeoScan_IDU_STRT
         
         private void ScanOrfeo_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.PageUp)
                 btnPrevScreen_Click(null, null);
-            if (e.KeyCode == Keys.Right)
+            if (e.KeyCode == Keys.PageDown)
                 btnNextScreen_Click(null, null);
+
+            if (e.KeyCode == Keys.Escape)
+            {
+                Rect.Location = new Point(0, 0);
+                Rect.Size = new Size(0, 0);
+                PageEdit.Invalidate();
+            }
 
 
         }
@@ -5192,6 +5299,7 @@ namespace OrfeoScan_IDU_STRT
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Anexo de Radicado";
+                            mostrar_obs();
                             lblTipoEnvio.ForeColor = System.Drawing.Color.Red;
                         }
                         else
@@ -5202,6 +5310,7 @@ namespace OrfeoScan_IDU_STRT
                             dtFechaAnexo.Visible = false;
                             dtHoraAnexo.Visible = false;
                             lblTipoEnvio.Text = "Documento Principal de Radicado";
+                            esconder_obs();
                             lblTipoEnvio.ForeColor = System.Drawing.Color.Blue;
                         }
                     }
@@ -5213,6 +5322,7 @@ namespace OrfeoScan_IDU_STRT
                         dtFechaAnexo.Visible = true;
                         dtHoraAnexo.Visible = true;
                         lblTipoEnvio.Text = "Anexo de Expediente";
+                        mostrar_obs();
                         lblTipoEnvio.ForeColor = System.Drawing.Color.Black;
                     }
                 }
@@ -5372,13 +5482,13 @@ namespace OrfeoScan_IDU_STRT
             catch (Exception ex)
             {
                 hide_loading_panel();
-                MessageBox.Show("Falla de sistema en la conversión a PDF/A");
+                MessageBox.Show("Falla de sistema en la conversión a PDF/A", title);
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
-                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso");
+                    MessageBox.Show("El PDF esta siendo utilizado en otro proceso", title);
 
                 }
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
                 garbage_collector();
                 return false;
             }
@@ -5400,7 +5510,7 @@ namespace OrfeoScan_IDU_STRT
                 //}
                 var bite = MergeTiff();
                 System.IO.File.WriteAllBytes(path, bite);
-                MessageBox.Show("Imagen Guardada");
+                MessageBox.Show("Imagen Guardada", title);
                 hide_loading_panel();
                 try
                 {
@@ -5413,7 +5523,7 @@ namespace OrfeoScan_IDU_STRT
             }
             else
             {
-                MessageBox.Show("No hay una colección de imagenes para guardar");
+                MessageBox.Show("No hay una colección de imagenes para guardar", title);
             }
             
             ////int i = 0;
@@ -5466,7 +5576,7 @@ namespace OrfeoScan_IDU_STRT
                 }
                 else
                 {
-                    MessageBox.Show("No hay una colección de imagenes para guardar");
+                    MessageBox.Show("No hay una colección de imagenes para guardar", title);
                 }
             }
             catch (Exception)
@@ -5770,51 +5880,154 @@ namespace OrfeoScan_IDU_STRT
             im.Dispose();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private bool sendFile__a(string ruta_archivo, string servidor, string ruta_servidor)
         {
+            try
+            {
+                show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
 
+
+                FtpWebRequest request;
+
+                request = WebRequest.Create(new Uri(servidor + ruta_servidor)) as FtpWebRequest;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UseBinary = true;
+                request.UsePassive = false;
+                request.KeepAlive = false;
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.ConnectionGroupName = "group";
+
+                try
+                {
+                    using (FileStream fs = File.OpenRead(ruta_archivo))
+                    {
+                        byte[] buffer = new byte[fs.Length];
+                        fs.Read(buffer, 0, buffer.Length);
+                        fs.Close();
+                        Stream requestStream = request.GetRequestStream();
+                        requestStream.Write(buffer, 0, buffer.Length);
+                        requestStream.Flush();
+                        requestStream.Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    using (var client = new WebClient())
+                    {
+                        client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                        client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
+                    }
+                }
+
+                FtpWebRequest requests;
+                requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
+                requests.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                requests.KeepAlive = false;
+                requests.Method = WebRequestMethods.Ftp.GetFileSize;
+
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)requests.GetResponse();
+                    return true;
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar", title);
+                        return false;
+                    }
+                }
+                hide_loading_panel();
+                return true;
+            }
+            catch (WebException e)
+            {
+                try
+                {
+
+                }
+                catch (Exception)
+                {
+
+                }
+                hide_loading_panel();
+                String status = ((FtpWebResponse)e.Response).StatusDescription;
+                MessageBox.Show(status, title);
+                return false;
+            }
+            return true;
         }
+        private void DownloadFileFTP(string ruta_archivo, string servidor, string ruta_servidor)
+        {
+            try
+            {
+                show_loading_panel(600, 177, 359, 20, "Descargando Archivo del Servidor");
+                string ftpfullpath = ruta_servidor;
+                using (WebClient request = new WebClient())
+                {
+                    request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                    byte[] fileData = request.DownloadData(ftpfullpath);
 
+                    using (FileStream file = File.Create(ruta_archivo))
+                    {
+                        file.Write(fileData, 0, fileData.Length);
+                        file.Close();
+                    }
+                    MessageBox.Show("Descarga Completa - Ruta: "+ ruta_archivo, title);
+                }
+                hide_loading_panel();
+            }
+            catch (Exception)
+            {
+                hide_loading_panel();
+            }
+        }
         private void button28_Click(object sender, EventArgs e)
         {
             if (dataGridView1.Rows.Count > 0)
             {
                 if (dataGridView1.CurrentRow.Cells[2].Value != null)
                 {
+                    string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] + @"/bodega_dev_of01";
                     string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                     string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                    string archivo = dataGridView1.CurrentRow.Cells[6].Value.ToString();
+                    string imagenf3 = servidor + archivo;
+
                     if (documento.Length == 14 || documento.Length == 19)
                     {
-                        if (tipo == "RADICADO" || tipo == "EXPEDIENTE")
+                        if (tipo == "RADICADO")
                         {
-                            imagenes.Clear();
-                            if (tipo== "RADICADO")
+                            if (archivo.Contains(".tif") || archivo.Contains(".tiff"))
                             {
-
+                                DownloadFileFTP(ConfigurationManager.AppSettings["DPATH"] + archivo, servidor, imagenf3);
                             }
-                            if (tipo == "EXPEDIENTE")
+                            if (archivo.Contains(".pdf"))
                             {
-
+                                DownloadFileFTP(ConfigurationManager.AppSettings["EPATH"] + archivo, servidor, imagenf3);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                            MessageBox.Show("Seleccione un radicado antes de iniciar la descarga del archivo", title);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                        MessageBox.Show("Seleccione un radicado antes de iniciar la descarga del archivo", title);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                    MessageBox.Show("Seleccione un radicado antes de iniciar la descarga del archivo", title);
                 }
             }
             else
             {
-                MessageBox.Show("Seleccione un radicado o expediente antes de iniciar el proceso de escaneo");
+                MessageBox.Show("Seleccione un radicado antes de iniciar la descarga del archivo", title);
             }
         }
 
@@ -5834,7 +6047,16 @@ namespace OrfeoScan_IDU_STRT
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-            limpiar_imagen();
+            if (total_page>0)
+            {
+                var confirmResult = MessageBox.Show("Se encuentra editando una imagen. Recuede guardar la imagen antes de continuar. Desea continuar ?",
+                                                     "Confirmación",
+                                                     MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    limpiar_imagen();
+                }
+            }
         }
 
         private void borrarSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5956,10 +6178,11 @@ namespace OrfeoScan_IDU_STRT
             if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                 BuscarExpediente60();
             else
-                MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
         }
         private void BuscarExpediente60()
         {
+            tabControl1.SelectedTab = tabPage1;
             codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
@@ -5990,7 +6213,7 @@ namespace OrfeoScan_IDU_STRT
                 hide_loading_panel();
                 con.Close();
                 con.Dispose();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
             //System.Windows.Forms.Clipboard.SetText(IISQL);
         }
@@ -6000,10 +6223,11 @@ namespace OrfeoScan_IDU_STRT
             if (!string.IsNullOrEmpty(usuarioScanOrfeo.DEPE_CODI.ToString().Trim()))
                 BuscarRadicados60();
             else
-                MessageBox.Show("Debe seleccionar una dependencia a Buscar");
+                MessageBox.Show("Debe seleccionar una dependencia a Buscar", title);
         }
         private void BuscarRadicados60()
         {
+            tabControl1.SelectedTab = tabPage1;
             codbarras_private = null;
             limpiar_informacion_radicado();
             dataGridView1.DataSource = null;
@@ -6071,7 +6295,7 @@ namespace OrfeoScan_IDU_STRT
                 hide_loading_panel();
                 con.Close();
                 con.Dispose();
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), title);
             }
         }
 
@@ -6194,6 +6418,11 @@ namespace OrfeoScan_IDU_STRT
                 enviarPDFAToolStripMenuItem.Checked = true;
                 enviarTiffToolStripMenuItem.Checked = false;
             }
+            else
+            {
+                enviarPDFAToolStripMenuItem.Checked = false;
+                enviarTiffToolStripMenuItem.Checked = true;
+            }
             
         }
 
@@ -6203,6 +6432,11 @@ namespace OrfeoScan_IDU_STRT
             {
                 enviarPDFAToolStripMenuItem.Checked = false;
                 enviarTiffToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                enviarPDFAToolStripMenuItem.Checked = true;
+                enviarTiffToolStripMenuItem.Checked = false;
             }
         }
 
@@ -6220,14 +6454,84 @@ namespace OrfeoScan_IDU_STRT
                     string nombreArchivo = saveFileDialog1.FileName;
                     if (crearPdf_2(nombreArchivo))
                     {
-                        MessageBox.Show("PDF guardado");
+                        MessageBox.Show("PDF guardado", title);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A");
+                MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A", title);
             }
+        }
+        private string send_only_path = "";
+        private void enviarSoloArchivoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enviarSoloArchivoToolStripMenuItem.Checked)
+            {
+                groupBox7.Visible = true;
+                richTextBox1.Text = string.Empty;
+                send_only_path = string.Empty;
+                panel4.Visible = false;
+            }
+            else
+            {
+                richTextBox1.Text = string.Empty;
+                groupBox7.Visible = false;
+                send_only_path = string.Empty;
+                panel4.Visible = true;
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+
+            if (enviarPDFAToolStripMenuItem.Checked)
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Archivos de Imagen (*.pdf) | *.pdf;";
+                dialog.InitialDirectory = @"C:\";
+                dialog.Title = "Abrir Imagen";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    Spire.Pdf.PdfDocument pdf = new Spire.Pdf.PdfDocument();
+                    pdf.LoadFromFile(dialog.FileName);
+                    PdfConformanceLevel conformance = pdf.Conformance;
+                    if (conformance.ToString()=="None")
+                    {
+                        MessageBox.Show("Este archivo no cumple el estandar de un PDF/A", title);
+                        return;
+                    }
+                    richTextBox1.Text = dialog.FileName;
+                    send_only_path = dialog.FileName;
+                }
+            }
+            else
+            {
+                if (enviarTiffToolStripMenuItem.Checked)
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "Archivos de Imagen (*.tif) | *.tif;";
+                    dialog.InitialDirectory = @"C:\";
+                    dialog.Title = "Abrir Imagen";
+
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        
+
+
+                        richTextBox1.Text = dialog.FileName;
+                        send_only_path = dialog.FileName;
+                    }
+                }
+            }
+            
+            
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
     public class InputBoxResult
@@ -6315,6 +6619,7 @@ namespace OrfeoScan_IDU_STRT
             txtInput.Size = new Size(379, 20);
             txtInput.TabIndex = 0;
             txtInput.Text = "";
+            txtInput.KeyUp += new System.Windows.Forms.KeyEventHandler(txtInput_KeyUp);
             // 
             // InputBoxDialog
             // 
@@ -6400,6 +6705,13 @@ namespace OrfeoScan_IDU_STRT
             frmInputDialog.Dispose();
         }
 
+        static private void txtInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnOK_Click(null, null);
+            if (e.KeyCode == Keys.Escape)
+                btnCancel_Click(null, null);
+        }
         #endregion
 
         #region Public Static Show functions
