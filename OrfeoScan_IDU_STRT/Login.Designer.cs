@@ -121,7 +121,8 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(300, 26);
             this.txtUsuario.TabIndex = 42;
-            this.txtUsuario.Text = "CAESLAVA2";
+            this.txtUsuario.Text = "caeslava2";
+            this.txtUsuario.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtUsuario_KeyUp);
             // 
             // txtContraseña
             // 
@@ -134,6 +135,7 @@
             this.txtContraseña.Size = new System.Drawing.Size(300, 26);
             this.txtContraseña.TabIndex = 43;
             this.txtContraseña.Text = "123";
+            this.txtContraseña.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtContraseña_KeyUp);
             // 
             // btn_ingresar
             // 
@@ -168,6 +170,7 @@
             this.Name = "Login";
             this.Text = "SCANORFEO - IDU";
             this.Load += new System.EventHandler(this.Login_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Login_KeyUp);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
