@@ -2,8 +2,8 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory>publicar\</PublishUrlHistory>
-    <InstallUrlHistory />
+    <PublishUrlHistory>\\ss03cc01\inventario\hector\OrfeoScan\actualizaciones\nuevo\|ftp://fs04cc01/orfeoscan_/setup/|publicar\</PublishUrlHistory>
+    <InstallUrlHistory>\\ss03cc01\inventario\hector\OrfeoScan\actualizaciones\nuevo\|\\ss03cc01\inventario\</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
