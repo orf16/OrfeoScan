@@ -4277,7 +4277,10 @@ namespace OrfeoScan_IDU_STRT
 
 
                             }
-                            
+                            if (!string.IsNullOrEmpty(send_only_path))
+                            {
+                                archivo_enviar = send_only_path;
+                            }
 
                             FileInfo fi = new FileInfo(archivo_enviar);
                             if (IsFileLocked(fi))
@@ -4285,10 +4288,7 @@ namespace OrfeoScan_IDU_STRT
                                 MessageBox.Show("El archivo " + extension + " a convertir está aun en uso, por favor vuelva a intentar", title);
                                 return;
                             }
-                            if (!string.IsNullOrEmpty(send_only_path))
-                            {
-                                archivo_enviar = send_only_path;
-                            }
+                            
 
                             if (sendFile(archivo_enviar, imagenf3, ""))
                                 {
@@ -6447,11 +6447,13 @@ namespace OrfeoScan_IDU_STRT
             {
                 enviarPDFAToolStripMenuItem.Checked = true;
                 enviarTiffToolStripMenuItem.Checked = false;
+                label14.Text = "Enviar PDF";
             }
             else
             {
                 enviarPDFAToolStripMenuItem.Checked = false;
                 enviarTiffToolStripMenuItem.Checked = true;
+                label14.Text = "Enviar TIFF";
             }
             
         }
@@ -6462,11 +6464,13 @@ namespace OrfeoScan_IDU_STRT
             {
                 enviarPDFAToolStripMenuItem.Checked = false;
                 enviarTiffToolStripMenuItem.Checked = true;
+                label14.Text = "Enviar TIFF";
             }
             else
             {
                 enviarPDFAToolStripMenuItem.Checked = true;
                 enviarTiffToolStripMenuItem.Checked = false;
+                label14.Text = "Enviar PDF";
             }
         }
 
