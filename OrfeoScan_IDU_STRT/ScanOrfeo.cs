@@ -104,6 +104,7 @@ namespace OrfeoScan_IDU_STRT
         private string temp_expediente = "";
 
         private string title = "Mensaje de OrfeoScan";
+        private int depe_orfeo = -1;
         private void zoomALaSelecciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int w_p = panel2.Width- System.Windows.Forms.SystemInformation.VerticalScrollBarWidth;
@@ -985,6 +986,7 @@ namespace OrfeoScan_IDU_STRT
         {
             if (total_page>0)
             {
+                show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
                 PageScreen1.Image = null;
                 PageScreen2.Image = null;
                 PageScreen3.Image = null;
@@ -1050,6 +1052,7 @@ namespace OrfeoScan_IDU_STRT
                     cargarImagen0000(pageRange, total_page);
                     cargarPrincipal(pageRange[0]);
                     garbage_collector();
+                    hide_loading_panel();
                     MessageBox.Show("Página Eliminada", title);
                 }
                 else
@@ -1106,6 +1109,7 @@ namespace OrfeoScan_IDU_STRT
                         cargarImagen0000(pageRange, total_page);
                         cargarPrincipal(actual_page);
                         garbage_collector();
+                        hide_loading_panel();
                         MessageBox.Show("Página Eliminada", title);
                     }
                 }
@@ -1746,7 +1750,9 @@ namespace OrfeoScan_IDU_STRT
                     configuraciónToolStripMenuItem.Visible = true;
                 }
             }
-            
+            if (int.TryParse(config.AppSettings.Settings["DEP_QUERY"].Value, out depe_orfeo))
+            {
+            }
         }
 
 
@@ -1798,6 +1804,7 @@ namespace OrfeoScan_IDU_STRT
         private void cBoxtRadicado_load()
         {
             cBoxtRadicado.Items.Clear();
+            cBoxtRadicado.Items.Add("");
             if (funciones.conexion_test(funciones.conni))
             {
                 string sql = "SELECT SGD_TRAD_CODIGO, SGD_TRAD_DESCR FROM OW_ORFEO.SGD_TRAD_TIPORAD ORDER BY SGD_TRAD_CODIGO";
@@ -1869,7 +1876,7 @@ namespace OrfeoScan_IDU_STRT
             dataGridView1.DataSource = null;
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
-            IISQL = " SELECT 'EXPEDIENTE' as TIPO,S.DEPE_CODI AS DEPENDENCIA, S.SGD_EXP_NUMERO AS NÚMERO_EXPEDIENTE,(SELECT COUNT(*) FROM SGD_AEX_ANEXOEXPEDIENTE A WHERE A.SGD_AEX_EXPEDIENTE = S.SGD_EXP_NUMERO) AS NÚM_ANEXOS ,S.SGD_SEXP_PAREXP1 AS ASUNTO,S.SGD_SEXP_PAREXP3 AS NOMBRE_Y_DOCUMENTO,S.SGD_SEXP_FECH AS FECHA ";
+            IISQL = " SELECT 'EXPEDIENTE' as TIPO,S.DEPE_CODI AS DEPENDENCIA, S.SGD_EXP_NUMERO AS NÚMERO_EXPEDIENTE,(SELECT COUNT(*) FROM SGD_AEX_ANEXOEXPEDIENTE A WHERE A.SGD_AEX_EXPEDIENTE = S.SGD_EXP_NUMERO) AS NÚM_ANEXOS ,S.SGD_SEXP_PAREXP1 AS ASUNTO,S.SGD_SEXP_PAREXP3 AS NOMBRE_Y_DOCUMENTO,S.SGD_SEXP_FECH AS FECHA,S.SGD_SEXP_PAREXP2 AS ASUNTO1 ";
             IISQL = IISQL + " ";
             IISQL = IISQL + " FROM SGD_SEXP_SECEXPEDIENTES S ";
             IISQL = IISQL + " WHERE S.SGD_EXP_NUMERO LIKE '%" + numradicado.Trim() + "%' ";
@@ -1887,6 +1894,11 @@ namespace OrfeoScan_IDU_STRT
                 dataGridView1.DataSource = dt;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 hide_loading_panel();
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("La consulta realizada no tiene resultados, por favor verifique la información suministrada");
+                }
+                
             }
             catch (Exception ex)
             {
@@ -1905,13 +1917,11 @@ namespace OrfeoScan_IDU_STRT
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
-                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + depe_orfeo.ToString().Substring(0, 3) + "%'";
             else
                 IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA,a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH  from Radicado a where a.radi_nume_radi is not null  ";
 
             IISQL += " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
-
-
 
             //IISQL += " and (a.radi_char_radi = '20190000850961' or a.radi_char_radi = '20195260194683')";
             try
@@ -1934,6 +1944,11 @@ namespace OrfeoScan_IDU_STRT
                 dataGridView1.DataSource = dt;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 hide_loading_panel();
+
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("La consulta realizada no tiene resultados, por favor verifique la información suministrada");
+                }
             }
             catch (Exception ex)
             {
@@ -1987,13 +2002,13 @@ namespace OrfeoScan_IDU_STRT
             string IISQL;
             OracleConnection con = new OracleConnection(funciones.conni);
             if (impresiónDeSobresToolStripMenuItem.Checked)
-                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL, a.RADI_PATH PATH, a.RADI_NOMB " + varConcat + " a.RADI_PRIM_APEL" + varConcat + " a.RADI_SEGU_APEL AS RADI_NOMB,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL, a.RADI_PATH PATH, a.RADI_NOMB " + varConcat + " a.RADI_PRIM_APEL" + varConcat + " a.RADI_SEGU_APEL AS RADI_NOMB,renv.SGD_RENV_NOMBRE,renv.SGD_RENV_DIR,renv.SGD_RENV_DEPTO,renv.SGD_RENV_MPIO,a.RADI_USUA_ACTU,b.depe_nomb," + varRadi_Fech_radi + " as anomes_rad from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL  AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + depe_orfeo.ToString().Substring(0, 3) + "%'";
             else
                 IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS,a.RADI_NUME_RADI NUMERO_RADICADO,a.RADI_FECH_RADI FECHA, a.RA_ASUN ASUNTO, a.RADI_DEPE_ACTU DEPENDENCIA_ACTUAL,a.RADI_PATH PATH,a.RADI_USUA_ACTU USUARIO from Radicado a where a.radi_nume_radi is not null  ";
             IISQL = IISQL + " and a.radi_char_radi like '%" + numradicado.Trim() + "%' ";
 
             string tipoRad = cBoxtRadicado.Text.Trim().Substring(0, 1);
-            IISQL = IISQL + " and " + varSubstr + "(radi_char_radi,5,3) =  '" + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "'";
+            IISQL = IISQL + " and " + varSubstr + "(radi_char_radi,5,3) =  '" + depe_orfeo.ToString().Substring(0, 3) + "'";
             IISQL = IISQL + " and a.radi_char_radi like '%" + tipoRad + "'";
             try
             {
@@ -2014,6 +2029,10 @@ namespace OrfeoScan_IDU_STRT
                 dataGridView1.DataSource = dt;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 hide_loading_panel();
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("La consulta realizada no tiene resultados, por favor verifique la información suministrada");
+                }
             }
             catch (Exception ex)
             {
@@ -2074,6 +2093,10 @@ namespace OrfeoScan_IDU_STRT
                     dataGridView1.DataSource = dt;
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                     hide_loading_panel();
+                    if (dataGridView1.Rows.Count == 0)
+                    {
+                        MessageBox.Show("La consulta realizada no tiene resultados, por favor verifique la información suministrada");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -3293,6 +3316,7 @@ namespace OrfeoScan_IDU_STRT
                 string paginas = "";
                 string fecha = "";
                 string asunto = "";
+                string asunto1 = "";
                 string dependencia = "";
                 string path = "";
                 string nombre_documento = "";
@@ -3448,10 +3472,14 @@ namespace OrfeoScan_IDU_STRT
                             asunto = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
                         if (dataGridView1.Rows[e.RowIndex].Cells[5].Value != null)
                             nombre_documento = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+                        if (dataGridView1.Rows[e.RowIndex].Cells[7].Value != null)
+                            asunto1 = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
+
+                        
 
                         lbl_InfoRadicado1.Text = tipo + " No." + numero_documento;
                         lbl_InfoRadicado2.Text = "Título:";
-                        lbl_InfoRadicado3.Text = asunto;
+                        lbl_InfoRadicado3.Text = asunto1;
                         lbl_InfoRadicado4.Text = "Nombre-CC-Nit:";
                         lbl_InfoRadicado5.Text = nombre_documento;
                         lbl_num_doc.Text = "EXPEDIENTE " + numero_documento;
@@ -3571,7 +3599,7 @@ namespace OrfeoScan_IDU_STRT
         {
             //tiene que tener una fila seleccionada
 
-            if (false)
+            if (true)
             {
                 if (!CheckForInternetConnection("ftp://fs04cc01/orfeoscan_/webclient.txt"))
                 {
@@ -3612,8 +3640,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -5991,7 +6019,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 if (dataGridView1.CurrentRow.Cells[2].Value != null)
                 {
-                    string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] + @"/bodega_dev_of01";
+                    string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"];
                     string documento = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                     string tipo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
                     string archivo = dataGridView1.CurrentRow.Cells[6].Value.ToString();
@@ -6236,14 +6264,14 @@ namespace OrfeoScan_IDU_STRT
             if (impresiónDeSobresToolStripMenuItem.Checked)
             {
                 IISQL = "Select 'RADICADO' as TIPO,   a.RADI_NUME_RADI AS NUMERO_RADICADO,   a.RADI_FECH_RADI AS FECHA,   renv.SGD_RENV_NOMBRE AS DESTINO,   renv.SGD_RENV_DIR AS DIRECCIÓN,   renv.SGD_RENV_DEPTO AS DEPARTAMENTO,   renv.SGD_RENV_MPIO AS MUNICIPIO,   a.RA_ASUN AS ASUNTO,    a.RADI_USUA_ACTU,   a.RADI_NUME_HOJA,   a.RADI_NOMB || a.RADI_PRIM_APEL || a.RADI_SEGU_APEL AS RADI_NOMB,   a.RADI_DEPE_ACTU as DEP_ACTUAL,   b.DEPE_NOMB,   TO_CHAR(a.RADI_FECH_RADI,'YYYYMM') as ANOMES_RAD";
-                IISQL += " from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND (SGD_RENV_PLANILLA IS NULL OR SGD_RENV_PLANILLA='00') AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
+                IISQL += " from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND (SGD_RENV_PLANILLA IS NULL OR SGD_RENV_PLANILLA='00') AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + depe_orfeo + "%'";
                 //IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA,renv.SGD_RENV_NOMBRE AS DESTINO,renv.SGD_RENV_DIR AS DIRECCIÓN,renv.SGD_RENV_DEPTO AS DEPARTAMENTO,renv.SGD_RENV_MPIO AS MUNICIPIO,a.RA_ASUN AS ASUNTO from Radicado a,dependencia b, sgd_renv_regenvio renv where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.RADI_NUME_RADI=renv.RADI_NUME_SAL AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";
             }
             else
             {
-                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA, a.RA_ASUN AS ASUNTO, a.RADI_USUA_ACTU,a.RADI_PATH, a.RADI_NOMB || a.RADI_PRIM_APEL || a.RADI_SEGU_APEL AS RADI_NOMB, a.RADI_DEPE_ACTU as DEP_ACTUAL, b.DEPE_NOMB,TO_CHAR(a.RADI_FECH_RADI,'YYYYMM') as ANOMES_RAD";
+                IISQL = "Select 'RADICADO' as TIPO, a.RADI_NUME_HOJA PAGINAS, a.RADI_NUME_RADI AS NUMERO_RADICADO,a.RADI_FECH_RADI AS FECHA, a.RA_ASUN AS ASUNTO,a.RADI_DEPE_ACTU as DEP_ACTUAL ,a.RADI_PATH, a.RADI_NOMB || a.RADI_PRIM_APEL || a.RADI_SEGU_APEL AS RADI_NOMB, a.RADI_USUA_ACTU , b.DEPE_NOMB,TO_CHAR(a.RADI_FECH_RADI,'YYYYMM') as ANOMES_RAD";
                 IISQL += " from Radicado a,dependencia b ";
-                IISQL += " where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.radi_path is null AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + usuarioScanOrfeo.DEPE_CODI.ToString().Substring(0, 3) + "%'";              
+                IISQL += " where a.RADI_DEPE_ACTU=b.DEPE_CODI AND a.radi_path is null AND a.RADI_CHAR_RADI LIKE '" + DateTime.Now.Year.ToString() + depe_orfeo + "%'";              
             }
 
             //if (impresiónDeSobresToolStripMenuItem.Checked)
@@ -6268,6 +6296,8 @@ namespace OrfeoScan_IDU_STRT
             {
                 IISQL += " and (TDOC_CODI != 26 AND MREC_CODI !=5) ";
             }
+
+            IISQL += "ORDER BY a.RADI_NUME_RADI DESC";
 
             try
             {

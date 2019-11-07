@@ -253,7 +253,7 @@
             this.expedientesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1854, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1353, 24);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -283,7 +283,7 @@
             this.buscarRadicadoToolStripMenuItem.Name = "buscarRadicadoToolStripMenuItem";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.buscarRadicadoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarRadicadoToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.buscarRadicadoToolStripMenuItem.Tag = "F12";
             this.buscarRadicadoToolStripMenuItem.Text = "Buscar Radicado";
             this.buscarRadicadoToolStripMenuItem.Click += new System.EventHandler(this.buscarRadicadoToolStripMenuItem_Click);
@@ -293,7 +293,7 @@
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Name = "buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "F12";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Text = "Buscar Expediente";
             this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadoOExpedientesToolStripMenuItem_Click);
             // 
@@ -302,65 +302,69 @@
             this.buscarSoloEnTipoToolStripMenuItem.Name = "buscarSoloEnTipoToolStripMenuItem";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeyDisplayString = "F11";
             this.buscarSoloEnTipoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.buscarSoloEnTipoToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.buscarSoloEnTipoToolStripMenuItem.Text = "Buscar solo en Tipo";
             this.buscarSoloEnTipoToolStripMenuItem.Click += new System.EventHandler(this.buscarSoloEnTipoToolStripMenuItem_Click);
             // 
             // buscarEnTodosLosRadicadosMasivaToolStripMenuItem
             // 
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Name = "buscarEnTodosLosRadicadosMasivaToolStripMenuItem";
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
-            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar en Todos los Radicados Masiva";
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Text = "Buscar Radicados Masivas";
             this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem.Click += new System.EventHandler(this.buscarEnTodosLosRadicadosMasivaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(208, 6);
             // 
             // radicados60DíasToolStripMenuItem
             // 
             this.radicados60DíasToolStripMenuItem.Name = "radicados60DíasToolStripMenuItem";
-            this.radicados60DíasToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.radicados60DíasToolStripMenuItem.ShortcutKeyDisplayString = "F8";
+            this.radicados60DíasToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.radicados60DíasToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.radicados60DíasToolStripMenuItem.Text = "Ver Radicados...";
             this.radicados60DíasToolStripMenuItem.Click += new System.EventHandler(this.radicados60DíasToolStripMenuItem_Click);
             // 
             // expedientes60DiasToolStripMenuItem
             // 
             this.expedientes60DiasToolStripMenuItem.Name = "expedientes60DiasToolStripMenuItem";
-            this.expedientes60DiasToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.expedientes60DiasToolStripMenuItem.ShortcutKeyDisplayString = "F9";
+            this.expedientes60DiasToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.expedientes60DiasToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.expedientes60DiasToolStripMenuItem.Text = "Ver Expedientes...";
             this.expedientes60DiasToolStripMenuItem.Click += new System.EventHandler(this.expedientes60DiasToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
             // 
             // seleccionarEscanerToolStripMenuItem
             // 
             this.seleccionarEscanerToolStripMenuItem.Name = "seleccionarEscanerToolStripMenuItem";
-            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.seleccionarEscanerToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.seleccionarEscanerToolStripMenuItem.Text = "Seleccionar Escaner";
             // 
             // configurarEscanerToolStripMenuItem
             // 
             this.configurarEscanerToolStripMenuItem.Name = "configurarEscanerToolStripMenuItem";
-            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configurarEscanerToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.configurarEscanerToolStripMenuItem.Text = "Configurar Escaner";
             this.configurarEscanerToolStripMenuItem.Click += new System.EventHandler(this.configurarEscanerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(272, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
             // guardarImagenToolStripMenuItem
             // 
             this.guardarImagenToolStripMenuItem.Name = "guardarImagenToolStripMenuItem";
             this.guardarImagenToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + G";
             this.guardarImagenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.guardarImagenToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.guardarImagenToolStripMenuItem.Text = "Guardar Imagen";
             this.guardarImagenToolStripMenuItem.Click += new System.EventHandler(this.guardarImagenToolStripMenuItem_Click);
             // 
@@ -369,14 +373,14 @@
             this.borrarSelecciónToolStripMenuItem.Name = "borrarSelecciónToolStripMenuItem";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + X";
             this.borrarSelecciónToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.borrarSelecciónToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.borrarSelecciónToolStripMenuItem.Text = "Borrar Selección";
             this.borrarSelecciónToolStripMenuItem.Click += new System.EventHandler(this.borrarSelecciónToolStripMenuItem_Click);
             // 
             // configuraciónToolStripMenuItem
             // 
             this.configuraciónToolStripMenuItem.Name = "configuraciónToolStripMenuItem";
-            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.configuraciónToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.configuraciónToolStripMenuItem.Text = "Configuración";
             this.configuraciónToolStripMenuItem.Visible = false;
             this.configuraciónToolStripMenuItem.Click += new System.EventHandler(this.configuraciónToolStripMenuItem_Click);
@@ -597,6 +601,7 @@
             this.enviarSoloArchivoToolStripMenuItem.Name = "enviarSoloArchivoToolStripMenuItem";
             this.enviarSoloArchivoToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
             this.enviarSoloArchivoToolStripMenuItem.Text = "No Convertir Solo Enviar...";
+            this.enviarSoloArchivoToolStripMenuItem.Visible = false;
             this.enviarSoloArchivoToolStripMenuItem.Click += new System.EventHandler(this.enviarSoloArchivoToolStripMenuItem_Click);
             // 
             // incluirDocumentosToolStripMenuItem
@@ -612,7 +617,7 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             this.pQRTelefónicasToolStripMenuItem.Click += new System.EventHandler(this.pQRTelefónicasToolStripMenuItem_Click);
             // 
@@ -620,7 +625,7 @@
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             this.pQRPersonalToolStripMenuItem.Click += new System.EventHandler(this.pQRPersonalToolStripMenuItem_Click);
             // 
@@ -630,7 +635,7 @@
             this.impresiónEtiquetaToolStripMenuItem,
             this.buscarExpedientesToolStripMenuItem});
             this.expedientesToolStripMenuItem.Name = "expedientesToolStripMenuItem";
-            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.expedientesToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.expedientesToolStripMenuItem.Text = "Expedientes";
             this.expedientesToolStripMenuItem.Visible = false;
             // 
@@ -639,7 +644,7 @@
             this.impresiónEtiquetaToolStripMenuItem.Name = "impresiónEtiquetaToolStripMenuItem";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + E";
             this.impresiónEtiquetaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.impresiónEtiquetaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.impresiónEtiquetaToolStripMenuItem.Text = "Impresión Etiqueta";
             // 
             // buscarExpedientesToolStripMenuItem
@@ -647,7 +652,7 @@
             this.buscarExpedientesToolStripMenuItem.Name = "buscarExpedientesToolStripMenuItem";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeyDisplayString = "Crtl + F12";
             this.buscarExpedientesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
-            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.buscarExpedientesToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.buscarExpedientesToolStripMenuItem.Text = "Buscar Expedientes";
             // 
             // PageEdit
@@ -1034,9 +1039,9 @@
             this.tssl_valor_dependencia,
             this.tssl_label_usuario,
             this.tssl_valor_usuario});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1033);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1854, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1353, 22);
             this.statusStrip1.TabIndex = 86;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1071,9 +1076,9 @@
             this.panel4.Controls.Add(this.panel2);
             this.panel4.Controls.Add(this.panel3);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 316);
+            this.panel4.Location = new System.Drawing.Point(0, 310);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1854, 723);
+            this.panel4.Size = new System.Drawing.Size(1353, 723);
             this.panel4.TabIndex = 88;
             // 
             // numericUpDown2
@@ -1725,7 +1730,7 @@
             this.dtHoraAnexo.Location = new System.Drawing.Point(199, 95);
             this.dtHoraAnexo.Name = "dtHoraAnexo";
             this.dtHoraAnexo.Size = new System.Drawing.Size(87, 22);
-            this.dtHoraAnexo.TabIndex = 85;
+            this.dtHoraAnexo.TabIndex = 73;
             this.dtHoraAnexo.Visible = false;
             // 
             // btnLimpiarAnexo
@@ -1795,7 +1800,7 @@
             this.cBoxtDocumento.Location = new System.Drawing.Point(106, 10);
             this.cBoxtDocumento.Name = "cBoxtDocumento";
             this.cBoxtDocumento.Size = new System.Drawing.Size(412, 22);
-            this.cBoxtDocumento.TabIndex = 0;
+            this.cBoxtDocumento.TabIndex = 70;
             this.cBoxtDocumento.Visible = false;
             // 
             // dataGridView1
@@ -2177,7 +2182,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 24);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1854, 286);
+            this.panel6.Size = new System.Drawing.Size(1353, 286);
             this.panel6.TabIndex = 87;
             // 
             // groupBox7
@@ -2310,7 +2315,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1854, 1061);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.statusStrip1);
