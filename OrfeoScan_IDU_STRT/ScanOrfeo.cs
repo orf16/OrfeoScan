@@ -2490,114 +2490,7 @@ namespace OrfeoScan_IDU_STRT
             label1.Text = "";
             pan_loading.Refresh();
         }
-        public byte[] MergeTiff()
-        {
-            byte[] tiffMerge = null;
-            using (var msMerge = new MemoryStream())
-            {
-                //get the codec for tiff files
-                ImageCodecInfo ici = null;
-                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
-                    if (i.MimeType == "image/tiff")
-                        ici = i;
-
-                Encoder enc = Encoder.SaveFlag;
-                EncoderParameters ep = new EncoderParameters(1);
-
-                Bitmap pages = null;
-                int frame = 0;
-
-                for (int i = 0; i < total_page; i++)
-                {
-                    using (System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff"))
-                    {
-                        foreach (Guid guid in tiffImage.FrameDimensionsList)
-                        {
-                            FrameDimension dimension = new FrameDimension(guid);
-                            int noOfPages = tiffImage.GetFrameCount(dimension);
-
-                            for (int index = 0; index < noOfPages; index++)
-                            {
-                                FrameDimension currentFrame = new FrameDimension(guid);
-                                tiffImage.SelectActiveFrame(currentFrame, index);
-                                using (MemoryStream tempImg = new MemoryStream())
-                                {
-                                    tiffImage.Save(tempImg, ImageFormat.Tiff);
-                                    {
-                                        if (frame == 0)
-                                        {
-                                            pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
-                                            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
-                                            pages.Save(msMerge, ici, ep);
-                                        }
-                                        else
-                                        {
-                                            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
-                                            pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
-                                        }
-                                    }
-                                    frame++;
-                                }
-                                garbage_collector();
-                            }
-                            garbage_collector();
-                        }
-                    }
-                    garbage_collector();
-                }
-
-                //foreach (var tiffFile in tiffFiles)
-                //{
-                //    using (var imageStream = new MemoryStream(tiffFile))
-                //    {
-                //        using (System.Drawing.Image tiffImage = System.Drawing.Image.FromStream(imageStream))
-                //        {
-                //            foreach (Guid guid in tiffImage.FrameDimensionsList)
-                //            {
-                //                FrameDimension dimension = new FrameDimension(guid);
-                //                int noOfPages = tiffImage.GetFrameCount(dimension);
-
-                //                for (int index = 0; index < noOfPages; index++)
-                //                {
-                //                    FrameDimension currentFrame = new FrameDimension(guid);
-                //                    tiffImage.SelectActiveFrame(currentFrame, index);
-                //                    using (MemoryStream tempImg = new MemoryStream())
-                //                    {
-                //                        tiffImage.Save(tempImg, ImageFormat.Tiff);
-                //                        {
-                //                            if (frame == 0)
-                //                            {
-                //                                pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
-                //                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
-                //                                pages.Save(msMerge, ici, ep);
-                //                            }
-                //                            else
-                //                            {
-                //                                ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
-                //                                pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
-                //                            }
-                //                        }
-                //                        frame++;
-                //                    }
-                //                    garbage_collector();
-                //                }
-                //                garbage_collector();
-                //            }
-                //        }
-                //    }
-                //    garbage_collector();
-                //}
-                if (frame > 0)
-                {
-                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.Flush);
-                    pages.SaveAdd(ep);
-                }
-
-                msMerge.Position = 0;
-                tiffMerge = msMerge.ToArray();
-            }
-            return tiffMerge;
-        }
+        
         public byte[] ImageToByteArray(System.Drawing.Image imageIn)
         {
             using (var ms = new MemoryStream())
@@ -5414,6 +5307,32 @@ namespace OrfeoScan_IDU_STRT
                 guardarTiffActual(nombreArchivo);
             }
         }
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (total_page > 0)
+            {
+                saveFileDialog1.InitialDirectory = @"C:\";
+                saveFileDialog1.RestoreDirectory = true;
+                saveFileDialog1.Title = "Guardar PDF";
+                saveFileDialog1.DefaultExt = "pdf";
+                saveFileDialog1.Filter = "Archivos PDF (*.pdf) | *.pdf";
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string nombreArchivo = saveFileDialog1.FileName;
+                    if (crearPdf_2(nombreArchivo))
+                    {
+                        MessageBox.Show("PDF guardado", title);
+                    }
+
+                    //Ejecutar proceso
+                    //Luego se comprueba si quedo mediante la ruta
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A", title);
+            }
+        }
         private bool crearPdf_2(string rutaFinal)
         {
 
@@ -5462,10 +5381,10 @@ namespace OrfeoScan_IDU_STRT
                         editada = true;
                 }
                 if (editada)
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Gif);
                 else
                 {
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Gif);
                 }
 
                 pool0.Alignment = 3;
@@ -5492,9 +5411,9 @@ namespace OrfeoScan_IDU_STRT
                     iTextSharp.text.Image pool;
 
                     if (editada1)
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
                     else
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
+                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
 
                     pool.Alignment = 3;
                     pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
@@ -5536,6 +5455,7 @@ namespace OrfeoScan_IDU_STRT
                 //    li.Add(ImageToByte(actualBitmap_));
                 //    garbage_collector();
                 //}
+                //Thread thread = new Thread(() => MergeTiff);
                 var bite = MergeTiff();
                 System.IO.File.WriteAllBytes(path, bite);
                 MessageBox.Show("Imagen Guardada", title);
@@ -5614,13 +5534,192 @@ namespace OrfeoScan_IDU_STRT
 
             return true;
         }
+        private void cargaImagenes(System.Drawing.Image actualBitmap_, int from, int to)
+        {
+            Guid objGuid1 = actualBitmap_.FrameDimensionsList[0];
+            System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid1);
+            total_page = actualBitmap_.GetFrameCount(objDimension);
+            for (int i = from; i < to; i++)
+            {
+                actualBitmap_.SelectActiveFrame(objDimension, i);
+                actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+            }
+            actualBitmap_.Dispose();
+            garbage_collector();
+        }
+        //public byte[] MergeTiff()
+        //{
+        //    byte[] tiffMerge = null;
+        //    using (var msMerge = new MemoryStream())
+        //    {
+        //        //get the codec for tiff files
+        //        ImageCodecInfo ici = null;
+        //        foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+        //            if (i.MimeType == "image/tiff")
+        //                ici = i;
+
+        //        Encoder enc = Encoder.SaveFlag;
+        //        EncoderParameters ep = new EncoderParameters(1);
+
+        //        Bitmap pages = null;
+        //        int frame = 0;
+
+        //        for (int i = 0; i < total_page; i++)
+        //        {
+        //            using (System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff"))
+        //            {
+        //                foreach (Guid guid in tiffImage.FrameDimensionsList)
+        //                {
+        //                    FrameDimension dimension = new FrameDimension(guid);
+        //                    int noOfPages = tiffImage.GetFrameCount(dimension);
+
+        //                    for (int index = 0; index < noOfPages; index++)
+        //                    {
+        //                        FrameDimension currentFrame = new FrameDimension(guid);
+        //                        tiffImage.SelectActiveFrame(currentFrame, index);
+        //                        using (MemoryStream tempImg = new MemoryStream())
+        //                        {
+        //                            tiffImage.Save(tempImg, ImageFormat.Tiff);
+        //                            {
+        //                                if (frame == 0)
+        //                                {
+        //                                    pages = (Bitmap)System.Drawing.Image.FromStream(tempImg);
+        //                                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+        //                                    pages.Save(msMerge, ici, ep);
+        //                                }
+        //                                else
+        //                                {
+        //                                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+        //                                    pages.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
+        //                                }
+        //                            }
+        //                            frame++;
+        //                        }
+        //                        garbage_collector();
+        //                    }
+        //                    garbage_collector();
+        //                }
+        //            }
+        //            garbage_collector();
+        //        }
+        //        if (frame > 0)
+        //        {
+        //            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.Flush);
+        //            pages.SaveAdd(ep);
+        //        }
+
+        //        msMerge.Position = 0;
+        //        tiffMerge = msMerge.ToArray();
+        //    }
+        //    return tiffMerge;
+        //}
+        private Bitmap pages_;
+        private  int frame = 0;
+        public byte[] MergeTiff()
+        {
+            pages_ = null;
+            byte[] tiffMerge = null;
+            using (var msMerge = new MemoryStream())
+            {
+                //get the codec for tiff files
+                ImageCodecInfo ici = null;
+                foreach (ImageCodecInfo i in ImageCodecInfo.GetImageEncoders())
+                    if (i.MimeType == "image/tiff")
+                        ici = i;
+
+                Encoder enc = Encoder.SaveFlag;
+                EncoderParameters ep = new EncoderParameters(1);
+                //hacer variable publica y luego reiniciarla
+                //Realizar la primera imagen con el hilo principal
+                //hacer los demas hilos no en paralelo pero si continuos
+                int frame = 0;
+
+                for (int i = 0; i < 1; i++)
+                {
+                    using (System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff"))
+                    {
+                        foreach (Guid guid in tiffImage.FrameDimensionsList)
+                        {
+                            FrameDimension currentFrame = new FrameDimension(guid);
+                            tiffImage.SelectActiveFrame(currentFrame, 0);
+                            using (MemoryStream tempImg = new MemoryStream())
+                            {
+                                tiffImage.Save(tempImg, ImageFormat.Tiff);
+                                if (frame == 0)
+                                {
+                                    pages_ = (Bitmap)System.Drawing.Image.FromStream(tempImg);
+                                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.MultiFrame);
+                                    pages_.Save(msMerge, ici, ep);
+                                }
+                                else
+                                {
+                                    ep.Param[0] = new EncoderParameter(enc, 23);
+                                    pages_.SaveAdd((Bitmap)System.Drawing.Image.FromStream(tempImg), ep);
+                                }
+                                frame++;
+                            }
+                            garbage_collector();
+                        }
+                    }
+                    garbage_collector();
+                }
+                //frame debe subir en uno
+                Thread thread1 = new Thread(() => parallelMerge(total_page));
+                thread1.Start();
+                thread1.Join();
+               // parallelMerge(1);
+
+                if (frame > 0)
+                {
+                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.Flush);
+                    pages_.SaveAdd(ep);
+                }
+
+                msMerge.Position = 0;
+                tiffMerge = msMerge.ToArray();
+            }
+            pages_ = null;
+            garbage_collector();
+            return tiffMerge;
+        }
+        private void cargaImagenesFinal(System.Drawing.Image actualBitmap_, int from, int to)
+        {
+            Guid objGuid1 = actualBitmap_.FrameDimensionsList[0];
+            System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid1);
+            total_page = actualBitmap_.GetFrameCount(objDimension);
+            for (int i = from; i < to; i++)
+            {
+                actualBitmap_.SelectActiveFrame(objDimension, i);
+                actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+            }
+            actualBitmap_.Dispose();
+            garbage_collector();
+        }
+        private void parallelMerge(int total_page)
+        {
+            //System.Drawing.Image tiffImage = System.Drawing.Image.FromFile(work_folder + @"\" + i + ".tiff")
+           // Bitmap bitmap1 = new Bitmap("C:\\test.bmp");
+            Encoder enc = Encoder.SaveFlag;
+            EncoderParameters ep = new EncoderParameters(1);
+            ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+            for (int i = 1; i < total_page; i++)
+            {
+                using (Bitmap bitmap1 = new Bitmap(work_folder + @"\" + i + ".tiff"))
+                {
+                    ep.Param[0] = new EncoderParameter(enc, (long)EncoderValue.FrameDimensionPage);
+                    pages_.SaveAdd(bitmap1, ep);
+                    frame++;
+                }
+                garbage_collector();
+            }
+        }
         private void button5_Click_1(object sender, EventArgs e)
         {
             //cuando existen imagenes
             if (total_page > 0)
             {
                 #region existen
-                
+
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
                 dialog.InitialDirectory = @"C:\";
@@ -5753,7 +5852,7 @@ namespace OrfeoScan_IDU_STRT
                             }
                             label28.Text = total_page + " Páginas";
                         }
-                        int actual_page_copy = actual_page+1;
+                        int actual_page_copy = actual_page + 1;
                         for (int i = 0; i < total_page_offset; i++)
                         {
                             try
@@ -5777,13 +5876,13 @@ namespace OrfeoScan_IDU_STRT
                     }
 
                     cambio_flecha = true;
-                    comboBox1.Text = (actual_page+1).ToString();
+                    comboBox1.Text = (actual_page + 1).ToString();
                     comboBox2.Text = (actual_page + 1).ToString();
                     pintar_imagen(1, actual_page);
                     cambio_flecha = false;
                     actualBitmap_.Dispose();
                     pageRange[0] = actual_page;
-                    pageRange[1] = actual_page+2;
+                    pageRange[1] = actual_page + 2;
                     cargarImagen0000(pageRange, total_page);
                     label28.Text = total_page + " Páginas";
                     cargarPrincipal(actual_page);
@@ -5809,30 +5908,30 @@ namespace OrfeoScan_IDU_STRT
                         show_loading_panel(600, 177, 359, 20, "Abriendo Imagen, por favor espere");
                         limpiar_imagen();
                         System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
+
                         Guid objGuid = actualBitmap_.FrameDimensionsList[0];
                         System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
                         total_page = actualBitmap_.GetFrameCount(objDimension);
 
-                        
-                        
-                        //SearchContentAsync().Wait();
-                        //cargarsync(objDimension, total_page, actualBitmap_, pageRange);
                         for (int i = 0; i < total_page; i++)
                         {
-                            try
+
+                            if (i>=0 && i<=10)
                             {
-                                actualBitmap_.SelectActiveFrame(objDimension, i);
-                                actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
-                                comboBox1.Items.Add(i + 1);
-                                comboBox2.Items.Add(i + 1);
+                                try
+                                {
+                                    actualBitmap_.SelectActiveFrame(objDimension, i);
+                                    actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+                                }
+                                catch (Exception ex)
+                                {
+                                    return;
+                                }
                             }
-                            catch (Exception)
-                            {
-                                ifSaved = false;
-                                comboBox1.Items.Clear();
-                                comboBox2.Items.Clear();
-                                return;
-                            }
+                            
+                            comboBox1.Items.Add(i + 1);
+                            comboBox2.Items.Add(i + 1);
+
                             if (i == 0)
                             {
                                 cargarPrincipal(pageRange[0]);
@@ -5850,6 +5949,10 @@ namespace OrfeoScan_IDU_STRT
                                 cargarImagen0000(pageRange, total_page);
                             }
                         }
+
+                        
+                        //thread.Join();
+
                         cambio_flecha = true;
                         comboBox1.Text = "1";
                         comboBox2.Text = "1";
@@ -5858,15 +5961,288 @@ namespace OrfeoScan_IDU_STRT
                         pintar_imagen(1, 0);
                         cambio_flecha = false;
                         label28.Text = total_page + " Páginas";
-                        actualBitmap_.Dispose();
 
-                        garbage_collector();
+                       // Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 20, 100));
+                      //  System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                     //   Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
+
+                        if (total_page>10 && total_page <= 50)
+                        {
+                            Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, total_page));
+                            thread.Start();
+                            thread.Join();
+                        }
+                        if (total_page > 50)
+                        {
+                            Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 50));
+                            System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                            Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 50, total_page));
+                            thread.Start();
+                            thread1.Start();
+                            thread.Join();
+                            thread1.Join();
+                        }
+
                         hide_loading_panel();
+                        
                     }
                     garbage_collector();
                 }
             }
         }
+        //private void button5_Click_1(object sender, EventArgs e)
+        //{
+        //    //cuando existen imagenes
+        //    if (total_page > 0)
+        //    {
+        //        #region existen
+                
+        //        OpenFileDialog dialog = new OpenFileDialog();
+        //        dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+        //        dialog.InitialDirectory = @"C:\";
+        //        dialog.Title = "Abrir Imagen";
+
+        //        if (dialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            show_loading_panel(600, 177, 359, 20, "Abriendo Imagen, por favor espere");
+        //            PageScreen1.Image = null;
+        //            PageScreen2.Image = null;
+        //            PageScreen3.Image = null;
+        //            PageEdit.Image = null;
+        //            lblScreen1.Text = "";
+        //            lblScreen2.Text = "";
+        //            lblScreen3.Text = "";
+        //            comboBox1.Text = "";
+        //            comboBox1.Items.Clear();
+        //            comboBox2.Text = "";
+        //            comboBox2.Items.Clear();
+        //            label28.Text = "";
+        //            garbage_collector();
+        //            total_page = 0;
+
+        //            System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
+        //            Guid objGuid = actualBitmap_.FrameDimensionsList[0];
+        //            System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
+        //            int total_page_offset = actualBitmap_.GetFrameCount(objDimension);
+
+        //            int paginas_nuevas = 0;
+
+        //            if (agregar_behind)
+        //            {
+        //                //Insertar atras
+        //                if (Directory.Exists(work_folder))
+        //                {
+        //                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
+        //                    foreach (FileInfo file in di.GetFiles())
+        //                    {
+        //                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+        //                        int numero_pag = -1;
+        //                        if (int.TryParse(woe, out numero_pag))
+        //                        {
+        //                            if (numero_pag >= actual_page)
+        //                            {
+        //                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+        //                                file.Delete();
+        //                            }
+        //                        }
+        //                    }
+
+        //                    foreach (FileInfo file in di.GetFiles())
+        //                    {
+        //                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+        //                        woe = woe.Replace("_edit", "");
+        //                        int numero_pag = -1;
+        //                        if (int.TryParse(woe, out numero_pag))
+        //                        {
+        //                            if (numero_pag >= actual_page)
+        //                            {
+        //                                numero_pag += total_page_offset;
+        //                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+        //                            }
+        //                            paginas_nuevas++;
+        //                            total_page++;
+        //                            comboBox1.Items.Add(paginas_nuevas);
+        //                            comboBox2.Items.Add(paginas_nuevas);
+        //                        }
+        //                    }
+        //                    label28.Text = total_page + " Páginas";
+        //                }
+        //                int actual_page_copy = actual_page;
+        //                for (int i = 0; i < total_page_offset; i++)
+        //                {
+        //                    try
+        //                    {
+        //                        actualBitmap_.SelectActiveFrame(objDimension, i);
+        //                        actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
+        //                        actual_page_copy++;
+        //                        total_page++;
+        //                        paginas_nuevas++;
+        //                        comboBox1.Items.Add(paginas_nuevas);
+        //                        comboBox2.Items.Add(paginas_nuevas);
+        //                    }
+        //                    catch (Exception)
+        //                    {
+        //                        comboBox1.Items.Clear();
+        //                        comboBox2.Items.Clear();
+        //                        return;
+        //                    }
+        //                }
+        //                label28.Text = total_page + " Páginas";
+        //            }
+        //            else
+        //            {
+        //                //Insertar Adelante
+        //                if (Directory.Exists(work_folder))
+        //                {
+        //                    DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
+        //                    foreach (FileInfo file in di.GetFiles())
+        //                    {
+        //                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+        //                        int numero_pag = -1;
+        //                        if (int.TryParse(woe, out numero_pag))
+        //                        {
+        //                            if (numero_pag > actual_page)
+        //                            {
+        //                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+        //                                file.Delete();
+        //                            }
+        //                        }
+        //                    }
+
+        //                    foreach (FileInfo file in di.GetFiles())
+        //                    {
+        //                        string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+        //                        woe = woe.Replace("_edit", "");
+        //                        int numero_pag = -1;
+        //                        if (int.TryParse(woe, out numero_pag))
+        //                        {
+        //                            if (numero_pag > actual_page)
+        //                            {
+        //                                numero_pag += total_page_offset;
+        //                                System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+        //                            }
+        //                            paginas_nuevas++;
+        //                            total_page++;
+        //                            comboBox1.Items.Add(paginas_nuevas);
+        //                            comboBox2.Items.Add(paginas_nuevas);
+        //                        }
+        //                    }
+        //                    label28.Text = total_page + " Páginas";
+        //                }
+        //                int actual_page_copy = actual_page+1;
+        //                for (int i = 0; i < total_page_offset; i++)
+        //                {
+        //                    try
+        //                    {
+        //                        actualBitmap_.SelectActiveFrame(objDimension, i);
+        //                        actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
+        //                        actual_page_copy++;
+        //                        total_page++;
+        //                        paginas_nuevas++;
+        //                        comboBox1.Items.Add(paginas_nuevas);
+        //                        comboBox2.Items.Add(paginas_nuevas);
+        //                    }
+        //                    catch (Exception)
+        //                    {
+        //                        comboBox1.Items.Clear();
+        //                        comboBox2.Items.Clear();
+        //                        return;
+        //                    }
+        //                }
+        //                label28.Text = total_page + " Páginas";
+        //            }
+
+        //            cambio_flecha = true;
+        //            comboBox1.Text = (actual_page+1).ToString();
+        //            comboBox2.Text = (actual_page + 1).ToString();
+        //            pintar_imagen(1, actual_page);
+        //            cambio_flecha = false;
+        //            actualBitmap_.Dispose();
+        //            pageRange[0] = actual_page;
+        //            pageRange[1] = actual_page+2;
+        //            cargarImagen0000(pageRange, total_page);
+        //            label28.Text = total_page + " Páginas";
+        //            cargarPrincipal(actual_page);
+        //            garbage_collector();
+        //            hide_loading_panel();
+        //        }
+        //        garbage_collector();
+        //        //}
+        //        #endregion
+        //    }
+        //    else
+        //    {
+        //        if (eliminar_work())
+        //        {
+        //            bool ifSaved = false;
+        //            OpenFileDialog dialog = new OpenFileDialog();
+        //            dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
+        //            dialog.InitialDirectory = @"C:\";
+        //            dialog.Title = "Abrir Imagen";
+
+        //            if (dialog.ShowDialog() == DialogResult.OK)
+        //            {
+        //                show_loading_panel(600, 177, 359, 20, "Abriendo Imagen, por favor espere");
+        //                limpiar_imagen();
+        //                System.Drawing.Image actualBitmap_ = System.Drawing.Image.FromFile(dialog.FileName);
+        //                Guid objGuid = actualBitmap_.FrameDimensionsList[0];
+        //                System.Drawing.Imaging.FrameDimension objDimension = new System.Drawing.Imaging.FrameDimension(objGuid);
+        //                total_page = actualBitmap_.GetFrameCount(objDimension);
+
+                        
+                        
+        //                //SearchContentAsync().Wait();
+        //                //cargarsync(objDimension, total_page, actualBitmap_, pageRange);
+        //                for (int i = 0; i < total_page; i++)
+        //                {
+        //                    try
+        //                    {
+        //                        actualBitmap_.SelectActiveFrame(objDimension, i);
+        //                        actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+        //                        comboBox1.Items.Add(i + 1);
+        //                        comboBox2.Items.Add(i + 1);
+        //                    }
+        //                    catch (Exception)
+        //                    {
+        //                        ifSaved = false;
+        //                        comboBox1.Items.Clear();
+        //                        comboBox2.Items.Clear();
+        //                        return;
+        //                    }
+        //                    if (i == 0)
+        //                    {
+        //                        cargarPrincipal(pageRange[0]);
+        //                        if (total_page == 1)
+        //                        {
+        //                            cargarImagen0000(pageRange, total_page);
+        //                        }
+        //                    }
+        //                    if (i == 1 && total_page == 2)
+        //                    {
+        //                        cargarImagen0000(pageRange, total_page);
+        //                    }
+        //                    if (i == 2 && total_page > 2)
+        //                    {
+        //                        cargarImagen0000(pageRange, total_page);
+        //                    }
+        //                }
+        //                cambio_flecha = true;
+        //                comboBox1.Text = "1";
+        //                comboBox2.Text = "1";
+        //                pageRange[0] = 0;
+        //                pageRange[1] = 2;
+        //                pintar_imagen(1, 0);
+        //                cambio_flecha = false;
+        //                label28.Text = total_page + " Páginas";
+        //                actualBitmap_.Dispose();
+
+        //                garbage_collector();
+        //                hide_loading_panel();
+        //            }
+        //            garbage_collector();
+        //        }
+        //    }
+        //}
         private void cargarsync (FrameDimension fd, int tp, System.Drawing.Image im, int[] rng)
         {
             var tasks = new List<Task>();
@@ -6474,29 +6850,7 @@ namespace OrfeoScan_IDU_STRT
             }
         }
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-            if (total_page>0)
-            {
-                saveFileDialog1.InitialDirectory = @"C:\";
-                saveFileDialog1.RestoreDirectory = true;
-                saveFileDialog1.Title = "Guardar PDF";
-                saveFileDialog1.DefaultExt = "pdf";
-                saveFileDialog1.Filter = "Archivos PDF (*.pdf) | *.pdf";
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    string nombreArchivo = saveFileDialog1.FileName;
-                    if (crearPdf_2(nombreArchivo))
-                    {
-                        MessageBox.Show("PDF guardado", title);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A", title);
-            }
-        }
+
         private string send_only_path = "";
         private void enviarSoloArchivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
