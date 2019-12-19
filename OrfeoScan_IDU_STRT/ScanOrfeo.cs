@@ -800,12 +800,12 @@ namespace OrfeoScan_IDU_STRT
                 var height0 = bmp.Height;
                 iTextSharp.text.Rectangle cero = new iTextSharp.text.Rectangle(width0, height0);
 
-                Document doc = new Document(cero, 0, 0, 0, 0);
+                doc_pdf = new Document(cero, 0, 0, 0, 0);
 
-                doc.SetMargins(0, 0, 0, 0);
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(rutaFinal, FileMode.Create));
+                doc_pdf.SetMargins(0, 0, 0, 0);
+                PdfWriter writer = PdfWriter.GetInstance(doc_pdf, new FileStream(rutaFinal, FileMode.Create));
                 writer.PDFXConformance = PdfWriter.PDFA1B;
-                doc.Open();
+                doc_pdf.Open();
 
                 PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
                 outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
@@ -825,11 +825,8 @@ namespace OrfeoScan_IDU_STRT
                 BaseFont bf = BaseFont.CreateFont(path + @"\arial.ttf", BaseFont.WINANSI, true);
                 iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
 
-                float subtrahend0 = doc.PageSize.Height - 10;
-
+                float subtrahend0 = doc_pdf.PageSize.Height - 10;
                 //iTextSharp.text.Image pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Tiff);
-
-
                 iTextSharp.text.Image pool0;
                 bool editada = false;
                 foreach (var item in editadas)
@@ -838,10 +835,10 @@ namespace OrfeoScan_IDU_STRT
                         editada = true;
                 }
                 if (editada)
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Gif);
                 else
                 {
-                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Jpeg);
+                    pool0 = iTextSharp.text.Image.GetInstance(bmp, ImageFormat.Gif);
 
                     //System.Drawing.Rectangle imageRect = new System.Drawing.Rectangle(0, 0, bmp.Size.Width, bmp.Size.Height);
                     //System.Drawing.Image image = (Bitmap)bmp.Clone(imageRect, PixelFormat.Format1bppIndexed);
@@ -849,46 +846,25 @@ namespace OrfeoScan_IDU_STRT
                     //pool0 = iTextSharp.text.Image.GetInstance(bmp, null, false);
                     
                 }
-                    
-
                 pool0.Alignment = 3;
-                pool0.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend0);
-                doc.Add(pool0);
+                pool0.ScaleToFit(doc_pdf.PageSize.Width - (doc_pdf.RightMargin * 2), subtrahend0);
+                doc_pdf.Add(pool0);
                 garbage_collector();
                 //Crear las paginas
                 for (int i = 1; i < total_page; ++i)
                 {
-                    bool editada1 = false;
-                    foreach (var item in editadas)
-                    {
-                        if (item == i)
-                            editada1 = true;
-                    }
-
                     System.Drawing.Image bmp1 = System.Drawing.Image.FromFile(work_folder + i + ".tiff");
-                    var width = bmp1.Width;
-                    var height = bmp1.Height;
-                    iTextSharp.text.Rectangle one = new iTextSharp.text.Rectangle(width, height);
-                    doc.SetPageSize(one);
-                    doc.NewPage();
-                    float subtrahend = doc.PageSize.Height - 10;
-                    iTextSharp.text.Image pool;
-
-                    if (editada1)
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
-                    else
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Jpeg);
-
-                    //pool = iTextSharp.text.Image.GetInstance(bmp1, iTextSharp.text.Color.WHITE, false);
-
-                    pool.Alignment = 3;
-                    pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
-                    doc.Add(pool);
+                    float Width = bmp1.Width;
+                    float Height = bmp1.Height;
+                    Task task1 = Task.Factory.StartNew(() => pdf_paralelo_page(bmp1));
+                    Task task2 = Task.Factory.StartNew(() => pdf_paralelo_doc(Width, Height));
+                    Task.WaitAll(task1, task2);
+                    doc_pdf.Add(page_prop_pdf);
                     bmp1.Dispose();
                     garbage_collector();
                 }
                 writer.CreateXmpMetadata();
-                doc.Close();
+                doc_pdf.Close();
                 bmp.Dispose();
                 hide_loading_panel();
             }
@@ -3533,8 +3509,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -4282,7 +4258,7 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (Exception e)
             {
-                MessageBox.Show("File upload/transfer Failed.\r\nError Message:\r\n" + ex.Message, "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("File upload/transfer Failed.\r\nError Message:\r\n" + ex.Message, "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             finally
             {
@@ -5365,7 +5341,14 @@ namespace OrfeoScan_IDU_STRT
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string nombreArchivo = saveFileDialog1.FileName;
-                    crearPdf_2(nombreArchivo);
+
+                    show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
+                    Thread thread = new Thread(() => crearPdf_2(nombreArchivo));
+                    thread.Start();
+                    thread.Join();
+                    hide_loading_panel();
+
+                    // crearPdf_2(nombreArchivo);
                     if (System.IO.File.Exists(nombreArchivo))
                     {
                         if ( new System.IO.FileInfo(nombreArchivo).Length>0)
@@ -5388,10 +5371,13 @@ namespace OrfeoScan_IDU_STRT
                 MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A", title);
             }
         }
+
+        private Document doc_pdf;
+        private iTextSharp.text.Image page_prop_pdf;
         private void crearPdf_2(string rutaFinal)
         {
 
-            show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
+            
             try
             {
                 garbage_collector();
@@ -5402,12 +5388,12 @@ namespace OrfeoScan_IDU_STRT
                 var height0 = bmp.Height;
                 iTextSharp.text.Rectangle cero = new iTextSharp.text.Rectangle(width0, height0);
 
-                Document doc = new Document(cero, 0, 0, 0, 0);
+                doc_pdf = new Document(cero, 0, 0, 0, 0);
 
-                doc.SetMargins(0, 0, 0, 0);
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(rutaFinal, FileMode.Create));
+                doc_pdf.SetMargins(0, 0, 0, 0);
+                PdfWriter writer = PdfWriter.GetInstance(doc_pdf, new FileStream(rutaFinal, FileMode.Create));
                 writer.PDFXConformance = PdfWriter.PDFA1B;
-                doc.Open();
+                doc_pdf.Open();
 
                 PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
                 outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
@@ -5426,7 +5412,7 @@ namespace OrfeoScan_IDU_STRT
                 BaseFont bf = BaseFont.CreateFont(path + @"\arial.ttf", BaseFont.WINANSI, true);
                 iTextSharp.text.Font f = new iTextSharp.text.Font(bf, 12);
 
-                float subtrahend0 = doc.PageSize.Height - 10;
+                float subtrahend0 = doc_pdf.PageSize.Height - 10;
 
                 iTextSharp.text.Image pool0;
                 bool editada = false;
@@ -5443,47 +5429,61 @@ namespace OrfeoScan_IDU_STRT
                 }
 
                 pool0.Alignment = 3;
-                pool0.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend0);
-                doc.Add(pool0);
+                pool0.ScaleToFit(doc_pdf.PageSize.Width - (doc_pdf.RightMargin * 2), subtrahend0);
+                doc_pdf.Add(pool0);
                 garbage_collector();
                 //Crear las paginas
                 for (int i = 1; i < total_page; ++i)
                 {
-                    bool editada1 = false;
-                    foreach (var item in editadas)
-                    {
-                        if (item == i)
-                            editada1 = true;
-                    }
 
                     System.Drawing.Image bmp1 = System.Drawing.Image.FromFile(work_folder + i + ".tiff");
-                    var width = bmp1.Width;
-                    var height = bmp1.Height;
-                    iTextSharp.text.Rectangle one = new iTextSharp.text.Rectangle(width, height);
-                    doc.SetPageSize(one);
-                    doc.NewPage();
-                    float subtrahend = doc.PageSize.Height - 10;
-                    iTextSharp.text.Image pool;
+                    float Width = bmp1.Width;
+                    float Height = bmp1.Height;
 
-                    if (editada1)
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
-                    else
-                        pool = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
+                    //doc_pdf.SetPageSize(new iTextSharp.text.Rectangle(bmp1.Width, bmp1.Height));
+                    //doc_pdf.NewPage();
 
-                    pool.Alignment = 3;
-                    pool.ScaleToFit(doc.PageSize.Width - (doc.RightMargin * 2), subtrahend);
-                    doc.Add(pool);
+                    ////iTextSharp.text.Image pool;
+                    //page_prop_pdf = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
+                    //page_prop_pdf.Alignment = 3;
+                    //page_prop_pdf.ScaleToFit(bmp1.Width, bmp1.Height - 10);
+
+                    //  Thread thread = new Thread(() => pdf_paralelo_page(bmp1));
+                    //thread.Start();
+                    //Thread thread1 = new Thread(() => pdf_paralelo_doc(Width, Height));
+                    //thread1.Start();
+
+                    //thread1.Join();
+                    //thread.Join();
+
+
+                    Task task1 = Task.Factory.StartNew(() => pdf_paralelo_page(bmp1));
+                    Task task2 = Task.Factory.StartNew(() => pdf_paralelo_doc(Width, Height));
+                    Task.WaitAll(task1, task2);
+
+
+                   // Task task3 = Task.Factory.StartNew(() => doStuff("Task3"));
+                    
+
+
+                   
+
+
+
+
+
+                    doc_pdf.Add(page_prop_pdf);
+
                     bmp1.Dispose();
                     garbage_collector();
                 }
                 writer.CreateXmpMetadata();
-                doc.Close();
+                doc_pdf.Close();
                 bmp.Dispose();
-                hide_loading_panel();
+
             }
             catch (Exception ex)
             {
-                hide_loading_panel();
                 MessageBox.Show("Falla de sistema en la conversión a PDF/A", title);
                 if (ex.ToString().Contains("utilizado en otro proceso"))
                 {
@@ -5494,6 +5494,17 @@ namespace OrfeoScan_IDU_STRT
                 garbage_collector();
             }
             garbage_collector();
+        }
+        private void pdf_paralelo_page(System.Drawing.Image bmp1)
+        {
+            page_prop_pdf = iTextSharp.text.Image.GetInstance(bmp1, ImageFormat.Gif);
+            page_prop_pdf.Alignment = 3;
+            page_prop_pdf.ScaleToFit(bmp1.Width, bmp1.Height - 10);
+        }
+        private void pdf_paralelo_doc(float w, float h)
+        {
+            doc_pdf.SetPageSize(new iTextSharp.text.Rectangle(w, h));
+            doc_pdf.NewPage();
         }
         private bool guardarTiffActual(string path)
         {
