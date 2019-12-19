@@ -4254,6 +4254,52 @@ namespace OrfeoScan_IDU_STRT
                 MessageBox.Show("No existen filas seleccionadas, debe realizar la busqueda de un registro y seleccionar una fila", title);
             return;
         }
+        private void enviar_servidor()
+        {
+            FileStream fs = null;
+            Stream rs = null;
+
+            try
+            {
+                string file = "D:\\RP-3160-driver.zip";
+                string uploadFileName = new FileInfo(file).Name;
+                string uploadUrl = "ftp://ftp.Sitename.com/tempFiles/";
+                fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+
+                string ftpUrl = string.Format("{0}/{1}", uploadUrl, uploadFileName);
+                FtpWebRequest requestObj = FtpWebRequest.Create(ftpUrl) as FtpWebRequest;
+                requestObj.Method = WebRequestMethods.Ftp.UploadFile;
+                requestObj.Credentials = new NetworkCredential("usernam", "password");
+                rs = requestObj.GetRequestStream();
+
+                byte[] buffer = new byte[8092];
+                int read = 0;
+                while ((read = fs.Read(buffer, 0, buffer.Length)) != 0)
+                {
+                    rs.Write(buffer, 0, read);
+                }
+                rs.Flush();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("File upload/transfer Failed.\r\nError Message:\r\n" + ex.Message, "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Close();
+                    fs.Dispose();
+                }
+
+                if (rs != null)
+                {
+                    rs.Close();
+                    rs.Dispose();
+                }
+            }
+
+        }
         public static bool CheckForInternetConnection(string servidor)
         {
             try
@@ -5319,13 +5365,22 @@ namespace OrfeoScan_IDU_STRT
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string nombreArchivo = saveFileDialog1.FileName;
-                    if (crearPdf_2(nombreArchivo))
+                    crearPdf_2(nombreArchivo);
+                    if (System.IO.File.Exists(nombreArchivo))
                     {
-                        MessageBox.Show("PDF guardado", title);
+                        if ( new System.IO.FileInfo(nombreArchivo).Length>0)
+                        {
+                            MessageBox.Show("PDF guardado", title);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error en la transformación del PDF", title);
+                        }
                     }
-
-                    //Ejecutar proceso
-                    //Luego se comprueba si quedo mediante la ruta
+                    else
+                    {
+                        MessageBox.Show("Error en la transformación del PDF", title);
+                    }
                 }
             }
             else
@@ -5333,7 +5388,7 @@ namespace OrfeoScan_IDU_STRT
                 MessageBox.Show("No hay imagenes para convertir y guardar como PDF/A", title);
             }
         }
-        private bool crearPdf_2(string rutaFinal)
+        private void crearPdf_2(string rutaFinal)
         {
 
             show_loading_panel(600, 177, 359, 20, "Convirtiendo imagen a PDF");
@@ -5437,10 +5492,8 @@ namespace OrfeoScan_IDU_STRT
                 }
                 MessageBox.Show(ex.ToString(), title);
                 garbage_collector();
-                return false;
             }
             garbage_collector();
-            return true;
         }
         private bool guardarTiffActual(string path)
         {
