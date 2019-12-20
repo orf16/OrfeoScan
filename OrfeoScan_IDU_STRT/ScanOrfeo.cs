@@ -5966,6 +5966,7 @@ namespace OrfeoScan_IDU_STRT
                     dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
                     dialog.InitialDirectory = @"C:\";
                     dialog.Title = "Abrir Imagen";
+                    dialog.RestoreDirectory = true;
 
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
@@ -6026,26 +6027,74 @@ namespace OrfeoScan_IDU_STRT
                         cambio_flecha = false;
                         label28.Text = total_page + " Páginas";
 
-                       // Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 20, 100));
-                      //  System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                     //   Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
+                        // Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 20, 100));
+                        //  System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                        //   Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
 
-                        if (total_page>10 && total_page <= 50)
+                        int paginas_adicionales = total_page - 10;
+
+                        if (paginas_adicionales > 0)
                         {
-                            Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, total_page));
-                            thread.Start();
-                            thread.Join();
-                        }
-                        if (total_page > 50)
-                        {
-                            Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 50));
+                            //double div = paginas_adicionales / 2;
+                            int div = paginas_adicionales / 2; //quotient is 1
+                            int mod = paginas_adicionales % 2; //remainder is 2
+                            int div1 = div * 2;
+                            int div2 = mod;
+
+                            Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, (paginas_adicionales / 2)));
                             System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                            Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 50, total_page));
+                            Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, (paginas_adicionales / 2), total_page));
+
                             thread.Start();
                             thread1.Start();
+
                             thread.Join();
                             thread1.Join();
                         }
+
+
+                        //if (total_page > 10 && total_page <= 20)
+                        //{
+                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 15));
+                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 15, total_page));
+
+                        //    thread.Start();
+                        //    thread1.Start();
+
+                        //    thread.Join();
+                        //    thread1.Join();
+                        //}
+                        //if (total_page>20 && total_page <= 50)
+                        //{
+                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 35));
+                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 35, total_page));
+                        //    thread.Start();
+                        //    thread1.Start();
+                        //    thread.Join();
+                        //    thread1.Join();
+                        //}
+                        //if (total_page > 50 && total_page <= 100)
+                        //{
+                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 50));
+                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 50, total_page));
+                        //    thread.Start();
+                        //    thread1.Start();
+                        //    thread.Join();
+                        //    thread1.Join();
+                        //}
+                        //if (total_page > 100)
+                        //{
+                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 100));
+                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
+                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
+                        //    thread.Start();
+                        //    thread1.Start();
+                        //    thread.Join();
+                        //    thread1.Join();
+                        //}
 
                         hide_loading_panel();
                         

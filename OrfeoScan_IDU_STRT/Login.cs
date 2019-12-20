@@ -139,5 +139,12 @@ namespace OrfeoScan_IDU_STRT
             if (e.KeyCode == Keys.Enter)
                 btn_ingresar_Click(null, null);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Convertidor Contenedor = new Convertidor();
+            Contenedor.Show();
+            this.Hide();
+        }
     }
 }
