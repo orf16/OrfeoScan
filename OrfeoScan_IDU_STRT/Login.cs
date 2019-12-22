@@ -12,6 +12,7 @@ namespace OrfeoScan_IDU_STRT
         funciones.funciones funciones = new funciones.funciones();
         public USUARIO usuario;
         public int tipo_usuario=0;
+        private bool ingresa = false;
         public Login()
         {
             InitializeComponent();
@@ -64,7 +65,8 @@ namespace OrfeoScan_IDU_STRT
                             tipo_usuario = usuario.USUA_DIGITALIZADOR;
                             ScanOrfeo Contenedor = new ScanOrfeo(usuario);
                             Contenedor.Show();
-                            this.Hide();
+                            ingresa = true;
+                            this.Close();
                         }
                         else
                             MessageBox.Show("El usuario de Orfeo no tiene permiso para acceder al digitalizador");
@@ -145,6 +147,14 @@ namespace OrfeoScan_IDU_STRT
             Convertidor Contenedor = new Convertidor();
             Contenedor.Show();
             this.Hide();
+        }
+
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!ingresa)
+            {
+                Environment.Exit(0);
+            }
         }
     }
 }

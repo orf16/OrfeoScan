@@ -21,8 +21,9 @@ namespace OrfeoScan_IDU_STRT
         private void Form1_Load(object sender, EventArgs e)
         {
             Login Contenedor = new Login();
-            this.Hide();
             Contenedor.Show();
+            this.Opacity = 0.0f;
+            this.ShowInTaskbar = false;
         }
 
     }

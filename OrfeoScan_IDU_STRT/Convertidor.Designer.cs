@@ -125,6 +125,7 @@
             this.Controls.Add(this.button16);
             this.Name = "Convertidor";
             this.Text = "Convertidor TIFF/PDF";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Convertidor_FormClosed);
             this.Load += new System.EventHandler(this.Convertidor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

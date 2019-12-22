@@ -1,15 +1,7 @@
 ﻿using iTextSharp.text;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 using iTextSharp.text.pdf;
 using System.IO;
 
@@ -19,11 +11,14 @@ namespace OrfeoScan_IDU_STRT
     {
         private string title = "Mensaje de OrfeoScan";
         private string convertidor_path = @"D:\Users\clgarcia8\Pictures\";
+        private string path_load = @"C:\";
+        private string path_save = @"C:\";
+        private Document doc_pdf;
+        private iTextSharp.text.Image page_prop_pdf;
         public Convertidor()
         {
             InitializeComponent();
         }
-
         private void Convertidor_Load(object sender, EventArgs e)
         {
             this.Icon = OrfeoScan_IDU_STRT.Properties.Resources.icon;
@@ -37,7 +32,7 @@ namespace OrfeoScan_IDU_STRT
         {
             if (!string.IsNullOrEmpty(convertidor_path))
             {
-                saveFileDialog1.InitialDirectory = @"C:\";
+                saveFileDialog1.InitialDirectory = path_load;
                 saveFileDialog1.RestoreDirectory = true;
                 saveFileDialog1.Title = "Guardar PDF";
                 saveFileDialog1.DefaultExt = "pdf";
@@ -45,12 +40,8 @@ namespace OrfeoScan_IDU_STRT
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string nombreArchivo = saveFileDialog1.FileName;
-                    //Thread thread = new Thread(() => );
-                    //thread.Start();
-                    //thread.Join();
+                    path_load = Path.GetDirectoryName(saveFileDialog1.FileName);
                     crearPdf_2(nombreArchivo);
-
-                    // crearPdf_2(nombreArchivo);
                     if (System.IO.File.Exists(nombreArchivo))
                     {
                         if (new System.IO.FileInfo(nombreArchivo).Length > 0)
@@ -81,8 +72,6 @@ namespace OrfeoScan_IDU_STRT
                 lbl_pdfconvertir.Text = "";
             }
         }
-        private Document doc_pdf;
-        private iTextSharp.text.Image page_prop_pdf;
         private void crearPdf_2(string rutaFinal)
         {
             try
@@ -99,8 +88,6 @@ namespace OrfeoScan_IDU_STRT
 
 
                 garbage_collector();
-                //Crear primera pagina 
-               // System.Drawing.Image bmp = actualBitmap_;
                 var width0 = actualBitmap_.Width;
                 var height0 = actualBitmap_.Height;
                 iTextSharp.text.Rectangle cero = new iTextSharp.text.Rectangle(width0, height0);
@@ -142,8 +129,6 @@ namespace OrfeoScan_IDU_STRT
                 for (int i = 1; i < total_page; ++i)
                 {
                     actualBitmap_.SelectActiveFrame(objDimension, i);
-
-                    //System.Drawing.Image bmp1 = System.Drawing.Image.FromFile(work_folder + i + ".tiff");
                     float Width = actualBitmap_.Width;
                     float Height = actualBitmap_.Height;
                     Task task1 = Task.Factory.StartNew(() => pdf_paralelo_page(actualBitmap_));
@@ -153,7 +138,6 @@ namespace OrfeoScan_IDU_STRT
                     decimal porcentaje = ((decimal)i / (decimal)total_page);
                     progressBar1.Value = (int)(porcentaje*100);
                     progressBar1.Refresh();
-                    //bmp1.Dispose();
                     garbage_collector();
                 }
                 progressBar1.Value = 100;
@@ -189,17 +173,22 @@ namespace OrfeoScan_IDU_STRT
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
-            dialog.InitialDirectory = @"C:\";
+            dialog.InitialDirectory = path_save;
             dialog.Title = "Abrir Imagen";
             dialog.RestoreDirectory = true;
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                path_save = Path.GetDirectoryName(dialog.FileName);
                 rtb_nombrearchivo.Text = string.Empty;
                 convertidor_path = string.Empty;
                 rtb_nombrearchivo.Text = dialog.FileName;
                 convertidor_path= dialog.FileName;
             }
+        }
+        private void Convertidor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
