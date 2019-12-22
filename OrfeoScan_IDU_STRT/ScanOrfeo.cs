@@ -3695,10 +3695,6 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (IOException)
             {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
                 return true;
             }
             finally
@@ -3706,8 +3702,6 @@ namespace OrfeoScan_IDU_STRT
                 if (stream != null)
                     stream.Close();
             }
-
-            //file is not locked
             return false;
         }
         private bool sendFile(string ruta_archivo, string servidor, string ruta_servidor)
@@ -3715,40 +3709,10 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
-
-
-                FtpWebRequest request;
-
-                request = WebRequest.Create(new Uri(servidor + ruta_servidor)) as FtpWebRequest;
-                request.Method = WebRequestMethods.Ftp.UploadFile;
-                request.UseBinary = true;
-                request.UsePassive = false;
-                request.KeepAlive = false;
-                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
-                request.ConnectionGroupName = "group";
-
-                try
-                {
-                    using (FileStream fs = File.OpenRead(ruta_archivo))
-                    {
-                        byte[] buffer = new byte[fs.Length];
-                        fs.Read(buffer, 0, buffer.Length);
-                        fs.Close();
-                        Stream requestStream = request.GetRequestStream();
-                        requestStream.Write(buffer, 0, buffer.Length);
-                        requestStream.Flush();
-                        requestStream.Close();
-                    }
-                }
-                catch (Exception)
-                {
-                    using (var client = new WebClient())
-                    {
-                        client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
-                        client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
-                    }
-                }
-
+                Thread thread = new Thread(() => sendthread(ruta_archivo, servidor, ruta_servidor));
+                thread.Start();
+                thread.Join();
+                //sendthread(ruta_archivo, servidor, ruta_servidor);
                 FtpWebRequest requests;
                 requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
                 requests.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
@@ -3767,6 +3731,7 @@ namespace OrfeoScan_IDU_STRT
                         FtpStatusCode.ActionNotTakenFileUnavailable)
                     {
                         MessageBox.Show("El archivo no se subió, por favor vuelva a intentar", title);
+                        hide_loading_panel();
                         return false;
                     }
                 }
@@ -3775,17 +3740,16 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (WebException e)
             {
+                
+                hide_loading_panel();
                 try
                 {
-                    
+                    String status = ((FtpWebResponse)e.Response).StatusDescription;
+                    MessageBox.Show(status, title);
                 }
                 catch (Exception)
                 {
-
                 }
-                hide_loading_panel();
-                String status = ((FtpWebResponse)e.Response).StatusDescription;
-                MessageBox.Show(status, title);
                 return false;
             }
             return true;
@@ -3800,15 +3764,10 @@ namespace OrfeoScan_IDU_STRT
             {
                 string file = ruta_archivo;
                 string uploadFileName = new FileInfo(file).Name;
-                string uploadUrl = "ftp://ftp.Sitename.com/tempFiles/";
                 fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-
-                string ftpUrl = string.Format("{0}/{1}", uploadUrl, uploadFileName);
-
 
                 FtpWebRequest requestObj = FtpWebRequest.Create(servidor+ ruta_servidor) as FtpWebRequest;
                 requestObj.Method = WebRequestMethods.Ftp.UploadFile;
-               // requestObj.Credentials = new NetworkCredential("usernam", "password");
                 requestObj.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
                 rs = requestObj.GetRequestStream();
 
@@ -3822,7 +3781,7 @@ namespace OrfeoScan_IDU_STRT
             }
             catch (Exception ex)
             {
-                MessageBox.Show("File upload/transfer Failed.\r\nError Message:\r\n" + ex.Message, "Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
             }
             finally
             {
