@@ -9,3 +9,9 @@ C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\bin\Debug\funciones.pdb
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\obj\Debug\funciones.dll
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\obj\Debug\funciones.pdb
 C:\Users\orf16\Source\Repos\orf16\OrfeoScan\funciones\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\OrfeoScan\funciones\bin\Debug\funciones.dll
+D:\OrfeoScan\funciones\bin\Debug\funciones.pdb
+D:\OrfeoScan\funciones\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\OrfeoScan\funciones\obj\Debug\funciones.csprojResolveAssemblyReference.cache
+D:\OrfeoScan\funciones\obj\Debug\funciones.dll
+D:\OrfeoScan\funciones\obj\Debug\funciones.pdb

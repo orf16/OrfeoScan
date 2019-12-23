@@ -34,6 +34,7 @@ namespace OrfeoScan_IDU_STRT
         bool _loadingCaps;
         List<System.Drawing.Image> imagenes = new List<System.Drawing.Image>();
         List<byte[]> streamer = new List<byte[]>();
+        private DataSource ds;
         //List<PictureBox> boxes = new List<PictureBox>();
 
         int numero_box = 0;
@@ -95,7 +96,7 @@ namespace OrfeoScan_IDU_STRT
         private string work_folder = @"D:\imgidu\work\";
         private bool agregar_behind = true;
         private bool Es_inicial = true;
-        private int adicionar_scan = -1;
+        private int adicionar_scan = 0;
 
         private float zoom_=1F;
         private string temp_radicado = "";
@@ -1455,6 +1456,7 @@ namespace OrfeoScan_IDU_STRT
             {
                 var srcBtn = btn as ToolStripMenuItem;
                 var src = srcBtn.Tag as DataSource;
+                ds = srcBtn.Tag as DataSource;
                 if (src.Name== config.AppSettings.Settings["SCAN_NAME"].Value)
                 {
                     if (src.Open() == ReturnCode.Success)
@@ -1481,6 +1483,7 @@ namespace OrfeoScan_IDU_STRT
                 }
                 primerEscaner = false;
             }
+
             List<string> administradores = new List<string>();
             administradores.Add("CAESLAVA2");
             administradores.Add("CLGARCIA8");
@@ -1507,6 +1510,13 @@ namespace OrfeoScan_IDU_STRT
             cBoxtDocumento.Text = string.Empty;
             cargarTipoDocumental();
 
+        }
+        private void escaner_load()
+        {
+            if (_twain.State > 4) { return; }
+            if (_twain.State == 4) { _twain.CurrentSource.Close(); }
+            if (ds.Open() == ReturnCode.Success)
+            { }
         }
         private void cargarTipoDocumental()
         {
@@ -2014,8 +2024,8 @@ namespace OrfeoScan_IDU_STRT
                                 cargarPrincipal(pageRange[0]);
                                 garbage_collector();
 
-                                btnStopScan.Enabled = false;
-                                btnStopScan.Visible = false;
+                                //btnStopScan.Enabled = false;
+                                //btnStopScan.Visible = false;
                                 btnStartCapture.Enabled = true;
                                 btnStartCapture.Visible = true;
                                 LoadSourceCaps();
@@ -2184,8 +2194,8 @@ namespace OrfeoScan_IDU_STRT
                                 cargarPrincipal(actual_page);
                                 garbage_collector();
 
-                                btnStopScan.Enabled = false;
-                                btnStopScan.Visible = false;
+                                //btnStopScan.Enabled = false;
+                                //btnStopScan.Visible = false;
                                 btnStartCapture.Enabled = true;
                                 btnStartCapture.Visible = true;
                                 LoadSourceCaps();
@@ -2205,12 +2215,20 @@ namespace OrfeoScan_IDU_STRT
                             pageRange[0] = 0;
                             pageRange[1] = 2;
                             cargarImagen0000(pageRange, total_page);
-                            label28.Text = total_page + " Páginas";
+                            if (total_page>=0)
+                            {
+                                label28.Text = total_page + " Páginas";
+                            }
+                            else
+                            {
+                                label28.Text = "";
+                            }
+                            
                             cargarPrincipal(pageRange[0]);
                             garbage_collector();
 
-                            btnStopScan.Enabled = false;
-                            btnStopScan.Visible = false;
+                            //btnStopScan.Enabled = false;
+                            //btnStopScan.Visible = false;
                             btnStartCapture.Enabled = true;
                             btnStartCapture.Visible = true;
                             LoadSourceCaps();
@@ -2357,8 +2375,11 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
+            escaner_load();
+
+
             twain_scan = true;
-            adicionar_scan = -1;
+            adicionar_scan = 0;
 
             if (total_page > 0)
             {
@@ -2417,8 +2438,8 @@ namespace OrfeoScan_IDU_STRT
                     // hide scanner ui if possible
                     if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, false, this.Handle) == ReturnCode.Success)
                     {
-                        btnStopScan.Enabled = true;
-                        btnStopScan.Visible = true;
+                        //btnStopScan.Enabled = true;
+                        //btnStopScan.Visible = true;
                         btnStartCapture.Enabled = false;
                         btnStartCapture.Visible = false;
                     }
@@ -2427,8 +2448,8 @@ namespace OrfeoScan_IDU_STRT
                 {
                     if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
                     {
-                        btnStopScan.Enabled = true;
-                        btnStopScan.Visible = true;
+                        //btnStopScan.Enabled = true;
+                        //btnStopScan.Visible = true;
                         btnStartCapture.Enabled = false;
                         btnStartCapture.Visible = false;
                     }
@@ -3155,8 +3176,6 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Error al actualizar registro de ruta de radicado", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    //limpiar_informacion_radicado();
-                                    //limpiar_gridview();
                                     hide_loading_panel();
                                     funciones.desconectar(con);
                                 }
@@ -3176,8 +3195,6 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Archivo enviado correctamente", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    //limpiar_informacion_radicado();
-                                    //limpiar_gridview();
                                     hide_loading_panel();
                                 }
                                 catch (Exception)
@@ -3185,8 +3202,6 @@ namespace OrfeoScan_IDU_STRT
                                     MessageBox.Show("Error en insertar registro historico", title);
                                     limpiar_anexos();
                                     limpiar_imagen();
-                                    //limpiar_informacion_radicado();
-                                    //limpiar_gridview();
                                     hide_loading_panel();
                                     funciones.desconectar(con);
                                 }
@@ -5211,6 +5226,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void button12_Click_1(object sender, EventArgs e)
         {
+            //SetupTwain();
             if (total_page>0)
             {
                 var confirmResult = MessageBox.Show("Se encuentra editando una imagen. Recuede guardar la imagen antes de continuar. Desea continuar ?",
@@ -5228,7 +5244,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void button13_Click_1(object sender, EventArgs e)
         {
-            if (panel6.Height==0)
+            if (panel6.Height == 0)
             {
                 panel6.Dock = DockStyle.None;
                 panel4.Dock = DockStyle.None;
@@ -5236,11 +5252,11 @@ namespace OrfeoScan_IDU_STRT
                 panel6.Location = new Point(1659, 247);
                 panel6.Size = new Size(0, 0);
 
-                panel4.Location = new Point(0, 400);
+                panel4.Location = new Point(0, 311);
                 panel4.Size = new Size(0, 0);
 
                 panel6.Size = new Size(1854, 286);
-                panel4.Size = new Size(1854, 723);
+                panel4.Size = new Size(1854, 685);
 
                 panel6.Dock = DockStyle.Top;
                 panel4.Dock = DockStyle.Bottom;
@@ -5249,26 +5265,18 @@ namespace OrfeoScan_IDU_STRT
                 button4.Visible = false;
                 button14.Visible = false;
 
-//                panel 6
-//1854; 286
-//0; 24
-
-//panel 4
-//0; 316
-//1854; 723
-
             }
             else
             {
                 panel6.Size = new Size(0, 0);
                 panel6.Location = new Point(1, 1);
-                panel4.Size = new Size(1523, 1000);
+                panel4.Size = new Size(1523, 971);
                 panel4.Location = new Point(0, 0);
                 comboBox2.Visible = true;
                 button4.Visible = true;
                 button14.Visible = true;
             }
-            
+
         }
         private void verPáginaCompletaToolStripMenuItem_Click(object sender, EventArgs e)
         {
