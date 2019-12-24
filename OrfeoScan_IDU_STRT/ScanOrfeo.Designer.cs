@@ -1395,7 +1395,7 @@
             this.btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnEnviarPDF1.FlatAppearance.BorderSize = 0;
             this.btnEnviarPDF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnviarPDF1.Location = new System.Drawing.Point(467, 85);
+            this.btnEnviarPDF1.Location = new System.Drawing.Point(462, 85);
             this.btnEnviarPDF1.Name = "btnEnviarPDF1";
             this.btnEnviarPDF1.Size = new System.Drawing.Size(45, 45);
             this.btnEnviarPDF1.TabIndex = 80;
@@ -1417,7 +1417,7 @@
             // 
             this.label14.AutoEllipsis = true;
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(425, 94);
+            this.label14.Location = new System.Drawing.Point(418, 92);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(40, 37);
             this.label14.TabIndex = 87;

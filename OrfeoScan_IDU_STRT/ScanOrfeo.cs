@@ -2949,8 +2949,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -3385,13 +3385,11 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Error al insertar registro de anexo de radicado", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        //limpiar_informacion_radicado();
-                                        //limpiar_gridview();
                                         funciones.desconectar(con);
                                         hide_loading_panel();
                                         return;
                                     }
-
+                           
                                     ObservacioneS = "(" + NumeroDeHojas + " Paginas)" + " (Anexo No. " + anex_codigo.ToString().PadLeft(5, '0') + ") " + observacion + "";
                                     string codusdp = usuarioScanOrfeo.DEPE_CODI.ToString().PadLeft(3, '0') + usuarioScanOrfeo.USUA_CODI.ToString().PadLeft(3, '0');
                                     ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (" + numero_documento.Substring(4, 3) + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + NumeroDeHojas + ")";
@@ -3408,8 +3406,6 @@ namespace OrfeoScan_IDU_STRT
                                         MessageBox.Show("Archivo enviado correctamente", title);
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        //limpiar_informacion_radicado();
-                                        //limpiar_gridview();
                                         hide_loading_panel();
                                     }
                                     catch (Exception)
@@ -3419,8 +3415,6 @@ namespace OrfeoScan_IDU_STRT
                                         funciones.desconectar(con);
                                         limpiar_anexos();
                                         limpiar_imagen();
-                                        //limpiar_informacion_radicado();
-                                        //limpiar_gridview();
                                         hide_loading_panel();
                                         return;
                                     }
@@ -3724,6 +3718,7 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
+                MessageBox.Show(servidor);
                 Thread thread = new Thread(() => sendthread(ruta_archivo, servidor, ruta_servidor));
                 thread.Start();
                 thread.Join();

@@ -14,11 +14,9 @@ namespace OrfeoScan_IDU_STRT.funciones
     public class funciones
     {
         //pruebas
-        public string conni = "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = gesdoc.idu.gov.co))); User Id = ow_orfeo; Password = TESTING; Pooling=False;";
-
+        //public string conni = "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = iduCluster-Scan.idu.gov.co)(PORT = 1975))(CONNECT_DATA = (SERVICE_NAME = gesdoc.idu.gov.co))); User Id = ow_orfeo; Password = TESTING; Pooling=False;";
         //Producción
-        //public string conni = "Data Source=(DESCRIPTION=    (ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=iducluster02-scan )(PORT=1521)))    (CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=orfeo.idu.gov.co)));User Id=ow_orfeo ;Password=Orf3011g2014 ; Pooling=False;";
-
+        public string conni = "Data Source=(DESCRIPTION=    (ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=iducluster02-scan )(PORT=1521)))    (CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=orfeo.idu.gov.co)));User Id=ow_orfeo ;Password=Orf3011g2014 ; Pooling=False;";
 
         public bool conexion_test(string cadena)
         {
@@ -63,21 +61,13 @@ namespace OrfeoScan_IDU_STRT.funciones
         public string MD5Hash(string text)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-
-            //compute hash from the bytes of text  
             md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
-
-            //get hash result after compute it  
             byte[] result = md5.Hash;
-
             StringBuilder strBuilder = new StringBuilder();
             for (int i = 0; i < result.Length; i++)
             {
-                //change it into 2 hexadecimal digits  
-                //for each byte  
                 strBuilder.Append(result[i].ToString("x2"));
             }
-
             return strBuilder.ToString();
         }
     }
