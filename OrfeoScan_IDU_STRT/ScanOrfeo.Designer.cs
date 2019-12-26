@@ -368,7 +368,7 @@
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
             this.verToolStripMenuItem.ShortcutKeyDisplayString = "F3";
             this.verToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.verToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
+            this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.verToolStripMenuItem.Text = "Ver";
             // 
             // zoomToolStripMenuItem
@@ -588,7 +588,7 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             this.pQRTelefónicasToolStripMenuItem.Click += new System.EventHandler(this.pQRTelefónicasToolStripMenuItem_Click);
             // 
@@ -596,7 +596,7 @@
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             this.pQRPersonalToolStripMenuItem.Click += new System.EventHandler(this.pQRPersonalToolStripMenuItem_Click);
             // 
@@ -1604,27 +1604,27 @@
             // 
             // pan_loading
             // 
-            this.pan_loading.BackColor = System.Drawing.Color.DarkOrange;
+            this.pan_loading.BackColor = System.Drawing.Color.IndianRed;
             this.pan_loading.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pan_loading.Controls.Add(this.label1);
             this.pan_loading.Enabled = false;
-            this.pan_loading.Location = new System.Drawing.Point(206, 164);
+            this.pan_loading.Location = new System.Drawing.Point(249, 176);
             this.pan_loading.Margin = new System.Windows.Forms.Padding(10);
             this.pan_loading.Name = "pan_loading";
-            this.pan_loading.Size = new System.Drawing.Size(14, 19);
+            this.pan_loading.Size = new System.Drawing.Size(21, 16);
             this.pan_loading.TabIndex = 63;
             this.pan_loading.Visible = false;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(4, 57);
+            this.label1.Location = new System.Drawing.Point(4, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(179, 42);
+            this.label1.Size = new System.Drawing.Size(589, 169);
             this.label1.TabIndex = 0;
             this.label1.Text = "Cargando...";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
@@ -2037,7 +2037,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.pan_loading.ResumeLayout(false);
-            this.pan_loading.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);

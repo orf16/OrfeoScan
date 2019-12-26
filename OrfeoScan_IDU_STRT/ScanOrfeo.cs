@@ -2949,8 +2949,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -3298,20 +3298,6 @@ namespace OrfeoScan_IDU_STRT
                             string imagenf2 = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/docs/" + nombrearchivo;
                             string imagenf3 = servidor + imagenf;
 
-
-
-                            //string nombrearchivo = numero_documento + extension;
-                            ////int numHojasDigitalizadas = (NumeroDeHojas - numInicialHojas);
-
-                            ////lbl_InfoRadicado1.Text = tipo + " No." + numero_documento.Substring(0, 4) + "-" + numero_documento.Substring(4, 3) + "-" + numero_documento.Substring(7, 6) + "-" + numero_documento.Substring(13, 1);
-                            //imagenf = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/" + numero_documento + extension;
-                            //string imagenf1 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + ".tiff";
-                            //string imagenf2 = @"\" + numero_documento.Substring(0, 4) + @"\" + numero_documento.Substring(4, 3) + @"\" + numero_documento + extension;
-                            //string imagenf3 = servidor + imagenf;
-                            //dirserver = @"/" + numero_documento.Substring(0, 4) + @"/" + numero_documento.Substring(4, 3) + @"/";
-
-                            //string archivo_enviar = epath + imagenf2;
-
                             string archivo_enviar = epath + imagenf2;
 
                             bool conversion = false;
@@ -3390,9 +3376,9 @@ namespace OrfeoScan_IDU_STRT
                                         return;
                                     }
                            
-                                    ObservacioneS = "(" + NumeroDeHojas + " Paginas)" + " (Anexo No. " + anex_codigo.ToString().PadLeft(5, '0') + ") " + observacion + "";
+                                    string ObservacioneS_ = "(" + NumeroDeHojas + " Paginas)" + " (Anexo No. " + anex_codigo.ToString().PadLeft(5, '0') + ") " + observacion + "";
                                     string codusdp = usuarioScanOrfeo.DEPE_CODI.ToString().PadLeft(3, '0') + usuarioScanOrfeo.USUA_CODI.ToString().PadLeft(3, '0');
-                                    ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (" + numero_documento.Substring(4, 3) + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + NumeroDeHojas + ")";
+                                    ISQL_HL = "insert into hist_eventos(DEPE_CODI,HIST_FECH,USUA_CODI,RADI_NUME_RADI,HIST_OBSE,USUA_CODI_DEST,USUA_DOC,SGD_TTR_CODIGO,NUM_PAG_DIGIT) values (" + numero_documento.Substring(4, 3) + "," + varFechaSistema + "," + usuarioScanOrfeo.USUA_CODI + "," + numero_documento + ",'" + ObservacioneS_ + "'," + codusdp + "," + usuarioScanOrfeo.USUA_DOC + "," + codTTR + "," + NumeroDeHojas + ")";
                                     con = new OracleConnection(funciones.conni);
 
                                     try
