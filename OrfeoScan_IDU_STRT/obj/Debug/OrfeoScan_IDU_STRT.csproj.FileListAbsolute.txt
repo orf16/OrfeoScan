@@ -67,7 +67,6 @@ D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\NTwain.pdb
 D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\NTwain.xml
 D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Spire.License.xml
 D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Spire.Pdf.xml
-D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\TiffViewerLib.pdb
 D:\OrfeoScan\OrfeoScan_IDU_STRT\bin\Debug\Interop.WIA.dll
 D:\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.csprojResolveAssemblyReference.cache
 D:\OrfeoScan\OrfeoScan_IDU_STRT\obj\Debug\OrfeoScan_IDU_STRT.configuracion.resources

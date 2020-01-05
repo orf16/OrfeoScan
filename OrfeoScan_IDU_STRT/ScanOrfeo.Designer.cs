@@ -368,7 +368,7 @@
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
             this.verToolStripMenuItem.ShortcutKeyDisplayString = "F3";
             this.verToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.verToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
             this.verToolStripMenuItem.Text = "Ver";
             // 
             // zoomToolStripMenuItem
@@ -588,7 +588,7 @@
             // 
             this.pQRTelefónicasToolStripMenuItem.CheckOnClick = true;
             this.pQRTelefónicasToolStripMenuItem.Name = "pQRTelefónicasToolStripMenuItem";
-            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRTelefónicasToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.pQRTelefónicasToolStripMenuItem.Text = "PQR Telefónicas";
             this.pQRTelefónicasToolStripMenuItem.Click += new System.EventHandler(this.pQRTelefónicasToolStripMenuItem_Click);
             // 
@@ -596,7 +596,7 @@
             // 
             this.pQRPersonalToolStripMenuItem.CheckOnClick = true;
             this.pQRPersonalToolStripMenuItem.Name = "pQRPersonalToolStripMenuItem";
-            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.pQRPersonalToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.pQRPersonalToolStripMenuItem.Text = "PQR Personal";
             this.pQRPersonalToolStripMenuItem.Click += new System.EventHandler(this.pQRPersonalToolStripMenuItem_Click);
             // 
@@ -633,7 +633,7 @@
             this.PageEdit.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PageEdit.Location = new System.Drawing.Point(0, 0);
             this.PageEdit.Name = "PageEdit";
-            this.PageEdit.Size = new System.Drawing.Size(10000, 10000);
+            this.PageEdit.Size = new System.Drawing.Size(3000, 4000);
             this.PageEdit.TabIndex = 42;
             this.PageEdit.TabStop = false;
             this.PageEdit.Click += new System.EventHandler(this.PageEdit_Click);
@@ -655,8 +655,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1800, 685);
             this.panel2.TabIndex = 43;
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
-            this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
             // 
             // button8
             // 

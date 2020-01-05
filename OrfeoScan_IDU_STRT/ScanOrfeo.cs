@@ -407,34 +407,31 @@ namespace OrfeoScan_IDU_STRT
         {
             if (e.Button != MouseButtons.Left)
             {
-            return;
+                return;
             }
             Point tempEndPoint = e.Location;
             _StartPoint = e.Location;
 
             if (PageEdit.Image != null)
             {
-                if (true)
-                {
-                    Rect.Location = new Point(
-                     Math.Min(RectStartPoint.X, tempEndPoint.X),
-                     Math.Min(RectStartPoint.Y, tempEndPoint.Y));
-                    Rect.Size = new Size(
-                        Math.Abs(RectStartPoint.X - tempEndPoint.X),
-                        Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+                Rect.Location = new Point(
+                 Math.Min(RectStartPoint.X, tempEndPoint.X),
+                 Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+                Rect.Size = new Size(
+                    Math.Abs(RectStartPoint.X - tempEndPoint.X),
+                    Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
 
-                    if (e.Y % 60 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 500 && e.Y <= PageEdit.Image.Height)
-                    {
-                        panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, e.Y - 0);
-                    }
-                    Point changePoint = new Point(e.Location.X - RectStartPoint.X,
-                                  e.Location.Y - RectStartPoint.Y);
-                    if (e.Y % 80 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 400 && e.Y <= PageEdit.Image.Height)
-                    {
-                        Thread.Sleep(50);
-                    }
-                    garbage_collector();
+                if (e.Y % 60 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 500 && e.Y <= PageEdit.Image.Height)
+                {
+                    panel2.AutoScrollPosition = new Point(-panel2.AutoScrollPosition.X, e.Y - 0);
                 }
+                Point changePoint = new Point(e.Location.X - RectStartPoint.X,
+                              e.Location.Y - RectStartPoint.Y);
+                if (e.Y % 80 == 0 && Math.Abs(RectStartPoint.Y - tempEndPoint.Y) > 400 && e.Y <= PageEdit.Image.Height)
+                {
+                    Thread.Sleep(50);
+                }
+                garbage_collector();
             }
             PageEdit.Invalidate();
         }
@@ -458,23 +455,14 @@ namespace OrfeoScan_IDU_STRT
         }
         private void PageEdit_Paint(object sender, PaintEventArgs e)
         {
-            // Draw the rectangle...
             if (PageEdit.Image != null)
             {
-                if (true)
-                {
-
                     if (Rect != null && Rect.Width > 0 && Rect.Height > 0)
                     {
-                        if (true)
-                        {
-                            Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
-                            e.Graphics.DrawRectangle(blackPen, Rect);
-                            e.Graphics.FillRectangle(selectionBrush, Rect);
-
-                            garbage_collector();
-                        }
-                    }
+                    Pen blackPen = new Pen(System.Drawing.Color.Black, 1);
+                    e.Graphics.DrawRectangle(blackPen, Rect);
+                    e.Graphics.FillRectangle(selectionBrush, Rect);
+                    garbage_collector();
                 }
             }
         }
@@ -486,12 +474,6 @@ namespace OrfeoScan_IDU_STRT
                 {
                 }
             }
-        }
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
-        private void panel2_MouseDown(object sender, MouseEventArgs e)
-        {
         }
 
         private void btnAbrirImagen_Click(object sender, EventArgs e)
@@ -2949,8 +2931,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -3704,7 +3686,6 @@ namespace OrfeoScan_IDU_STRT
             try
             {
                 show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
-                MessageBox.Show(servidor);
                 Thread thread = new Thread(() => sendthread(ruta_archivo, servidor, ruta_servidor));
                 thread.Start();
                 thread.Join();
@@ -4795,6 +4776,23 @@ namespace OrfeoScan_IDU_STRT
                 garbage_collector();
             }
         }
+        private void movefile1()
+        {
+            DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
+            foreach (FileInfo file in di.GetFiles())
+            {
+                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                int numero_pag = -1;
+                if (int.TryParse(woe, out numero_pag))
+                {
+                    if (numero_pag > actual_page)
+                    {
+                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+                        file.Delete();
+                    }
+                }
+            }
+        }
         private void button5_Click_1(object sender, EventArgs e)
         {
             //cuando existen imagenes
@@ -4874,6 +4872,9 @@ namespace OrfeoScan_IDU_STRT
                             label28.Text = total_page + " Páginas";
                         }
                         int actual_page_copy = actual_page;
+
+                        //Incluir Threading
+
                         for (int i = 0; i < total_page_offset; i++)
                         {
                             try
@@ -4980,7 +4981,6 @@ namespace OrfeoScan_IDU_STRT
             {
                 if (eliminar_work())
                 {
-                    bool ifSaved = false;
                     OpenFileDialog dialog = new OpenFileDialog();
                     dialog.Filter = "Archivos de Imagen (*.tif, *.tiff) | *.tif; *.tiff";
                     dialog.InitialDirectory = path_abrir_tiff;
@@ -5008,7 +5008,7 @@ namespace OrfeoScan_IDU_STRT
                                     actualBitmap_.SelectActiveFrame(objDimension, i);
                                     actualBitmap_.Save(work_folder + i + ".tiff", System.Drawing.Imaging.ImageFormat.Tiff);
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     return;
                                 }
@@ -5035,9 +5035,6 @@ namespace OrfeoScan_IDU_STRT
                             }
                         }
 
-                        
-                        //thread.Join();
-
                         cambio_flecha = true;
                         comboBox1.Text = "1";
                         comboBox2.Text = "1";
@@ -5047,17 +5044,12 @@ namespace OrfeoScan_IDU_STRT
                         cambio_flecha = false;
                         label28.Text = total_page + " Páginas";
 
-                        // Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 20, 100));
-                        //  System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                        //   Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
-
                         int paginas_adicionales = total_page - 10;
 
                         if (paginas_adicionales > 0)
                         {
-                            //double div = paginas_adicionales / 2;
-                            int div = paginas_adicionales / 2; //quotient is 1
-                            int mod = paginas_adicionales % 2; //remainder is 2
+                            int div = paginas_adicionales / 2;
+                            int mod = paginas_adicionales % 2; 
                             int div1 = div * 2;
                             int div2 = mod;
 
@@ -5071,53 +5063,7 @@ namespace OrfeoScan_IDU_STRT
                             thread.Join();
                             thread1.Join();
                         }
-
-
-                        //if (total_page > 10 && total_page <= 20)
-                        //{
-                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 15));
-                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 15, total_page));
-
-                        //    thread.Start();
-                        //    thread1.Start();
-
-                        //    thread.Join();
-                        //    thread1.Join();
-                        //}
-                        //if (total_page>20 && total_page <= 50)
-                        //{
-                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 35));
-                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 35, total_page));
-                        //    thread.Start();
-                        //    thread1.Start();
-                        //    thread.Join();
-                        //    thread1.Join();
-                        //}
-                        //if (total_page > 50 && total_page <= 100)
-                        //{
-                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 50));
-                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 50, total_page));
-                        //    thread.Start();
-                        //    thread1.Start();
-                        //    thread.Join();
-                        //    thread1.Join();
-                        //}
-                        //if (total_page > 100)
-                        //{
-                        //    Thread thread = new Thread(() => cargaImagenes(actualBitmap_, 10, 100));
-                        //    System.Drawing.Image actualBitmap_1 = System.Drawing.Image.FromFile(dialog.FileName);
-                        //    Thread thread1 = new Thread(() => cargaImagenesFinal(actualBitmap_1, 100, total_page));
-                        //    thread.Start();
-                        //    thread1.Start();
-                        //    thread.Join();
-                        //    thread1.Join();
-                        //}
-
-                        hide_loading_panel();
-                        
+                        hide_loading_panel();                       
                     }
                     garbage_collector();
                 }
