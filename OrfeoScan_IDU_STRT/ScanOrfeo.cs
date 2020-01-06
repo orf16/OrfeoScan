@@ -2006,8 +2006,8 @@ namespace OrfeoScan_IDU_STRT
                                 cargarPrincipal(pageRange[0]);
                                 garbage_collector();
 
-                                //btnStopScan.Enabled = false;
-                                //btnStopScan.Visible = false;
+                                btnStopScan.Enabled = false;
+                                btnStopScan.Visible = false;
                                 btnStartCapture.Enabled = true;
                                 btnStartCapture.Visible = true;
                                 LoadSourceCaps();
@@ -2176,8 +2176,8 @@ namespace OrfeoScan_IDU_STRT
                                 cargarPrincipal(actual_page);
                                 garbage_collector();
 
-                                //btnStopScan.Enabled = false;
-                                //btnStopScan.Visible = false;
+                                btnStopScan.Enabled = false;
+                                btnStopScan.Visible = false;
                                 btnStartCapture.Enabled = true;
                                 btnStartCapture.Visible = true;
                                 LoadSourceCaps();
@@ -2209,8 +2209,8 @@ namespace OrfeoScan_IDU_STRT
                             cargarPrincipal(pageRange[0]);
                             garbage_collector();
 
-                            //btnStopScan.Enabled = false;
-                            //btnStopScan.Visible = false;
+                            btnStopScan.Enabled = false;
+                            btnStopScan.Visible = false;
                             btnStartCapture.Enabled = true;
                             btnStartCapture.Visible = true;
                             LoadSourceCaps();
@@ -2420,8 +2420,8 @@ namespace OrfeoScan_IDU_STRT
                     // hide scanner ui if possible
                     if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, false, this.Handle) == ReturnCode.Success)
                     {
-                        //btnStopScan.Enabled = true;
-                        //btnStopScan.Visible = true;
+                        btnStopScan.Enabled = true;
+                        btnStopScan.Visible = true;
                         btnStartCapture.Enabled = false;
                         btnStartCapture.Visible = false;
                     }
@@ -2430,8 +2430,8 @@ namespace OrfeoScan_IDU_STRT
                 {
                     if (_twain.CurrentSource.Enable(SourceEnableMode.ShowUI, true, this.Handle) == ReturnCode.Success)
                     {
-                        //btnStopScan.Enabled = true;
-                        //btnStopScan.Visible = true;
+                        btnStopScan.Enabled = true;
+                        btnStopScan.Visible = true;
                         btnStartCapture.Enabled = false;
                         btnStartCapture.Visible = false;
                     }
@@ -2440,7 +2440,7 @@ namespace OrfeoScan_IDU_STRT
         }
         private void btnStopScan_Click(object sender, EventArgs e)
         {
-            _stopScan = true;
+            //_stopScan = true;
         }
         private void LoadSourceCaps()
         {
@@ -4793,6 +4793,115 @@ namespace OrfeoScan_IDU_STRT
                 }
             }
         }
+        private void movefile_A1(DirectoryInfo di)
+        {
+            
+            foreach (FileInfo file in di.GetFiles())
+            {
+                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                int numero_pag = -1;
+                if (int.TryParse(woe, out numero_pag))
+                {
+                    if (numero_pag >= actual_page)
+                    {
+                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+                        file.Delete();
+                    }
+                }
+            }
+        }
+        private void movefile_A2(DirectoryInfo di, int total_page_offset, int paginas_nuevas)
+        {
+            foreach (FileInfo file in di.GetFiles())
+            {
+                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                woe = woe.Replace("_edit", "");
+                int numero_pag = -1;
+                if (int.TryParse(woe, out numero_pag))
+                {
+                    if (numero_pag >= actual_page)
+                    {
+                        numero_pag += total_page_offset;
+                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+                    }
+                    paginas_nuevas++;
+                }
+            }
+        }
+        private void movefile_A3(int total_page_offset, int paginas_nuevas, System.Drawing.Image actualBitmap_, System.Drawing.Imaging.FrameDimension objDimension, int actual_page_copy)
+        {
+            for (int i = 0; i < total_page_offset; i++)
+            {
+                try
+                {
+                    actualBitmap_.SelectActiveFrame(objDimension, i);
+                    actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
+                    actual_page_copy++;
+                    total_page++;
+                    paginas_nuevas++;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
+        }
+
+
+
+        private void movefile_D1(DirectoryInfo di)
+        {
+            foreach (FileInfo file in di.GetFiles())
+            {
+                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                int numero_pag = -1;
+                if (int.TryParse(woe, out numero_pag))
+                {
+                    if (numero_pag > actual_page)
+                    {
+                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
+                        file.Delete();
+                    }
+                }
+            }
+        }
+        private void movefile_D2(DirectoryInfo di, int total_page_offset, int paginas_nuevas)
+        {
+            foreach (FileInfo file in di.GetFiles())
+            {
+                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
+                woe = woe.Replace("_edit", "");
+                int numero_pag = -1;
+                if (int.TryParse(woe, out numero_pag))
+                {
+                    if (numero_pag > actual_page)
+                    {
+                        numero_pag += total_page_offset;
+                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
+                    }
+                    paginas_nuevas++;
+                }
+            }
+        }
+        private void movefile_D3(int total_page_offset, int paginas_nuevas, System.Drawing.Image actualBitmap_, System.Drawing.Imaging.FrameDimension objDimension, int actual_page_copy)
+        {
+            for (int i = 0; i < total_page_offset; i++)
+            {
+                try
+                {
+                    actualBitmap_.SelectActiveFrame(objDimension, i);
+                    actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
+                    actual_page_copy++;
+                    total_page++;
+                    paginas_nuevas++;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
+        }
+
         private void button5_Click_1(object sender, EventArgs e)
         {
             //cuando existen imagenes
@@ -4833,23 +4942,21 @@ namespace OrfeoScan_IDU_STRT
 
                     if (agregar_behind)
                     {
+                        #region atras
+                        
                         //Insertar atras
                         if (Directory.Exists(work_folder))
                         {
                             DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
-                            foreach (FileInfo file in di.GetFiles())
-                            {
-                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                int numero_pag = -1;
-                                if (int.TryParse(woe, out numero_pag))
-                                {
-                                    if (numero_pag >= actual_page)
-                                    {
-                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
-                                        file.Delete();
-                                    }
-                                }
-                            }
+
+
+                            Thread thread = new Thread(() => movefile_A1(di));
+                            thread.Start();
+                            thread.Join();
+
+                            Thread thread1 = new Thread(() => movefile_A2(di, total_page_offset, paginas_nuevas));
+                            thread1.Start();
+                            thread1.Join();
 
                             foreach (FileInfo file in di.GetFiles())
                             {
@@ -4858,11 +4965,6 @@ namespace OrfeoScan_IDU_STRT
                                 int numero_pag = -1;
                                 if (int.TryParse(woe, out numero_pag))
                                 {
-                                    if (numero_pag >= actual_page)
-                                    {
-                                        numero_pag += total_page_offset;
-                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
-                                    }
                                     paginas_nuevas++;
                                     total_page++;
                                     comboBox1.Items.Add(paginas_nuevas);
@@ -4874,15 +4976,14 @@ namespace OrfeoScan_IDU_STRT
                         int actual_page_copy = actual_page;
 
                         //Incluir Threading
-
+                        Thread thread2 = new Thread(() => movefile_A3(total_page_offset, paginas_nuevas, actualBitmap_, objDimension, actual_page_copy));
+                        thread2.Start();
+                        thread2.Join();
+                       
                         for (int i = 0; i < total_page_offset; i++)
                         {
                             try
                             {
-                                actualBitmap_.SelectActiveFrame(objDimension, i);
-                                actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
-                                actual_page_copy++;
-                                total_page++;
                                 paginas_nuevas++;
                                 comboBox1.Items.Add(paginas_nuevas);
                                 comboBox2.Items.Add(paginas_nuevas);
@@ -4895,26 +4996,27 @@ namespace OrfeoScan_IDU_STRT
                             }
                         }
                         label28.Text = total_page + " Páginas";
+
+
+                        #endregion
                     }
                     else
                     {
+                        #region delante
+                        
                         //Insertar Adelante
                         if (Directory.Exists(work_folder))
                         {
                             DirectoryInfo di = new System.IO.DirectoryInfo(work_folder);
-                            foreach (FileInfo file in di.GetFiles())
-                            {
-                                string woe = Path.GetFileNameWithoutExtension(work_folder + @"\" + file.Name);
-                                int numero_pag = -1;
-                                if (int.TryParse(woe, out numero_pag))
-                                {
-                                    if (numero_pag > actual_page)
-                                    {
-                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + woe + "_edit.tiff");
-                                        file.Delete();
-                                    }
-                                }
-                            }
+
+                            Thread thread = new Thread(() => movefile_D1(di));
+                            thread.Start();
+                            thread.Join();
+
+                            Thread thread1 = new Thread(() => movefile_D2(di, total_page_offset, paginas_nuevas));
+                            thread1.Start();
+                            thread1.Join();
+
 
                             foreach (FileInfo file in di.GetFiles())
                             {
@@ -4923,11 +5025,6 @@ namespace OrfeoScan_IDU_STRT
                                 int numero_pag = -1;
                                 if (int.TryParse(woe, out numero_pag))
                                 {
-                                    if (numero_pag > actual_page)
-                                    {
-                                        numero_pag += total_page_offset;
-                                        System.IO.File.Move(work_folder + @"\" + file.Name, work_folder + @"\" + numero_pag + ".tiff");
-                                    }
                                     paginas_nuevas++;
                                     total_page++;
                                     comboBox1.Items.Add(paginas_nuevas);
@@ -4937,14 +5034,13 @@ namespace OrfeoScan_IDU_STRT
                             label28.Text = total_page + " Páginas";
                         }
                         int actual_page_copy = actual_page + 1;
+                        Thread thread2 = new Thread(() => movefile_D3(total_page_offset, paginas_nuevas, actualBitmap_, objDimension, actual_page_copy));
+                        thread2.Start();
+                        thread2.Join();
                         for (int i = 0; i < total_page_offset; i++)
                         {
                             try
                             {
-                                actualBitmap_.SelectActiveFrame(objDimension, i);
-                                actualBitmap_.Save(work_folder + actual_page_copy + ".tiff");
-                                actual_page_copy++;
-                                total_page++;
                                 paginas_nuevas++;
                                 comboBox1.Items.Add(paginas_nuevas);
                                 comboBox2.Items.Add(paginas_nuevas);
@@ -4956,7 +5052,9 @@ namespace OrfeoScan_IDU_STRT
                                 return;
                             }
                         }
+                        //SECCION3
                         label28.Text = total_page + " Páginas";
+                        #endregion
                     }
 
                     cambio_flecha = true;
