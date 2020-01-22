@@ -2708,7 +2708,7 @@ namespace OrfeoScan_IDU_STRT
                         }
                         if (CIU > 0)
                         {
-                            IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
+                            IISQL = "Select a.sgd_ciu_nombre || ' ' || a.sgd_ciu_apell1 || ' ' || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
                             tipo_rem += "(CIU) ";
                         }
                         if (ESP > 0)
@@ -3874,17 +3874,17 @@ namespace OrfeoScan_IDU_STRT
                                 }
                                 if (CIU > 0)
                                 {
-                                    IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
+                                    IISQL = "Select a.sgd_ciu_nombre || ' ' || a.sgd_ciu_apell1 || ' ' || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
                                     tipo_rem += "(CIU) ";
                                 }
                                 if (ESP > 0)
                                 {
-                                    IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
+                                    IISQL = "Select a.SIGLA_DE_LA_EMPRESA || ' ' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
                                     tipo_rem += "(ESP) ";
                                 }
                                 if (FUN != string.Empty)
                                 {
-                                    IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
+                                    IISQL = "Select substr(USUA_NOMB,0,20) || ' ' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
                                     tipo_rem += "(FUN) ";
                                 }
 
@@ -4086,17 +4086,17 @@ namespace OrfeoScan_IDU_STRT
                             }
                             if (CIU > 0)
                             {
-                                IISQL = "Select a.sgd_ciu_nombre || a.sgd_ciu_apell1 || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
+                                IISQL = "Select a.sgd_ciu_nombre || ' ' || a.sgd_ciu_apell1 || ' ' || sgd_ciu_apell2 REMITENTE from SGD_CIU_CIUDADANO a where a.sgd_ciu_codigo=" + CIU.ToString();
                                 tipo_rem += "(CIU) ";
                             }
                             if (ESP > 0)
                             {
-                                IISQL = "Select a.SIGLA_DE_LA_EMPRESA || '-' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
+                                IISQL = "Select a.SIGLA_DE_LA_EMPRESA || ' ' || a.NOMBRE_DE_LA_EMPRESA REMITENTE from BODEGA_EMPRESAS a where a.IDENTIFICADOR_EMPRESA=" + ESP.ToString();
                                 tipo_rem += "(ESP) ";
                             }
                             if (FUN != string.Empty)
                             {
-                                IISQL = "Select substr(USUA_NOMB,0,20) || '-' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
+                                IISQL = "Select substr(USUA_NOMB,0,20) || ' ' || DEPE_CODI REMITENTE from USUARIO a where a.usua_doc='" + FUN + "'";
                                 tipo_rem += "(FUN) ";
                             }
 
