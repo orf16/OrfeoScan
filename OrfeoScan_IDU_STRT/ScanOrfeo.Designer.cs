@@ -1279,7 +1279,7 @@
             this.tabControl1.Location = new System.Drawing.Point(989, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(527, 173);
+            this.tabControl1.Size = new System.Drawing.Size(504, 173);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
@@ -1371,8 +1371,8 @@
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.label13);
             this.tabPage2.Controls.Add(this.dtHoraAnexo);
-            this.tabPage2.Controls.Add(this.btnLimpiarAnexo);
             this.tabPage2.Controls.Add(this.dtFechaAnexo);
+            this.tabPage2.Controls.Add(this.btnLimpiarAnexo);
             this.tabPage2.Controls.Add(this.txtObservaciones);
             this.tabPage2.Controls.Add(this.label12);
             this.tabPage2.Controls.Add(this.label4);
@@ -1380,7 +1380,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(519, 146);
+            this.tabPage2.Size = new System.Drawing.Size(496, 146);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Enviar al Servidor";
             // 
@@ -1393,7 +1393,7 @@
             this.btnEnviarPDF1.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnEnviarPDF1.FlatAppearance.BorderSize = 0;
             this.btnEnviarPDF1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnviarPDF1.Location = new System.Drawing.Point(462, 85);
+            this.btnEnviarPDF1.Location = new System.Drawing.Point(313, 79);
             this.btnEnviarPDF1.Name = "btnEnviarPDF1";
             this.btnEnviarPDF1.Size = new System.Drawing.Size(45, 45);
             this.btnEnviarPDF1.TabIndex = 80;
@@ -1403,11 +1403,11 @@
             // label37
             // 
             this.label37.ForeColor = System.Drawing.Color.White;
-            this.label37.Location = new System.Drawing.Point(303, 92);
+            this.label37.Location = new System.Drawing.Point(380, 126);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(71, 37);
+            this.label37.Size = new System.Drawing.Size(117, 15);
             this.label37.TabIndex = 94;
-            this.label37.Text = "Limpiar Formulario";
+            this.label37.Text = "Limpiar";
             this.label37.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.label37.Visible = false;
             // 
@@ -1415,9 +1415,9 @@
             // 
             this.label14.AutoEllipsis = true;
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(418, 92);
+            this.label14.Location = new System.Drawing.Point(310, 127);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 37);
+            this.label14.Size = new System.Drawing.Size(64, 15);
             this.label14.TabIndex = 87;
             this.label14.Text = "Enviar PDF";
             // 
@@ -1452,9 +1452,9 @@
             this.btnLimpiarAnexo.FlatAppearance.BorderSize = 0;
             this.btnLimpiarAnexo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnLimpiarAnexo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiarAnexo.Location = new System.Drawing.Point(380, 97);
+            this.btnLimpiarAnexo.Location = new System.Drawing.Point(422, 85);
             this.btnLimpiarAnexo.Name = "btnLimpiarAnexo";
-            this.btnLimpiarAnexo.Size = new System.Drawing.Size(20, 20);
+            this.btnLimpiarAnexo.Size = new System.Drawing.Size(33, 33);
             this.btnLimpiarAnexo.TabIndex = 1000;
             this.btnLimpiarAnexo.UseVisualStyleBackColor = false;
             this.btnLimpiarAnexo.Visible = false;
@@ -1474,7 +1474,7 @@
             this.txtObservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtObservaciones.Location = new System.Drawing.Point(107, 54);
             this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(406, 22);
+            this.txtObservaciones.Size = new System.Drawing.Size(370, 22);
             this.txtObservaciones.TabIndex = 71;
             this.txtObservaciones.Visible = false;
             // 
@@ -1509,7 +1509,7 @@
             this.cBoxtDocumento.FormattingEnabled = true;
             this.cBoxtDocumento.Location = new System.Drawing.Point(106, 10);
             this.cBoxtDocumento.Name = "cBoxtDocumento";
-            this.cBoxtDocumento.Size = new System.Drawing.Size(407, 22);
+            this.cBoxtDocumento.Size = new System.Drawing.Size(371, 22);
             this.cBoxtDocumento.TabIndex = 70;
             this.cBoxtDocumento.Visible = false;
             // 
@@ -1876,7 +1876,7 @@
             this.groupBox7.ForeColor = System.Drawing.Color.White;
             this.groupBox7.Location = new System.Drawing.Point(1052, 187);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(464, 91);
+            this.groupBox7.Size = new System.Drawing.Size(441, 91);
             this.groupBox7.TabIndex = 89;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Archivo sin edición o transformación";
@@ -1887,7 +1887,7 @@
             this.richTextBox1.Enabled = false;
             this.richTextBox1.Location = new System.Drawing.Point(86, 18);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(372, 60);
+            this.richTextBox1.Size = new System.Drawing.Size(349, 60);
             this.richTextBox1.TabIndex = 99;
             this.richTextBox1.Text = "";
             // 

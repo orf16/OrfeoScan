@@ -2931,8 +2931,8 @@ namespace OrfeoScan_IDU_STRT
                         int NumeroDeHojas = total_page;
                         int codTTR = 0;
                         int anex_codigo = 0;
-                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
-                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
+                        string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"]+ @"/bodega_dev_of01";
+                        //string servidor = "ftp://" + ConfigurationManager.AppSettings["FTP_SERVER"] + ConfigurationManager.AppSettings["FTP_P1"] + ConfigurationManager.AppSettings["FTP_ROUTE"] + ConfigurationManager.AppSettings["FTP_P2"] ;
                         string extension = ".pdf";
                         string epath = ConfigurationManager.AppSettings["EPATH"];
                         string resend = "Una operación anterior fallo, desea saltar la conversión a PDF y enviar el ultimo archivo convertido";
@@ -3734,48 +3734,156 @@ namespace OrfeoScan_IDU_STRT
 
         private void sendthread(string ruta_archivo, string servidor, string ruta_servidor)
         {
-            FileStream fs = null;
-            Stream rs = null;
+            //FileStream fs = null;
+            //Stream rs = null;
 
+            //try
+            //{
+            //    string file = ruta_archivo;
+            //    string uploadFileName = new FileInfo(file).Name;
+            //    fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+
+            //    FtpWebRequest requestObj = FtpWebRequest.Create(servidor+ ruta_servidor) as FtpWebRequest;
+            //    requestObj.Method = WebRequestMethods.Ftp.UploadFile;
+            //    requestObj.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+            //    rs = requestObj.GetRequestStream();
+
+            //    byte[] buffer = new byte[8092];
+            //    int read = 0;
+            //    while ((read = fs.Read(buffer, 0, buffer.Length)) != 0)
+            //    {
+            //        rs.Write(buffer, 0, read);
+            //    }
+            //    rs.Flush();
+            //}
+            //catch (Exception ex)
+            //{
+                
+            //}
+            //finally
+            //{
+            //    if (fs != null)
+            //    {
+            //        fs.Close();
+            //        fs.Dispose();
+            //    }
+
+            //    if (rs != null)
+            //    {
+            //        rs.Close();
+            //        rs.Dispose();
+            //    }
+            //}
+                
+                FtpWebRequest request;
+                request = WebRequest.Create(new Uri(servidor + ruta_servidor)) as FtpWebRequest;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UseBinary = true;
+                request.UsePassive = false;
+                request.KeepAlive = false;
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.ConnectionGroupName = "group";
+
+                try
+                {
+                    using (FileStream fs = File.OpenRead(ruta_archivo))
+                    {
+                        byte[] buffer = new byte[fs.Length];
+                        fs.Read(buffer, 0, buffer.Length);
+                        fs.Close();
+                        Stream requestStream = request.GetRequestStream();
+                        requestStream.Write(buffer, 0, buffer.Length);
+                        requestStream.Flush();
+                        requestStream.Close();
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+
+
+        }
+        private bool sendFilefgfg(string ruta_archivo, string servidor, string ruta_servidor)
+        {
             try
             {
-                string file = ruta_archivo;
-                string uploadFileName = new FileInfo(file).Name;
-                fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+                show_loading_panel(600, 177, 359, 20, "Enviando Archivo al Servidor");
 
-                FtpWebRequest requestObj = FtpWebRequest.Create(servidor+ ruta_servidor) as FtpWebRequest;
-                requestObj.Method = WebRequestMethods.Ftp.UploadFile;
-                requestObj.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
-                rs = requestObj.GetRequestStream();
 
-                byte[] buffer = new byte[8092];
-                int read = 0;
-                while ((read = fs.Read(buffer, 0, buffer.Length)) != 0)
+                FtpWebRequest request;
+
+                request = WebRequest.Create(new Uri(servidor + ruta_servidor)) as FtpWebRequest;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UseBinary = true;
+                request.UsePassive = false;
+                request.KeepAlive = false;
+                request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                request.ConnectionGroupName = "group";
+
+                try
                 {
-                    rs.Write(buffer, 0, read);
+                    using (FileStream fs = File.OpenRead(ruta_archivo))
+                    {
+                        byte[] buffer = new byte[fs.Length];
+                        fs.Read(buffer, 0, buffer.Length);
+                        fs.Close();
+                        Stream requestStream = request.GetRequestStream();
+                        requestStream.Write(buffer, 0, buffer.Length);
+                        requestStream.Flush();
+                        requestStream.Close();
+                    }
                 }
-                rs.Flush();
+                catch (Exception)
+                {
+                    using (var client = new WebClient())
+                    {
+                        client.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                        client.UploadFile(servidor + ruta_servidor, WebRequestMethods.Ftp.UploadFile, ruta_archivo);
+                    }
+                }
+
+                FtpWebRequest requests;
+                requests = (FtpWebRequest)WebRequest.Create(servidor + ruta_servidor);
+                requests.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["FTP_IDU_USER"], ConfigurationManager.AppSettings["FTP_IDU_PASSWORD"]);
+                requests.KeepAlive = false;
+                requests.Method = WebRequestMethods.Ftp.GetFileSize;
+
+                try
+                {
+                    FtpWebResponse response = (FtpWebResponse)requests.GetResponse();
+                    return true;
+                }
+                catch (WebException ex)
+                {
+                    FtpWebResponse response = (FtpWebResponse)ex.Response;
+                    if (response.StatusCode ==
+                        FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        MessageBox.Show("El archivo no se subió, por favor vuelva a intentar", title);
+                        return false;
+                    }
+                }
+                hide_loading_panel();
+                return true;
             }
-            catch (Exception ex)
+            catch (WebException e)
             {
-                
-            }
-            finally
-            {
-                if (fs != null)
+                try
                 {
-                    fs.Close();
-                    fs.Dispose();
-                }
 
-                if (rs != null)
-                {
-                    rs.Close();
-                    rs.Dispose();
                 }
+                catch (Exception)
+                {
+
+                }
+                hide_loading_panel();
+                String status = ((FtpWebResponse)e.Response).StatusDescription;
+                MessageBox.Show(status, title);
+                return false;
             }
+            return true;
         }
-
         private void ScanOrfeo_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.PageUp)
